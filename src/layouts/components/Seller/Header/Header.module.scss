@@ -1,0 +1,29 @@
+.box {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    padding-top: 8px;
+    max-height: min((100vh - 96px) - 60px, 734px);
+    min-height: 100px;
+    background: rgb(255, 255, 255);
+    box-shadow: rgb(0 0 0 / 12%) 0px 2px 12px;
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
+a.waves_effect {
+    font-size: 13px;
+    color: #263238;
+    display: block;
+    line-height: 22px;
+    padding: 10px 15px;
+    cursor: pointer;
+    user-select: none;
+    transition: 0.3s ease-out;
+    text-decoration: none;
+    background-color: transparent;
+
+    &:hover {
+        background-color: #eee;
+    }
+}

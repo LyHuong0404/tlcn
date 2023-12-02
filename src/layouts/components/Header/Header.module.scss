@@ -1,0 +1,91 @@
+.box {
+    display: flex;
+    flex-direction: column;
+    width: 240px;
+    padding-top: 8px;
+    max-height: min((100vh - 96px) - 60px, 734px);
+    min-height: 100px;
+    background: rgb(255, 255, 255);
+    box-shadow: rgb(0 0 0 / 12%) 0px 2px 12px;
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
+.css_13cymwt_control {
+    background-color: transparent;
+    border-color: transparent;
+    border-radius: 0;
+}
+
+.custom_image_eng {
+    background: #262729 no-repeat -6px;
+    background-size: 155% !important;
+    border: 5px solid #404142;
+    border-radius: 50%;
+    object-fit: cover !important;
+    height: 34px;
+    width: 34px;
+    -webkit-background-size: 155% !important;
+    margin-right: 10px;
+    background-image: url('../../../assets/images/icon-flag-britain.png');
+}
+
+.custom_image_vn {
+    background: #262729 no-repeat -6px;
+    background-size: 155% !important;
+    border: 5px solid #404142;
+    border-radius: 50%;
+    object-fit: fill !important;
+    height: 34px;
+    width: 34px;
+    -webkit-background-size: 155% !important;
+    margin-right: 10px;
+    background-image: url('../../../assets/images/vn.png');
+}
+
+.name_language {
+    font-size: 1.4rem;
+    font-family: 'Montserrat', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+.aaa {
+    font-family: 'Montserrat', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+.active {
+    background-color: #b7f4fc;
+}
+
+ul.private {
+    margin: 0;
+    padding: 0;
+
+    li {
+        text-decoration: none;
+        height: 50px;
+        display: flex;
+        align-items: center;
+        border-top: 1px solid #eee;
+
+        &:hover {
+            background-color: #08c1da;
+            cursor: pointer;
+            i {
+                color: #fff;
+            }
+            a {
+                color: #fff;
+                text-decoration: none;
+            }
+        }
+    }
+
+    a {
+        color: #000;
+        font-size: 1.6rem;
+        user-select: none;
+    }
+
+    i {
+        margin: 0 20px 0 20px;
+        color: #000;
+    }
+}

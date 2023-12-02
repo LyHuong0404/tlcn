@@ -1,0 +1,29 @@
+.box {
+    background-color: #e6e6e6;
+    margin: 8px 0 0 0;
+    padding: 0;
+    min-width: 250px;
+
+    a {
+        font-size: 16px;
+        border-bottom: 1px solid #b3b3b3;
+        font-weight: 600;
+        color: #1a1a1a;
+        padding: 10px 20px;
+
+        &:hover {
+            color: white !important;
+            background-color: red;
+            transition: unset;
+        }
+    }
+}
+
+.active {
+    background-color: #cc0000;
+    color: white;
+}
+
+.text_logout {
+    color: #cc0000 !important;
+}

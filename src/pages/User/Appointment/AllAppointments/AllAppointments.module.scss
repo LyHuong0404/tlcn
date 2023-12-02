@@ -1,0 +1,139 @@
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    // align-items: center;
+}
+
+ul.private {
+    margin: 0;
+    padding: 0;
+
+    li {
+        text-decoration: none;
+
+        &:hover {
+            background-color: #08c1da;
+            cursor: pointer;
+            i {
+                color: #fff;
+            }
+            a {
+                color: #fff;
+                text-decoration: none;
+            }
+        }
+    }
+
+    a {
+        color: #000;
+        font-size: 1.6rem;
+        user-select: none;
+    }
+
+    i {
+        margin: 0 20px 0 20px;
+        color: #000;
+    }
+}
+
+.menu {
+    border-top: 1px solid #e0e0e0;
+    line-height: 51px;
+}
+
+.active {
+    background-color: #08c1da;
+    cursor: text;
+    a,
+    i {
+        color: #fff;
+    }
+}
+
+a .image_room {
+    max-width: 110px;
+    object-fit: cover;
+    border: 5px solid;
+}
+
+a.action_edit,
+a.action_delete {
+    padding: 5px;
+    font-size: 12px;
+    border-radius: 7px;
+    color: #e6e6e6;
+    margin-right: 10px;
+
+    &:hover {
+        background-color: #000;
+    }
+}
+
+.action_edit {
+    background-color: #4d4d4d;
+}
+
+.action_delete {
+    background-color: #ff0000;
+}
+
+.custom_icon {
+    &:hover,
+    &:focus {
+        color: #fff;
+    }
+}
+
+.box {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    padding-top: 8px;
+    max-height: min((100vh - 96px) - 60px, 734px);
+    min-height: 100px;
+    background: rgb(255, 255, 255);
+    box-shadow: rgb(0 0 0 / 12%) 0px 2px 12px;
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
+li.waves_effect {
+    font-size: 13px;
+    display: block;
+    line-height: 22px;
+    padding: 10px 15px;
+    cursor: pointer;
+    user-select: none;
+    transition: 0.3s ease-out;
+    background-color: transparent;
+
+    a {
+        color: #263238;
+        text-decoration: none;
+        display: flex;
+    }
+    &:hover {
+        background-color: #eee;
+    }
+}
+
+.button_delete {
+    background: #167ee6;
+    border: none;
+    padding: 4px 10px;
+    color: #fff;
+    border-radius: 5px;
+}
+
+.button_cancel {
+    background: #f0f2f0;
+    border: none;
+    padding: 4px 10px;
+    color: #000;
+    border-radius: 5px;
+}
+
+.pagination {
+    float: right;
+    margin: 0 0 25px 0;
+}
