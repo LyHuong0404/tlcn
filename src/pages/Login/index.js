@@ -15,18 +15,28 @@ import '~/assets/css/cssAuth/style.css';
 
 import Image from '~/components/Image';
 import { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { login } from '~/actions/authActions';
+import images from '~/assets/images';
 
 function Login() {
     const { isAuthenticated, error, user } = useSelector((state) => state.auth);
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
-    const { register, handleSubmit } = useForm();
+    const {
+        register,
+        handleSubmit,
+        formState: { errors },
+    } = useForm();
     useEffect(() => {
         if (isAuthenticated && user) {
-            navigate('/');
+            if (user.roles.some((role) => role === 'ROLE_SELLER')) {
+                navigate('/seller/dashboard');
+            } else {
+                navigate('/');
+                window.location.reload();
+            }
         }
     }, [isAuthenticated, navigate, error, user]);
 
@@ -41,32 +51,42 @@ function Login() {
                     <div className="col-lg-6 align-self-center form-section">
                         <div className="form-inner">
                             <a href="index.html" className="logo">
-                                <Image src="img/logos/logo.png" alt="logo" />
+                                <Image src={images.user} alt="logo" />
                             </a>
                             <h3>Sign into your account</h3>
-                            {error && <p style={{color: '#ed2a2a', fontSize: '17px'}}>{error}</p>}
+                            {error && <p style={{ color: '#ed2a2a', fontSize: '17px' }}>{error}</p>}
 
                             <form onSubmit={handleSubmit(submitForm)}>
                                 <div className="form-group clearfix">
                                     <input
                                         name="username"
                                         type="text"
-                                        className="form-control"
+                                        className={`form-control ${errors.username ? 'status-error' : ''}`}
                                         placeholder="Username"
                                         aria-label="Username"
                                         {...register('username', { required: true })}
                                     />
+                                    {errors.username && (
+                                        <div style={{ textAlign: 'left' }}>
+                                            <label className="error-message">Username is required.</label>
+                                        </div>
+                                    )}
                                 </div>
                                 <div className="form-group clearfix">
                                     <input
                                         name="password"
                                         type="password"
-                                        className="form-control"
+                                        className={`form-control ${errors.password ? 'status-error' : ''}`}
                                         placeholder="Password"
                                         aria-label="Password"
                                         autoComplete="username"
                                         {...register('password', { required: true })}
                                     />
+                                    {errors.password && (
+                                        <div style={{ textAlign: 'left' }}>
+                                            <label className="error-message">Password is required.</label>
+                                        </div>
+                                    )}
                                 </div>
                                 <div className="form-group checkbox clearfix">
                                     {/* <div className="form-check checkbox-theme float-start">
@@ -105,9 +125,9 @@ function Login() {
                             </div>
                             <p className="option">
                                 Don't have an account?
-                                <a href="signup.html" className="thembo">
+                                <Link to="/auth/signup" className="thembo">
                                     Register here
-                                </a>
+                                </Link>
                             </p>
                         </div>
                     </div>

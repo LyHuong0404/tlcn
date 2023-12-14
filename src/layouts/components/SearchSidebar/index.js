@@ -44,28 +44,6 @@ function SearchSidebar() {
                             // precision={0.5} // Specify half-star increments (optional)
                             onChange={handleChangeRating}
                         />
-                        <p className="htlfndr-input-label">accomodation type</p>
-                        <p className="htlfndr-checkbox-line">
-                            <input type="checkbox" id="htlfndr-check-apartment" name="htlfndr-check-apartment" />
-                            <label htmlFor="htlfndr-check-apartment">
-                                Apartment
-                                <span>(5)</span>
-                            </label>
-                        </p>
-                        <p className="htlfndr-checkbox-line">
-                            <input type="checkbox" id="htlfndr-check-hostel" name="htlfndr-check-hostel" />
-                            <label htmlFor="htlfndr-check-hostel">
-                                Hostel
-                                <span>(5)</span>
-                            </label>
-                        </p>
-                        <p className="htlfndr-checkbox-line">
-                            <input type="checkbox" id="htlfndr-check-hotel" name="htlfndr-check-hotel" defaultChecked />
-                            <label htmlFor="htlfndr-check-hotel">
-                                Hotel
-                                <span>(15)</span>
-                            </label>
-                        </p>
                         <p className="htlfndr-input-label">Amenities</p>
                         <p className="htlfndr-checkbox-line">
                             <input type="checkbox" id="htlfndr-check-television" name="htlfndr-check-television" />

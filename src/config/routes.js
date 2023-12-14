@@ -1,29 +1,22 @@
 const routes = {
-    login: '/login',
-    signup: '/signup',
-    forgotpassword: '/forgotpassword',
     home: '/',
-    // profile: '/:nickname',
-    // profileLink: (nickname) => `/${nickname}`,
     search: '/search',
-    // video: '/videos/:id',
-    // videoLink: (id) => `/videos/${id}`,
-    detailroom: '/room/:id', //hotel
-    detailRoomLink: (id) => `/room/${id}`, //hotel  
+    detailroom: '/room/detail/:id', 
+    detailRoomLink: (id) => `/room/detail/${id}`, 
     moreavailableroom: '/moreavailableroom',
     allreviews: '/allreviews',
-    appointment: '/user/appointment',
-    updateAppointmentLink: (id) => `/user/appointment/${id}`,
-    allappointmentsuser: '/user/allappointments',
+    
+
 
     //seller
     dashboard: '/seller/dashboard',
     allrooms: '/seller/allrooms',
     addroom: '/seller/addroom',
-    allcustomers: '/seller/allcustomers',
     setting: '/seller/setting',  //profile
     viewcustomer: '/seller/viewcustomer',
     allappointments: '/seller/allappointments',
+    updateRoom: '/seller/updateRoom/:id',
+    updateRoomLink: (id) => `/seller/updateRoom/${id}`,
 
     //admin
     dashboards: '/admin/dashboards',

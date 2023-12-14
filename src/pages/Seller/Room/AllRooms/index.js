@@ -11,32 +11,57 @@ import { useCallback } from 'react';
 import { format } from 'date-fns';
 import config from '~/config';
 import { toast } from 'react-toastify';
+import Select from 'react-select';
+import { useSelector } from 'react-redux';
+import { SearchOutlined } from '@ant-design/icons';
+import { Input } from 'antd';
+import useDebounce from '~/components/hooks';
+
+const customStyles = {
+    control: (provided) => ({
+        ...provided,
+        width: '230px',
+        height: '20px',
+        alignContent: 'center',
+        backgroundColor: '#fff',
+    }),
+};
 
 function AllRooms() {
+    const { provins } = useSelector((state) => state.provins);
     const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
     const [roomId, setRoomId] = useState();
     const [rooms, setRooms] = useState([]);
     const [totalPage, setTotalPage] = useState(0);
     const [currentPage, setCurrentPage] = useState(0);
+    const [totalRoom, setTotalRoom] = useState(0);
+    const [searchValue, setSearchValue] = useState(null);
+    const [provinceCode, setProvinceCode] = useState(null);
+    const debounceValue = useDebounce(searchValue, 500);
 
-    const fetchAllRooms = useCallback(() => {
-        try {
-            const fetchData = async () => {
-                const result = await getAllRooms(currentPage);
-                result?.content.map(
-                    (element) => (element.dayPublic = format(new Date(element.dayPublic), 'dd-MM-yyyy')),
-                );
-                setRooms(result.content);
-                setTotalPage(result.totalPage);
-            };
-            fetchData();
-        } catch (error) {
-            console.log(error);
-        }
-    }, [currentPage]);
+    const fetchAllRooms = useCallback(
+        (pageSize, currentPage, debounceValue, provinceCode) => {
+            try {
+                const fetchData = async () => {
+                    const result = await getAllRooms(pageSize, currentPage, debounceValue, provinceCode);
+                    result?.content?.map(
+                        (element) => (element.dayPublic = format(new Date(element.dayPublic), 'dd-MM-yyyy')),
+                    );
+                    setTotalRoom(result?.totalElement);
+                    setRooms(result?.content);
+                    setTotalPage(result?.totalPage);
+                };
+                fetchData();
+            } catch (error) {
+                console.log(error);
+            }
+        },
+        [currentPage, debounceValue, provinceCode],
+    );
+
     useEffect(() => {
-        fetchAllRooms(currentPage);
-    }, [currentPage, fetchAllRooms]);
+        fetchAllRooms(7, currentPage, debounceValue, provinceCode);
+    }, [currentPage, fetchAllRooms, debounceValue, provinceCode]);
 
     const handleClickOpen = (id) => {
         setDeleteDialogOpen(true);
@@ -60,11 +85,27 @@ function AllRooms() {
             fetchData();
         } catch {}
     };
+    const handleChangeProvince = (e) => {
+        setProvinceCode(e.code);
+    };
+
+    const handleChangeSearch = (e) => {
+        const SearchValue = e.target.value;
+        if (!SearchValue.startsWith(' ')) {
+            setSearchValue(e.target.value);
+        }
+    };
+
+    const provinceOptions = provins.map((province) => ({
+        code: province.code,
+        label: province.name,
+        value: province.name,
+    }));
 
     return (
         <div className="sb2-2">
             <div className="sb2-2-2">
-                {/* <ul>
+                <ul>
                     <li>
                         <Link to="/seller/dashboard">
                             <i className="fa fa-home" aria-hidden="true"></i> Home
@@ -73,62 +114,35 @@ function AllRooms() {
                     <li className="active-bre">
                         <a className="txt-none"> All Room</a>
                     </li>
-                </ul> */}
+                </ul>
             </div>
             <div className="sb2-2-3">
                 <div className="row">
                     <div className="col-md-12">
                         <div className="box-inn-sp">
                             <div className="inn-title display-app-small-search">
-                                <h4>All Room</h4>
-                                <form className="app-small-search">
-                                    <input type="text" placeholder="Search..." className="form-control" />
-                                    <a href="#">
-                                        <i className="fa fa-search"></i>
-                                    </a>
-                                </form>
-                                {/* <Tippy
-                                    interactive
-                                    offset={[-75, -30]} //lệch ngang, cao
-                                    hideOnClick={true}
-                                    render={(attrs) => (
-                                        <div className={styles.box} tabIndex="-1" {...attrs}>
-                                            <ul id="dr-users">
-                                                <li className={styles.waves_effect}>
-                                                    <a href="/seller/addroom">Add New</a>
-                                                </li>
-                                                <li className={styles.waves_effect}>
-                                                    <a href="#!">Edit</a>
-                                                </li>
-                                                <li className={styles.waves_effect}>
-                                                    <a href="#!">Update</a>
-                                                </li>
-                                                <li className="divider"></li>
-                                                <li className={styles.waves_effect}>
-                                                    <a href="#!">
-                                                        <i className="material-icons" style={{ marginRight: '20px' }}>
-                                                            delete
-                                                        </i>
-                                                        Delete
-                                                    </a>
-                                                </li>
-                                                <li className={styles.waves_effect}>
-                                                    <a href="#!">
-                                                        <i className="material-icons" style={{ marginRight: '20px' }}>
-                                                            subject
-                                                        </i>
-                                                        View All
-                                                    </a>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    )}
-                                    // onHide={() => setHistory((prev) => prev.slice(0, 1))}
-                                >
-                                    <a className="dropdown-button drop-down-meta" href="#" data-activates="dr-users">
-                                        <i className="material-icons">more_vert</i>
-                                    </a>
-                                </Tippy> */}
+                                <div>
+                                    <h4>All Rooms</h4>
+                                    <span>Total: {totalRoom}</span>
+                                </div>
+                                <div style={{ display: 'flex' }}>
+                                    <Select
+                                        options={provinceOptions}
+                                        placeholder="Select a province..."
+                                        isSearchable={true}
+                                        styles={customStyles}
+                                        onChange={(selectedOption) => {
+                                            handleChangeProvince(selectedOption);
+                                        }}
+                                    />
+                                    <Input
+                                        style={{ marginLeft: '5px' }}
+                                        placeholder="Search..."
+                                        suffix={<SearchOutlined />}
+                                        value={searchValue}
+                                        onChange={handleChangeSearch}
+                                    />
+                                </div>
                             </div>
                             <div className="tab-inn">
                                 <div className="table-responsive table-desi">
@@ -149,7 +163,7 @@ function AllRooms() {
                                                 <tr key={room.id}>
                                                     <td
                                                         style={{
-                                                            maxWidth: '70px',
+                                                            width: '70px',
                                                             overflow: 'hidden',
                                                             textOverflow: 'ellipsis',
                                                         }}
@@ -160,7 +174,7 @@ function AllRooms() {
                                                     </td>
                                                     <td
                                                         style={{
-                                                            maxWidth: '120px',
+                                                            width: '170px',
                                                             overflow: 'hidden',
                                                             textOverflow: 'ellipsis',
                                                         }}
@@ -171,7 +185,7 @@ function AllRooms() {
                                                     </td>
                                                     <td
                                                         style={{
-                                                            maxWidth: '240px',
+                                                            width: '320px',
                                                             overflow: 'hidden',
                                                             textOverflow: 'ellipsis',
                                                         }}
@@ -180,7 +194,7 @@ function AllRooms() {
                                                     </td>
                                                     <td
                                                         style={{
-                                                            maxWidth: '100px',
+                                                            width: '150px',
                                                             overflow: 'hidden',
                                                             textOverflow: 'ellipsis',
                                                         }}
@@ -189,7 +203,7 @@ function AllRooms() {
                                                     </td>
                                                     <td
                                                         style={{
-                                                            maxWidth: '100px',
+                                                            width: '110px',
                                                             overflow: 'hidden',
                                                             textOverflow: 'ellipsis',
                                                         }}
@@ -198,7 +212,7 @@ function AllRooms() {
                                                     </td>
                                                     <td
                                                         style={{
-                                                            maxWidth: '100px',
+                                                            width: '110px',
                                                             overflow: 'hidden',
                                                             textOverflow: 'ellipsis',
                                                         }}
@@ -208,15 +222,19 @@ function AllRooms() {
                                                     <td>
                                                         <Link
                                                             to={config.routes.detailRoomLink(room.id)}
-                                                            state={{
-                                                                room: room,
-                                                            }}
                                                             target="_blank"
+                                                            state={{
+                                                                step: 2,
+                                                            }}
                                                         >
-                                                            <i className="fa fa-eye" aria-hidden="true"></i>
+                                                            <i
+                                                                className="fa fa-eye"
+                                                                aria-hidden="true"
+                                                                style={{ cursor: 'pointer' }}
+                                                            ></i>
                                                         </Link>
 
-                                                        <Link to="hotel-edit.html">
+                                                        <Link to={config.routes.updateRoomLink(room.id)}>
                                                             <i className="fa fa-pencil-square-o" aria-hidden="true"></i>
                                                         </Link>
 
@@ -231,6 +249,7 @@ function AllRooms() {
                                             ))}
                                         </tbody>
                                     </table>
+                                    {totalRoom === 0 && <div>No data to display</div>}
                                 </div>
                             </div>
                             {totalPage > 1 ? (
@@ -255,6 +274,7 @@ function AllRooms() {
                                     open={deleteDialogOpen}
                                     onClose={() => setDeleteDialogOpen(!deleteDialogOpen)}
                                     onDeleteSuccess={handleDeteleRoom}
+                                    title="Are you sure want to delete this room?"
                                 />
                             )}
                         </div>

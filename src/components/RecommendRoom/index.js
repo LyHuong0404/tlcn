@@ -10,8 +10,7 @@ function RecommendRoom({ data }) {
                     <Link
                         to={config.routes.detailRoomLink(room.id)}
                         state={{
-                            room: room,
-                            step: 2
+                            step: 2,
                         }}
                     >
                         <article className="htlfndr-top-destination-block">
@@ -32,10 +31,22 @@ function RecommendRoom({ data }) {
                                             {room.privateToilet && (
                                                 <div className="col-sm-6 col-xs-6 htlfndr-service">Private Toilet</div>
                                             )}
-                                        </div>
-                                        <div className="row">
                                             {room.allowedPet && (
                                                 <div className="col-sm-6 col-xs-6 htlfndr-service">Allow Pet</div>
+                                            )}
+                                            {room.furnitureAvailable && (
+                                                <div className="col-sm-6 col-xs-6 htlfndr-service">
+                                                    Furniture Available
+                                                </div>
+                                            )}
+                                            {room.tvAvailable && (
+                                                <div className="col-sm-6 col-xs-6 htlfndr-service">Television</div>
+                                            )}
+                                            {room.airConditionAvailable && (
+                                                <div className="col-sm-6 col-xs-6 htlfndr-service">Air Conditioning</div>
+                                            )}
+                                            {room.isFreeParking && (
+                                                <div className="col-sm-6 col-xs-6 htlfndr-service">Free Parking</div>
                                             )}
                                             <div className="col-sm-6 col-xs-6 htlfndr-service">Free Wi-Fi</div>
                                         </div>

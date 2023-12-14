@@ -1,4 +1,5 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
+import { Link } from 'react-router-dom';
 import '~/assets/css/cssAuth/animate.min.css';
 import '~/assets/css/cssAuth/bootstrap-select.min.css';
 import '~/assets/css/cssAuth/bootstrap-submenu.css';
@@ -59,7 +60,7 @@ function ForgotPassword() {
                                 </a>
                             </div>
                             <p className='option'>
-                                Already a member? <a href="login.html">Login here</a>
+                                Already a member? <Link href="/auth/login">Login here</Link>
                             </p>
                         </div>
                     </div>

@@ -1870,6 +1870,7 @@ input[type="submit"] {
     /* 2 */
     
     cursor: pointer;
+    z-index: 0;
     /* 3 */
 }
 /**
@@ -1878,7 +1879,9 @@ input[type="submit"] {
 
 button[disabled],
 html input[disabled] {
-    cursor: default;
+    /* cursor: default; */
+    cursor: auto !important;
+    background-color: #cccccc !important;
 }
 /**
  * Remove inner padding and border in Firefox 4+.
@@ -4953,7 +4956,8 @@ textarea.materialize-textarea {
     border-bottom: 1px solid #9e9e9e;
     border-radius: 0;
     outline: none;
-    height: 3rem;
+    /* height: 3rem; */
+    height: 2rem;
     width: 100%;
     font-size: 1rem;
     /* margin: 0 0 20px 0; */

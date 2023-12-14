@@ -13,18 +13,42 @@ import '~/assets/js/jquery-1.11.3.min.js';
 import 'jquery-ui-dist/jquery-ui';
 import images from '~/assets/images';
 import { Link } from 'react-router-dom';
+import { useEffect, useState } from 'react';
 
 function Footer() {
+    const [showBackToTop, setShowBackToTop] = useState(false);
+
     const handleBackToTopClick = () => {
         window.scrollTo({ top: 0, behavior: 'smooth' });
     };
 
+    useEffect(() => {
+        const handleScroll = () => {
+            const scrollY = window.scrollY;
+            const threshold = 200;
+
+            if (scrollY > threshold) {
+                setShowBackToTop(true);
+            } else {
+                setShowBackToTop(false);
+            }
+        };
+
+        window.addEventListener('scroll', handleScroll);
+
+        return () => {
+            window.removeEventListener('scroll', handleScroll);
+        };
+    }, []); 
+
     return (
         <>
-            <footer className="htlfndr-footer">
-                <button className="htlfndr-button-to-top" onClick={handleBackToTopClick}>
-                    <span> Back to top</span>
-                </button>
+            <footer className="htlfndr-footer" style={{marginTop: '80px'}}>
+            {showBackToTop && (
+                    <button className="htlfndr-button-to-top" onClick={handleBackToTopClick}>
+                        <span> Back to top</span>
+                    </button>
+                )}
                 <div className="widget-wrapper">
                     <div className="container">
                         <div className="row">
@@ -72,15 +96,15 @@ function Footer() {
 
                                     <ul className="menu">
                                         <li className="menu-item active">
-                                            <Link to="index-2.html"> home</Link>
+                                            <Link to="/"> home</Link>
                                         </li>
 
                                         <li className="menu-item">
-                                            <Link to="blog-index.html"> blog</Link>
+                                            <Link to="/auth/login"> blog</Link>
                                         </li>
 
                                         <li className="menu-item">
-                                            <Link to="about-us.html"> about</Link>
+                                            <Link > about</Link>
                                         </li>
 
                                         <li className="menu-item">

@@ -14,22 +14,37 @@ import Image from '~/components/Image';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import styles from './Header.module.scss';
 import { Link } from 'react-router-dom';
-import { useSelector } from 'react-redux';
 import Tippy from '@tippyjs/react/headless';
+import { getProfile } from '~/actions/userActions';
+import Survey from '~/components/Survey';
 
 function Header() {
-    const { user } = useSelector((state) => state.auth);
+    const [user, setUser] = useState({});
     const [active, setActive] = useState(1);
 
     const [language, setLanguage] = useState('en');
     const [menuActive, setMenuActive] = useState(1);
+    const [openSurvey, setOpenSurvey] = useState(false);
 
     const handleChangeLang = (event) => {
         setLanguage(event.target.value);
     };
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const result = await getProfile();
+                setUser(result);
+            } catch (error) {
+                console.log(error);
+            }
+        };
+        fetchData();
+    }, []);
+
     return (
         <>
             <div className="htlfndr-loader-overlay"></div>
@@ -50,111 +65,120 @@ function Header() {
                                         <span className="icon-bar"></span>
                                         <span className="icon-bar"></span>
                                     </button>
-                                    <a className="htlfndr-logo navbar-brand" href="index-2.html">
+                                    <a className="htlfndr-logo navbar-brand" href="/">
                                         <Image src={images.logo} alt="Logo" />
                                         <p className="htlfndr-logo-text">
-                                            hotel <span>finder</span>
+                                            Room <span>finder</span>
                                         </p>
                                     </a>
                                 </div>
+                                {/* <div className="htlfndr-user-signed-in" style={{ right: '68px' }}>
+                                    <Link className="htlfndr-user-avatar" >
+                                        <Image src={images.bellring} alt="user avatar" style={{width: '35px', height: '35px'}}/>
+                                    </Link>
+                                    <Link className="htlfndr-user-avatar" >
+                                        <Image src={images.bell} alt="bell" style={{width: '35px', height: '35px'}}/>
+                                    </Link>
+                                </div> */}
                                 {user ? (
-                                    <Tippy
-                                        interactive
-                                        // visible
-                                        // offset={[0, -10]} //lệch ngang, cao
-                                        render={(attrs) => (
-                                            <div className={styles.box} tabIndex="-1" {...attrs}>
-                                                <ul style={{ listStyle: 'none' }} className={styles.private}>
-                                                    <li
-                                                        className={`${styles.menu} ${
-                                                            active === 1 ? styles.active : ''
-                                                        }`}
-                                                        onClick={() => setActive(1)}
-                                                    >
-                                                        <Link to="">
-                                                            <i className="fa fa-user"></i>
-                                                            Personal Info
-                                                        </Link>
-                                                    </li>
-                                                    <li
-                                                        className={` ${active === 2 ? styles.active : ''}`}
-                                                        onClick={() => setActive(2)}
-                                                    >
-                                                        <Link to="/user/allappointments">
-                                                            <i className="fa fa-clock-o"></i> Appointment
-                                                        </Link>
-                                                    </li>
-
-                                                    <li
-                                                        className={` ${active === 3 ? styles.active : ''}`}
-                                                        onClick={() => setActive(3)}
-                                                    >
-                                                        <Link to="">
-                                                            <i className="fa fa-heart-o"></i> Wishlist
-                                                        </Link>
-                                                    </li>
-                                                    <li
-                                                        className={` ${active === 4 ? styles.active : ''}`}
-                                                        onClick={() => setActive(4)}
-                                                    >
-                                                        <Link to="">
-                                                            <i className="fa fa-wrench"></i> Settings
-                                                        </Link>
-                                                    </li>
-                                                    <li
-                                                        className={` ${active === 5 ? styles.active : ''}`}
-                                                        onClick={() => setActive(5)}
-                                                    >
-                                                        <Link to="">
-                                                            <i className="fa fa-credit-card"></i>
-                                                            Register Seller
-                                                        </Link>
-                                                    </li>
-                                                    {user ? (
+                                    <div>
+                                        <Tippy
+                                            interactive
+                                            // visible
+                                            offset={[-25, 10]} //lệch ngang, cao
+                                            render={(attrs) => (
+                                                <div className={styles.box} tabIndex="-1" {...attrs}>
+                                                    <ul style={{ listStyle: 'none' }} className={styles.private}>
                                                         <li
-                                                            className={` ${active === 6 ? styles.active : ''}`}
-                                                            onClick={() => setActive(6)}
+                                                            className={`${styles.menu} ${
+                                                                active === 1 ? styles.active : ''
+                                                            }`}
+                                                            onClick={() => setActive(1)}
                                                         >
+                                                            <Link to="/profile">
+                                                                <i className="fa fa-user"></i>
+                                                                Personal Info
+                                                            </Link>
+                                                        </li>
+                                                        <li
+                                                            className={`${styles.menu} ${
+                                                                active === 2 ? styles.active : ''
+                                                            }`}
+                                                            onClick={() => {
+                                                                setActive(2);
+                                                                setOpenSurvey(!openSurvey);
+                                                            }}
+                                                        >
+                                                            <Link>
+                                                                <i className="fa fa-pencil-square-o"></i>
+                                                                Survey
+                                                            </Link>
+                                                        </li>
+                                                        {user?.roles?.length === 2 && (
+                                                            <li
+                                                                className={`${styles.menu} ${
+                                                                    active === 3 ? styles.active : ''
+                                                                }`}
+                                                            >
+                                                                <Link to="/seller/dashboard">
+                                                                    <i className="fa fa-home"></i>
+                                                                    Seller Home
+                                                                </Link>
+                                                            </li>
+                                                        )}
+                                                        {user?.roles?.length === 3 && (
+                                                            <li
+                                                                className={`${styles.menu} ${
+                                                                    active === 3 ? styles.active : ''
+                                                                }`}
+                                                            >
+                                                                <Link to="/seller/dashboard">
+                                                                    <i className="fa fa-home"></i>
+                                                                    Admin Home
+                                                                </Link>
+                                                            </li>
+                                                        )}
+
+                                                        <li>
                                                             <a>
                                                                 <i className="fa fa-sign-out"></i>
                                                                 Logout
                                                             </a>
                                                         </li>
-                                                    ) : (
-                                                        <li
-                                                            className={` ${active === 6 ? styles.active : ''}`}
-                                                            onClick={() => setActive(6)}
-                                                        >
-                                                            <a>
-                                                                <i className="fa fa-sign-in"></i>
-                                                                Login
-                                                            </a>
-                                                        </li>
-                                                    )}
-                                                </ul>
+                                                    </ul>
+                                                </div>
+                                            )}
+                                        >
+                                            <div className="htlfndr-user-signed-in">
+                                                <Link to="/profile" className="htlfndr-user-avatar">
+                                                    <Image
+                                                        src={user.avatar}
+                                                        alt="user avatar"
+                                                        // className="avatar-header"
+                                                    />
+                                                </Link>
+                                                <h5 className="htlfndr-user-greeting">Hi, {user.username}!</h5>
                                             </div>
-                                        )}
-                                    >
-                                        <div className="htlfndr-user-signed-in">
-                                            <a href="/" className="htlfndr-user-avatar">
-                                                <Image
-                                                    src="https://th.bing.com/th/id/OIP.AbyqDkpwVGUclMtO1kqv0QHaEV?w=271&h=191&c=7&r=0&o=5&dpr=1.3&pid=1.7"
-                                                    alt="user avatar"
-                                                />
-                                            </a>
-                                            <h5 className="htlfndr-user-greeting">Hi, John!</h5>
-                                        </div>
-                                    </Tippy>
+                                        </Tippy>
+                                    </div>
                                 ) : (
                                     <div className="collapse navbar-collapse navbar-right" id="htlfndr-first-nav">
                                         <ul className="nav navbar-nav htlfndr-singup-block">
                                             <li id="htlfndr-singup-link">
-                                                <a href="/signup" data-toggle="modal" data-target="#htlfndr-sing-up">
+                                                <a
+                                                    href="/auth/signup"
+                                                    data-toggle="modal"
+                                                    data-target="#htlfndr-sing-up"
+                                                >
                                                     <span>sign up</span>
                                                 </a>
                                             </li>
                                             <li id="htlfndr-singin-link">
-                                                <a href="/login" data-toggle="modal" data-target="#htlfndr-sing-in">
+                                                <a
+                                                    href="/auth/login"
+                                                    data-toggle="modal"
+                                                    data-target="#htlfndr-sing-in"
+                                                >
                                                     <span>sign in</span>
                                                 </a>
                                             </li>
@@ -163,7 +187,7 @@ function Header() {
                                 )}
                                 <div className="collapse navbar-collapse navbar-right" id="htlfndr-first-nav">
                                     <ul className="nav navbar-nav htlfndr-language">
-                                        <li id="htlfndr-dropdown-language">
+                                        <li id="htlfndr-dropdown-language" style={{top: '-4px'}}>
                                             <div className="htlfndr-dropdown-container aaa">
                                                 <FormControl
                                                     sx={{ m: 0, minWidth: 100 }}
@@ -179,7 +203,7 @@ function Header() {
                                                     >
                                                         <MenuItem value="en" className={styles.aaa}>
                                                             <Image className={styles.custom_image_eng} />
-                                                            <span className={styles.name_language}>EN</span>
+                                                            <span className={styles.name_language}>ENG</span>
                                                         </MenuItem>
                                                         <MenuItem value="vn" className={styles.aaa}>
                                                             <Image className={styles.custom_image_vn} />
@@ -221,13 +245,13 @@ function Header() {
                                             className={menuActive === 2 ? 'active' : ''}
                                             onClick={() => setMenuActive(2)}
                                         >
-                                            <Link to="blog-index.html">blog</Link>
+                                            <Link to="/auth/login">blog</Link>
                                         </li>
                                         <li
                                             className={menuActive === 3 ? 'active' : ''}
                                             onClick={() => setMenuActive(3)}
                                         >
-                                            <Link to="about-us.html">about</Link>
+                                            <Link >about</Link>
                                         </li>
                                         <li
                                             className={menuActive === 4 ? 'active' : ''}
@@ -267,6 +291,7 @@ function Header() {
                     </div>
                 </header>
             </div>
+            {openSurvey && <Survey onClose={() => setOpenSurvey(!openSurvey)} />}
         </>
     );
 }

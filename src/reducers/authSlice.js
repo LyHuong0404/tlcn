@@ -1,11 +1,10 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { login, signup } from '~/actions/authActions';
+import { login, AuthoSignup } from '~/actions/authActions';
 
 // initialize TOKEN from local storage
 const userJson = localStorage.getItem('user');
 const user = JSON.parse(userJson)?.user || null;
 const token = JSON.parse(userJson)?.accessToken || null;
-
 
 const initialState = {
     loading: false,
@@ -22,15 +21,15 @@ const userSlice = createSlice({
     reducers: {},
     extraReducers: {
         // Register user
-        [signup.pending]: (state) => {
+        [AuthoSignup.pending]: (state) => {
             state.loading = true;
             state.error = null;
         },
-        [signup.fulfilled]: (state, { payload }) => {
+        [AuthoSignup.fulfilled]: (state, { payload }) => {
             state.loading = false;
             state.success = true;
         },
-        [signup.rejected]: (state, { payload }) => {
+        [AuthoSignup.rejected]: (state, { payload }) => {
             state.loading = false;
             state.error = payload;
             state.success = false;

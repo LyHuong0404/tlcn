@@ -1,4 +1,8 @@
 /* @MUI */
+body {
+    overflow: auto !important;
+    padding-right: 0 !important;
+}
 div.MuiDialog-root.MuiModal-root.css-zw3mfo-MuiModal-root-MuiDialog-root {
     z-index: 10000;
 }
@@ -13,10 +17,31 @@ div.css-11u53oe-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input.MuiSe
     min-height: 0;
     max-height: 0.4375em;
 }
+label.css-1jy569b-MuiFormLabel-root-MuiInputLabel-root {
+    z-index: 0 !important;
+}
 
 a {
     cursor: pointer;
 }
 
+//custom-select library
+span.css-1u9des2-indicatorSeparator {
+    width: 0 !important;
+}
 
+div.css-1n6sfyn-MenuList {
+    max-height: 255px;
+}
 
+//tooltip-react
+div.styles-module_dark__xNqje {
+    background: #f8d390;
+    color: #000;
+}
+
+//antd
+span:where(.css-dev-only-do-not-override-2q8sxy).ant-input-affix-wrapper {
+    font-size: 15px;
+    color: hsl(0, 0%, 20%);
+}

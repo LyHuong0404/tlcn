@@ -25,26 +25,36 @@ export const login = createAsyncThunk('auth/login', async ({ username, password 
         }
     }
 });
-
-export const signup = createAsyncThunk('auth/signup', async ({ username, password }, { rejectWithValue }) => {
+export const signup = async ({ email, username, password }) => {
     try {
         const config = {
             headers: {
                 'Content-Type': 'application/json',
             },
         };
-        const { data, message } = await httprequest.post('auth/signup', { username, password }, config);
-
-        if (data) {
-            return data;
-        } else {
-            return rejectWithValue(message);
-        }
-    } catch (error) {
-        if (error.response && error.response.data.message) {
-            return rejectWithValue(error.response.data.message);
-        } else {
-            return rejectWithValue(error.message);
-        }
+        const response = await httprequest.post('get-code-signup', { email, username, password }, config);
+        return response;
+    } catch (err) {
+        console.log(err);
     }
-});
+};
+
+export const AuthoSignup = createAsyncThunk(
+    'signup',
+    async ({ username, password, email, code }, { rejectWithValue }) => {
+        try {
+            const { success } = await httprequest.post('signup', { username, password, email, code });
+            if (success) {
+                return success;
+            } else {
+                return rejectWithValue('Please enter the correct OTP to sign up.');
+            }
+        } catch (error) {
+            if (error.response && error.response.data.message) {
+                return rejectWithValue(error.response.data.message);
+            } else {
+                return rejectWithValue(error.message);
+            }
+        }
+    },
+);

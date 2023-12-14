@@ -132,7 +132,9 @@ input[type='submit'] {
 }
 button[disabled],
 html input[disabled] {
-    cursor: default;
+    /* cursor: default; */
+    cursor: auto !important;
+    background-color: #cccccc !important;
 }
 button::-moz-focus-inner,
 input::-moz-focus-inner {
@@ -2602,7 +2604,8 @@ input[type='search'] {
 }
 input[type='checkbox'],
 input[type='radio'] {
-    margin: 4px 0 0;
+    /* margin: 4px 0 0;*/
+    margin: 7px 7px 7px 0px;
     margin-top: 1px \9;
     line-height: normal;
 }

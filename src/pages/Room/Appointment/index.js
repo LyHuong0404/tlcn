@@ -4,21 +4,32 @@ import Image from '~/components/Image';
 import { makeAppointment } from '~/actions/userActions';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import images from '~/assets/images';
+import { useState } from 'react';
+import PaymentDialog from '~/components/PaymentDialog';
 
-function Appointment({ dataRoom }) {
-    const { register, handleSubmit } = useForm();
+function Appointment() {
+    const {
+        register,
+        handleSubmit,
+        formState: { errors },
+    } = useForm();
     const navigate = useNavigate();
     const location = useLocation();
     const room = location?.state?.room;
-    debugger;
+    const [isOpen, setIsOpen] = useState(false);
+    const [isDisabled, setIsDisabled] = useState(true);
+
     const submitForm = (data) => {
-        data.roomId = room.id;
+        data.roomId = room?.id;
         try {
             const fetchAPI = async () => {
                 const result = await makeAppointment(data);
-                if (result.success) {
+                if (result?.success) {
                     toast.success('Make an appointment successfully');
                     navigate('/profile', { state: { activeTab: 2 } });
+                } else {
+                    setIsOpen(!isOpen);
                 }
             };
             fetchAPI();
@@ -29,6 +40,7 @@ function Appointment({ dataRoom }) {
 
     return (
         <div className="row htlfndr-page-content">
+            {isOpen && <PaymentDialog onClose={() => setIsOpen(!isOpen)} />}
             <div className="row htlfndr-payment-page">
                 <main id="htlfndr-main-content" className="col-sm-12 col-md-8 col-lg-8" role="main">
                     <form onSubmit={handleSubmit(submitForm)}>
@@ -47,7 +59,7 @@ function Appointment({ dataRoom }) {
                                     <div className="row">
                                         <div className="col-xs-6 col-sm-6 col-md-6">
                                             <label
-                                                for="htlfndr-first-adult-name"
+                                                htmlFor="htlfndr-first-adult-name"
                                                 className="htlfndr-required htlfndr-top-label"
                                             >
                                                 Date
@@ -57,12 +69,18 @@ function Appointment({ dataRoom }) {
                                                 id="htlfndr-first-adult-name"
                                                 name="htlfndr-first-adult-name"
                                                 className="htlfndr-input"
+                                                style={{ marginBottom: '0' }}
                                                 {...register('day', { required: true })}
                                             />
+                                            {errors.day && (
+                                                <div style={{ textAlign: 'left' }}>
+                                                    <label className="error-message">Date is required.</label>
+                                                </div>
+                                            )}
                                         </div>
                                         <div className="col-xs-6 col-sm-6 col-md-6">
                                             <label
-                                                for="htlfndr-first-adult-last-name"
+                                                htmlFor="htlfndr-first-adult-last-name"
                                                 className="htlfndr-required htlfndr-top-label"
                                             >
                                                 Time
@@ -72,15 +90,33 @@ function Appointment({ dataRoom }) {
                                                 id="htlfndr-first-adult-last-name"
                                                 name="htlfndr-first-adult-last-name"
                                                 className="htlfndr-input"
+                                                style={{ marginBottom: '0' }}
                                                 {...register('time', { required: true })}
                                             />
+                                            {errors.time && (
+                                                <div style={{ textAlign: 'left' }}>
+                                                    <label className="error-message">Time is required.</label>
+                                                </div>
+                                            )}
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </section>
-                        <section className="htlfndr-form-section htlfndr-form-review-section">
-                            <input type="submit" className="htlfndr-payment-submit" value="complete booking" />
+                        <br />
+                        <input id="policy" type="checkbox" name="policy" onChange={() => setIsDisabled(!isDisabled)} />
+                        <label htmlFor="policy">I agree to deduct 2 points when creating an appointment.</label>
+
+                        <section
+                            className="htlfndr-form-section htlfndr-form-review-section"
+                            style={{ marginTop: '20px' }}
+                        >
+                            <input
+                                type="submit"
+                                disabled={isDisabled}
+                                className="htlfndr-payment-submit"
+                                value="complete booking"
+                            />
                         </section>
                     </form>
                 </main>
@@ -96,12 +132,12 @@ function Appointment({ dataRoom }) {
                                 <div className="htlfndr-widget-block htlfndr-table-view">
                                     <div className="htlfndr-hotel-thumbnail">
                                         <a href="hotel-page-v1.html">
-                                            <Image src="images/16415688600_a030e3e8dd_k.jpg" alt="Hotel picture" />
+                                            <Image src={room?.avatarUrl} alt="Hotel picture" />
                                         </a>
                                     </div>
                                     <div className="htlfndr-hotel-info">
                                         <a href="hotel-page-v1.html">
-                                            <h3>Hilton Hotel</h3>
+                                            <h3>{room?.subject}</h3>
                                         </a>
                                         <div className="htlfndr-rating-stars">
                                             <i className="fa fa-star htlfndr-star-color"></i>
@@ -110,34 +146,22 @@ function Appointment({ dataRoom }) {
                                             <i className="fa fa-star htlfndr-star-color"></i>
                                             <i className="fa fa-star htlfndr-star-color"></i>
                                         </div>
-                                        <p className="htlfndr-location">san francisco, usa</p>
+                                        <p className="htlfndr-location">{room?.address}</p>
                                     </div>
                                 </div>
                                 <div className="htlfndr-widget-block htlfndr-bigger-font">
-                                
                                     <p className="htlfndr-details">
-                                        <span>persons:</span> <span>2</span>
+                                        <span>persons:</span> <span>{room?.totalPerson}</span>
                                     </p>
-                                </div>
-                                <div className="htlfndr-widget-block htlfndr-bigger-font">
-                                    <p className="htlfndr-room-cost">
-                                        <span>1 month price</span>
-                                        <span>$100</span>
+                                    <p className="htlfndr-total-price" style={{ marginTop: '0', marginBottom: '55px' }}>
+                                        1 month price:
                                     </p>
-                                </div>
-                                <p className="htlfndr-total-price">total price:</p>
-                                <div className="htlfndr-hotel-price">
-                                    <span className="htlfndr-cost">$ 130</span>
+                                    <br />
+                                    <div className="htlfndr-hotel-price">
+                                        <span className="htlfndr-cost">{room?.price}</span>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                    <div className="widget htlfndr-widget-help">
-                        <div className="htlfndr-widget-main-content htlfndr-widget-padding">
-                            <h3 className="widget-title">need our help</h3>
-                            <span>24/7 dedicated customer support</span>
-                            <p className="htlfndr-phone">+(000) 000-000-000</p>
-                            <p className="htlfndr-mail">support@bestwebsoft.zendesk.com</p>
                         </div>
                     </div>
                 </aside>

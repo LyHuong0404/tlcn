@@ -13,30 +13,12 @@ import 'swiper/css/pagination';
 import 'swiper/css/scrollbar';
 import 'swiper/css/zoom';
 import { Link } from 'react-router-dom';
+import RoomLocation from '~/components/RoomLocation';
+import { useForm } from 'react-hook-form';
+import { addReview } from '~/actions/userActions';
 
 function Infor({ data }) {
-    const slides = [
-        {
-            src: 'https://th.bing.com/th/id/OIP.AbyqDkpwVGUclMtO1kqv0QHaEV?w=271&h=191&c=7&r=0&o=5&dpr=1.3&pid=1.7',
-            title: 'image',
-        },
-        {
-            src: 'https://th.bing.com/th/id/OIP.IzjaEZKws0XXBiPhjUV22wHaNK?w=115&h=180&c=7&r=0&o=5&dpr=1.3&pid=1.7',
-            title: 'image',
-        },
-        {
-            src: 'https://th.bing.com/th/id/OIP.uXLLU88V0TEjbvPPIBchmQHaJQ?w=154&h=194&c=7&r=0&o=5&dpr=1.3&pid=1.7',
-            title: 'image',
-        },
-        {
-            src: 'https://th.bing.com/th/id/OIP.kbRzX1sx3MgH1iA-iJQXxQHaJq?w=147&h=194&c=7&r=0&o=5&dpr=1.3&pid=1.7',
-            title: 'image',
-        },
-        {
-            src: 'https://th.bing.com/th/id/OIP.vrbopt9dj0VSm784eXvGzAHaHa?w=194&h=194&c=7&r=0&o=5&dpr=1.3&pid=1.7',
-            title: 'image',
-        },
-    ];
+    const { register, handleSubmit } = useForm();
     const [photoActive, setPhotoActive] = useState(true);
     const [mapActive, setMapActive] = useState(false);
     const [menuActive, setMenuActive] = useState(1);
@@ -51,6 +33,22 @@ function Infor({ data }) {
         setRating(newValue);
     };
 
+    const submitForm = (dataSubmit) => {
+        let fullData = { ...dataSubmit, roomId: data.room.id, star: rating };
+        const formData = new FormData();
+        for (const key in fullData) {
+            formData.append(key, fullData[key]);
+        }
+        try {
+            const fetchData = async () => {
+                const rs = await addReview(formData);
+                console.log(rs);
+            };
+            fetchData();
+        } catch (error) {
+            console.log(error);
+        }
+    };
     return (
         <main
             id="htlfndr-main-content"
@@ -72,17 +70,8 @@ function Infor({ data }) {
                 >
                     MAP
                 </button>
-                {/* images */}
                 {mapActive ? (
-                    <div id="htlfndr-gallery-tab-2">
-                        <div className="htlfndr-iframe-wrapper">
-                            <iframe
-                                title="ggmap"
-                                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d4461.6570805764695!2d-122.42764988684334!3d37.74624140010288!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x80859a6d00690021%3A0x4a501367f076adff!2z0KHQsNC9LdCk0YDQsNC90YbQuNGB0LrQviwg0JrQsNC70LjRhNC-0YDQvdC40Y8sINCh0KjQkA!5e0!3m2!1sru!2sua!4v1438339854639"
-                                allowFullScreen
-                            ></iframe>
-                        </div>
-                    </div>
+                    <RoomLocation address={data?.room?.address} />
                 ) : (
                     <div id="htlfndr-gallery-tab-1" className="htlfndr-hotel-gallery">
                         <div id="htlfndr-gallery-synced-1" className="htlfndr-gallery-carousel">
@@ -91,16 +80,16 @@ function Infor({ data }) {
                                     modules={[Zoom, Navigation, Pagination, Scrollbar, A11y]}
                                     spaceBetween={50}
                                     slidesPerView={1}
-                                    loop={true}
+                                    // loop={true}
                                     zoom={true}
                                     // navigation={true}
                                     grabCursor={true}
                                     pagination={{ clickable: true }}
                                 >
-                                    {slides.map((slide, index) => (
+                                    {data?.room?.images.map((slide, index) => (
                                         <div className="htlfndr-gallery-item swiper-zoom-container" key={index}>
                                             <SwiperSlide key={index}>
-                                                <Image src={slide.src} alt={slide.title} className={styles.slide} />
+                                                <Image src={slide.imgUrl} alt="cwef" className={styles.slide} />
                                             </SwiperSlide>
                                         </div>
                                     ))}
@@ -108,21 +97,6 @@ function Infor({ data }) {
                             </div>
 
                             <br />
-                            {/* <Swiper
-                                modules={[Zoom, Navigation, Pagination, Scrollbar, A11y]}
-                                spaceBetween={10}
-                                slidesPerView={4}
-                                scrollbar={{ draggable: true }}
-                                className={styles.slides_loop}
-                            >
-                                {slides.map((slide, index) => (
-                                    <div className="htlfndr-gallery-item swiper-zoom-container" key={index}>
-                                        <SwiperSlide key={index}>
-                                            <Image src={slide.src} alt={slide.title} className={styles.small_slide} />
-                                        </SwiperSlide>
-                                    </div>
-                                ))}
-                            </Swiper> */}
                         </div>
                     </div>
                 )}
@@ -155,12 +129,16 @@ function Infor({ data }) {
                     >
                         REVIEWS
                     </button>
-                    <button
-                        onClick={() => setMenuActive(5)}
-                        className={`group-button ${menuActive === 5 ? styles.active : styles.outline}`}
-                    >
-                        WRITE A REVIEW
-                    </button>
+                    {data?.isCanReview && (
+                        <button
+                            onClick={() => setMenuActive(5)}
+                            className={`group-button ${menuActive === 5 ? styles.active : styles.outline}`}
+                        >
+                            WRITE A REVIEW
+                        </button>
+                    )}
+
+                    {/* isCanReview */}
                 </div>
                 {menuActive === 1 ? (
                     <div id="htlfndr-hotel-description-tab-1" className="htlfndr-hotel-description-tab">
@@ -170,39 +148,44 @@ function Infor({ data }) {
                                     <tbody>
                                         <tr>
                                             <th scope="row">type:</th>
-                                            <td>hotel</td>
+                                            <td>motel</td>
                                         </tr>
                                         <tr>
                                             <th scope="row">rating stars:</th>
-                                            <td>4 stars</td>
+                                            <td>{`${data?.room?.averageStar} stars`}</td>
                                         </tr>
                                         <tr>
-                                            <th scope="row">country:</th>
-                                            <td>usa</td>
+                                            <th scope="row">width:</th>
+                                            <td>{`${data?.room?.width} m2`}</td>
                                         </tr>
                                         <tr>
-                                            <th scope="row">city:</th>
-                                            <td>san francisco</td>
+                                            <th scope="row">height:</th>
+                                            <td>{`${data?.room?.height} m2`}</td>
                                         </tr>
-                                        <tr>
-                                            <th scope="row">address:</th>
-                                            <td>Giudeca 810 st.</td>
-                                        </tr>
+
                                         <tr>
                                             <th scope="row">phone no:</th>
                                             <td>1-800-123-0000</td>
                                         </tr>
                                         <tr>
-                                            <th scope="row">check in:</th>
-                                            <td>12-00 pm</td>
+                                            <th scope="row">Person:</th>
+                                            <td>{data?.room?.totalPerson}</td>
                                         </tr>
                                         <tr>
-                                            <th scope="row">check out:</th>
-                                            <td>12-00 am</td>
+                                            <th scope="row">Electricity fee:</th>
+                                            <td>{`${data?.room?.priceElectric}/block`}</td>
                                         </tr>
                                         <tr>
-                                            <th scope="row">minimum stay:</th>
-                                            <td>2 days</td>
+                                            <th scope="row">water fee:</th>
+                                            <td>{`${data?.room?.priceWater}/block`}</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">Price/month:</th>
+                                            <td>{data?.room?.price}</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">address:</th>
+                                            <td>{data?.room?.address}</td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -212,22 +195,21 @@ function Infor({ data }) {
                                     <div className="media-left">
                                         <Image
                                             className="media-object"
-                                            src="images/visitor-avatar-1.jpg"
-                                            alt="client"
+                                            src={data?.room?.ownerAvatarUrl}
+                                            alt={data?.room?.ownerName}
                                         />
                                     </div>
                                     <div className="media-body">
-                                        <h5>hotel manager</h5>
-                                        <h4 className="media-heading">jessica brown</h4>
+                                        <h5>motel manager</h5>
+                                        <h4 className="media-heading">{data?.room?.ownerName}</h4>
                                     </div>
                                 </div>
                                 <blockquote>
                                     <p>
-                                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aspernatur, dolores
-                                        eveniet laboriosam maxime molestias nulla quidem similique. Amet asperiores at
-                                        esse expedita iusto magni, nam perferendis sequi? Molestias possimus, quasi.
-                                        Amet asperiores at esse expedita iusto magni, nam perferendis sequi? Molestias
-                                        possimus, quasi.
+                                        Lodging always puts prestige first. Security is always guaranteed and necessary
+                                        amenities are provided for rooms. If you are interested in us or are looking for
+                                        a room, please make an appointment with us. Our room always welcomes you to join
+                                        this shared house. Thanks!
                                     </p>
                                 </blockquote>
                             </div>
@@ -238,51 +220,6 @@ function Infor({ data }) {
                 )}
                 {menuActive === 2 ? (
                     <div id="htlfndr-hotel-description-tab-2" className="htlfndr-hotel-description-tab">
-                        {/* <aside className="htlfndr-sidebar-in-top htlfndr-short-form">
-                            <form name="search-hotel" id="search-hotel" className="htlfndr-search-form">
-                                <div id="htlfndr-input-date-in" className="htlfndr-input-wrapper">
-                                    <label htmlFor="htlfndr-date-in" className="sr-only">
-                                        Date in
-                                    </label>
-                                    <input
-                                        type="text"
-                                        name="htlfndr-date-in"
-                                        id="htlfndr-date-in"
-                                        className="search-hotel-input"
-                                    />
-                                    <button type="button" className="htlfndr-clear-datepicker"></button>
-                                </div>
-                                <div id="htlfndr-input-date-out" className="htlfndr-input-wrapper">
-                                    <label htmlFor="htlfndr-date-out" className="sr-only">
-                                        Date out
-                                    </label>
-                                    <input
-                                        type="text"
-                                        name="htlfndr-date-out"
-                                        id="htlfndr-date-out"
-                                        className="search-hotel-input"
-                                    />
-                                    <button type="button" className="htlfndr-clear-datepicker"></button>
-                                </div>
-                                <div id="htlfndr-input-4" className="htlfndr-input-wrapper">
-                                    <label htmlFor="htlfndr-dropdown" className="sr-only">
-                                        Number person in room
-                                    </label>
-                                    <select name="htlfndr-dropdown" id="htlfndr-dropdown" className="htlfndr-dropdown">
-                                        <option value="1 adult">1 adult</option>
-                                        <option value="2 adults in 1 room">2 adults in 1 room</option>
-                                        <option value="3 adults in 1 room">3 adults in 1 room</option>
-                                        <option value="4 adults in 1 room">4 adults in 1 room</option>
-                                        <option value="2 adults in 2 room">2 adults in 2 room</option>
-                                        <option value="need more">Need more?</option>
-                                    </select>
-                                </div>
-                                <div id="htlfndr-input-5" className="htlfndr-input-wrapper">
-                                    <input type="submit" value="update" className="btn-default" />
-                                </div>
-                                <div className="clearfix"></div>
-                            </form>
-                        </aside> */}
                         <section className="htlfndr-available-rooms-section">
                             <header>
                                 <h3>available rooms</h3>
@@ -306,8 +243,10 @@ function Infor({ data }) {
                                             <span className="htlfndr-kids">3</span>
                                         </h6>
                                         <p className="htlfndr-post-excerpt">
-                                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus alias
-                                            beatae debitis deserunt eius esse, explicabo facilis hic!
+                                            Lodging always puts prestige first. Security is always guaranteed and
+                                            necessary amenities are provided for rooms. If you are interested in us or
+                                            are looking for a room, please make an appointment with us. Our room always
+                                            welcomes you to join this shared house. Thanks!
                                         </p>
                                         <p className="htlfndr-button-block">
                                             <a
@@ -338,8 +277,10 @@ function Infor({ data }) {
                                             <span className="htlfndr-kids">3</span>
                                         </h6>
                                         <p className="htlfndr-post-excerpt">
-                                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus alias
-                                            beatae debitis deserunt eius esse, explicabo facilis hic!
+                                            Lodging always puts prestige first. Security is always guaranteed and
+                                            necessary amenities are provided for rooms. If you are interested in us or
+                                            are looking for a room, please make an appointment with us. Our room always
+                                            welcomes you to join this shared house. Thanks!
                                         </p>
                                         <p className="htlfndr-button-block">
                                             <a
@@ -365,15 +306,13 @@ function Infor({ data }) {
                     <div id="htlfndr-hotel-description-tab-3" className="htlfndr-hotel-description-tab">
                         <article className="htlfndr-tab-article htlfndr-third-tab-post">
                             <header>
-                                <h3>amenities of hilton</h3>
+                                <h3>amenities of room</h3>
                             </header>
                             <p className="htlfndr-post-excerpt">
-                                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium amet, animi
-                                consequatur deleniti dignissimos eligendi error esse ex illum iusto officia quos unde!
-                                Dolore illum iusto optio, porro rerum voluptates! Lorem ipsum dolor sit amet,
-                                consectetur adipisicing elit. Debitis dolorem expedita impedit laboriosam minus nemo
-                                nulla numquam similique voluptatem! Distinctio magnam nesciunt sequi. Error eum
-                                molestias neque sunt veritatis voluptates!
+                                Lodging always puts prestige first. Security is always guaranteed and necessary
+                                amenities are provided for rooms. If you are interested in us or are looking for a room,
+                                please make an appointment with us. Our room always welcomes you to join this shared
+                                house. Thanks!
                             </p>
 
                             <footer className="row htlfndr-amenities">
@@ -383,36 +322,62 @@ function Infor({ data }) {
                                     </div>
                                     <p>Wi-Fi internet</p>
                                 </div>
-                                <div className="col-md-4 col-sm-6 col-xs-6">
-                                    <div className="htlfndr-amenities-icon">
-                                        <i className="fa fa-gamepad"></i>
+                                {data?.room?.attic && (
+                                    <div className="col-md-4 col-sm-6 col-xs-6">
+                                        <div className="htlfndr-amenities-icon">
+                                            <i className="fa fa-expand"></i>
+                                        </div>
+                                        <p>Attic</p>
                                     </div>
-                                    <p>game zone</p>
-                                </div>
-                                <div className="col-md-4 col-sm-6 col-xs-6">
-                                    <div className="htlfndr-amenities-icon">
-                                        <i className="fa fa-life-ring"></i>
+                                )}
+                                {data?.room?.privateToilet && (
+                                    <div className="col-md-4 col-sm-6 col-xs-6">
+                                        <div className="htlfndr-amenities-icon">
+                                            <i className="fa fa-adjust"></i>
+                                        </div>
+                                        <p>Private Toilet</p>
                                     </div>
-                                    <p>pool</p>
-                                </div>
-                                <div className="col-md-4 col-sm-6 col-xs-6">
-                                    <div className="htlfndr-amenities-icon">
-                                        <i className="fa fa-cutlery"></i>
+                                )}
+                                {data?.room?.allowedPet && (
+                                    <div className="col-md-4 col-sm-6 col-xs-6">
+                                        <div className="htlfndr-amenities-icon">
+                                            <i className="fa fa-paw"></i>
+                                        </div>
+                                        <p>Allow Pet</p>
                                     </div>
-                                    <p>room service</p>
-                                </div>
-                                <div className="col-md-4 col-sm-6 col-xs-6">
-                                    <div className="htlfndr-amenities-icon">
-                                        <i className="fa fa-wheelchair"></i>
+                                )}
+                                {data?.room?.furnitureAvailable && (
+                                    <div className="col-md-4 col-sm-6 col-xs-6">
+                                        <div className="htlfndr-amenities-icon">
+                                            <i className="fa fa-plug"></i>
+                                        </div>
+                                        <p>Furniture Available</p>
                                     </div>
-                                    <p>wheelchair access</p>
-                                </div>
-                                <div className="col-md-4 col-sm-6 col-xs-6">
-                                    <div className="htlfndr-amenities-icon">
-                                        <i className="fa fa-spoon"></i>
+                                )}
+                                {data?.room?.tvAvailable && (
+                                    <div className="col-md-4 col-sm-6 col-xs-6">
+                                        <div className="htlfndr-amenities-icon">
+                                            <i className="fa fa-cc-amex"></i>
+                                        </div>
+                                        <p>Television</p>
                                     </div>
-                                    <p>kitchen</p>
-                                </div>
+                                )}
+                                {data?.room?.airConditionAvailable && (
+                                    <div className="col-md-4 col-sm-6 col-xs-6">
+                                        <div className="htlfndr-amenities-icon">
+                                            <i className="fa fa-server"></i>
+                                        </div>
+                                        <p>Air Conditioning</p>
+                                    </div>
+                                )}
+                                {data?.room?.isFreeParking && (
+                                    <div className="col-md-4 col-sm-6 col-xs-6">
+                                        <div className="htlfndr-amenities-icon">
+                                            <i className="fa fa-bicycle"></i>
+                                        </div>
+                                        <p>Free Parking</p>
+                                    </div>
+                                )}
                             </footer>
                         </article>
                     </div>
@@ -432,10 +397,10 @@ function Infor({ data }) {
                                 </div>
                                 <dl>
                                     <dt>
-                                        <span>4.8</span> out of 5
+                                        <span>{data?.room?.averageStar}</span> out of 5
                                     </dt>
                                     <dd>
-                                        based on <span>123</span> Reviews
+                                        based on <span>{data?.room?.totalReview}</span> Reviews
                                     </dd>
                                 </dl>
                             </div>
@@ -443,7 +408,7 @@ function Infor({ data }) {
                                 <table>
                                     <tbody>
                                         <tr>
-                                            <th>room cleanliness</th>
+                                            <th>Amentinies</th>
                                             <td className="htlfndr-meter-cell">
                                                 <meter className="htlfndr-meter" value="0.75" min="0" max="1">
                                                     <div className="meter-gauge">
@@ -454,7 +419,7 @@ function Infor({ data }) {
                                             <td className="htlfndr-rating-cell">4.5</td>
                                         </tr>
                                         <tr>
-                                            <th>service & staff</th>
+                                            <th>room comfort</th>
                                             <td className="htlfndr-meter-cell">
                                                 <meter className="htlfndr-meter" value="0.6" min="0" max="1">
                                                     <div className="meter-gauge">
@@ -465,7 +430,7 @@ function Infor({ data }) {
                                             <td className="htlfndr-rating-cell">3</td>
                                         </tr>
                                         <tr>
-                                            <th>room comfort</th>
+                                            <th>Security</th>
                                             <td className="htlfndr-meter-cell">
                                                 <meter className="htlfndr-meter" value="0.9" min="0" max="1">
                                                     <div className="meter-gauge">
@@ -474,17 +439,6 @@ function Infor({ data }) {
                                                 </meter>
                                             </td>
                                             <td className="htlfndr-rating-cell">4.8</td>
-                                        </tr>
-                                        <tr>
-                                            <th>hotel condition</th>
-                                            <td className="htlfndr-meter-cell">
-                                                <meter className="htlfndr-meter" value="0.75" min="0" max="1">
-                                                    <div className="meter-gauge">
-                                                        <span style={{ width: '75.00%' }}></span>
-                                                    </div>
-                                                </meter>
-                                            </td>
-                                            <td className="htlfndr-rating-cell">4.5</td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -575,62 +529,33 @@ function Infor({ data }) {
                 )}
                 {menuActive === 5 ? (
                     <div id="htlfndr-hotel-description-tab-5" className="htlfndr-hotel-description-tab">
-                        <form method="get" className="htlfndr-review-form">
+                        <form onSubmit={handleSubmit(submitForm)} className="htlfndr-review-form">
                             <div className="htlfndr-form-left-side">
-                                <label htmlFor="review-title">review title</label>
-                                <input
-                                    type="text"
-                                    name="review-title"
-                                    id="review-title"
-                                    className="htlfndr-review-form-input"
-                                />
                                 <label htmlFor="review-text">review text</label>
                                 <textarea
                                     name="review-text"
                                     id="review-text"
                                     className="htlfndr-review-form-input"
+                                    {...register('content', { required: true })}
                                 ></textarea>
                             </div>
                             <div className="htlfndr-form-right-side">
                                 <div className="htlfndr-radio-set">
-                                    <h3>room cleanliness</h3>
+                                    <h3>Amentinies</h3>
                                     <Rating
                                         size="large"
-                                        name="my-rating"
+                                        name="Amentinies"
                                         value={rating}
-                                        // precision={0.5} // Specify half-star increments (optional)
-                                        onChange={handleChangeRating}
-                                    />
-                                </div>
-                                <div className="htlfndr-radio-set">
-                                    <h3>service & staff</h3>
-                                    <Rating
-                                        size="large"
-                                        name="my-rating"
-                                        value={rating}
-                                        // precision={0.5} // Specify half-star increments (optional)
                                         onChange={handleChangeRating}
                                     />
                                 </div>
                                 <div className="htlfndr-radio-set">
                                     <h3>room comfort</h3>
-                                    <Rating
-                                        size="large"
-                                        name="my-rating"
-                                        value={rating}
-                                        // precision={0.5} // Specify half-star increments (optional)
-                                        onChange={handleChangeRating}
-                                    />
+                                    <Rating size="large" name="comfort" value={5} />
                                 </div>
                                 <div className="htlfndr-radio-set">
-                                    <h3>hotel condition</h3>
-                                    <Rating
-                                        size="large"
-                                        name="my-rating"
-                                        value={rating}
-                                        // precision={0.5} // Specify half-star increments (optional)
-                                        onChange={handleChangeRating}
-                                    />
+                                    <h3>Security</h3>
+                                    <Rating size="large" name="Security" value={5} />
                                 </div>
                             </div>
                             <div className="clearfix"></div>

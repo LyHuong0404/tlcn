@@ -21,11 +21,13 @@ import { format } from 'date-fns';
 import { Pagination } from '@mui/material';
 import { useCallback } from 'react';
 import { toast } from 'react-toastify';
+import UpdateAppointmentDialog from '~/components/UpdateAppointmentDialog';
 
 function AllAppointments() {
-    const [dataAppointment, setDataAppointment] = useState([]);
+    const [dataAppointments, setDataAppointments] = useState([]);
+    const [appointment, setAppointment] = useState();
     const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
-    const [appointmentId, setAppointmentId] = useState();
+    const [updateDialogOpen, setUpdateDialogOpen] = useState(false);
     const [totalPage, setTotalPage] = useState(0);
     const [currentPage, setCurrentPage] = useState(0);
 
@@ -33,11 +35,11 @@ function AllAppointments() {
         try {
             const fetchData = async () => {
                 const result = await userAllAppointment(currentPage);
-                result?.content.map((element) => {
+                result?.content?.map((element) => {
                     element.day = format(new Date(element.day), 'dd-MM-yyyy');
                     element.time = format(new Date(`2000-01-01T${element.time}`), 'HH:mm');
                 });
-                setDataAppointment(result.content);
+                setDataAppointments(result.content);
                 setTotalPage(result.totalPage);
             };
             fetchData();
@@ -52,7 +54,7 @@ function AllAppointments() {
 
     const handleDeleteAppointment = async () => {
         try {
-            const result = await deleteAppointment(appointmentId);
+            const result = await deleteAppointment(appointment.id);
             if (result?.success) {
                 getAllAppointment(currentPage);
             }
@@ -62,15 +64,24 @@ function AllAppointments() {
         }
     };
 
-    const handleClickOpen = (id) => {
+    const handleDeleteDialogClick = (appointment) => {
         setDeleteDialogOpen(true);
-        setAppointmentId(id);
+        setAppointment(appointment);
+    };
+
+    const handleUpdateDialogClick = (appointment) => {
+        setUpdateDialogOpen(true);
+        setAppointment(appointment);
     };
 
     const handleSetPage = (event, page) => {
         setCurrentPage(page - 1);
     };
 
+    const handleCloseUpdateDialog = () => {
+        setUpdateDialogOpen(!updateDialogOpen);
+        getAllAppointment(currentPage);
+    };
     return (
         <div className="htlfndr-user-panel col-md-9 col-sm-8 htlfndr-booking-page" id="htlfndr-user-tab-2">
             <table className="table">
@@ -85,9 +96,13 @@ function AllAppointments() {
                     </tr>
                 </thead>
                 <tbody>
-                    {dataAppointment?.map((appointment, index) => (
+                    {dataAppointments?.map((appointment, index) => (
                         <tr key={index}>
-                            <td className="htlfndr-scope-row">
+                            <td className="htlfndr-scope-row" style={{
+                                    width: '150px',
+                                    overflow: 'hidden',
+                                    textOverflow: 'ellipsis',
+                                }}>
                                 <a href="/">
                                     <Image
                                         src={appointment.room.avatarUrl}
@@ -105,7 +120,11 @@ function AllAppointments() {
                             >
                                 {appointment.room.subject}
                             </td>
-                            <td>{appointment.room.price}</td>
+                            <td style={{
+                                    width: '100px',
+                                    overflow: 'hidden',
+                                    textOverflow: 'ellipsis',
+                                }}>{appointment.room.price}</td>
                             <td
                                 style={{
                                     width: '280px',
@@ -119,13 +138,13 @@ function AllAppointments() {
                                 {appointment.day}, {appointment.time}
                             </td>
                             <td>
-                                <Link
-                                    to={config.routes.updateAppointmentLink(appointment.id)}
-                                    className={styles.action_edit}
-                                >
+                                <a className={styles.action_edit} onClick={() => handleUpdateDialogClick(appointment)}>
                                     <FontAwesomeIcon icon={faEdit} className={styles.custom_icon} />
-                                </Link>
-                                <a className={styles.action_delete} onClick={() => handleClickOpen(appointment.id)}>
+                                </a>
+                                <a
+                                    className={styles.action_delete}
+                                    onClick={() => handleDeleteDialogClick(appointment)}
+                                >
                                     <FontAwesomeIcon icon={faTrashCan} className={styles.custom_icon} />
                                 </a>
                             </td>
@@ -155,7 +174,11 @@ function AllAppointments() {
                     open={deleteDialogOpen}
                     onClose={() => setDeleteDialogOpen(!deleteDialogOpen)}
                     onDeleteSuccess={handleDeleteAppointment}
+                    title="Are you sure want to delete this appointment?"
                 />
+            )}
+            {updateDialogOpen && (
+                <UpdateAppointmentDialog open={updateDialogOpen} onClose={handleCloseUpdateDialog} data={appointment} />
             )}
         </div>
     );

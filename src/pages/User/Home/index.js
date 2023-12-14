@@ -23,13 +23,13 @@ function Home() {
         try {
             const fetchData = async () => {
                 const result = await topRecommends(0, 6);
-                setRecommendRooms(result.content);
+                setRecommendRooms(result?.content);
             };
             fetchData();
         } catch (error) {
             console.log(error);
         }
-    });
+    }, []);
 
     return (
         <>
@@ -38,7 +38,7 @@ function Home() {
                 <section className="container htlfndr-top-destinations">
                     <h2 className="htlfndr-section-title">top recommends</h2>
                     <div className="htlfndr-section-under-title-line"></div>
-                    <RecommendRoom data={recommendRooms}/>
+                    <RecommendRoom data={recommendRooms} />
                 </section>
                 <section className="container-fluid htlfndr-usp-section">
                     <h2 className="htlfndr-section-title htlfndr-lined-title">
@@ -54,14 +54,11 @@ function Home() {
                                     width="100"
                                     alt="icon"
                                 />
-                                <h5 className="htlfndr-section-subtitle">beverages included</h5>
+                                <h5 className="htlfndr-section-subtitle">eat and drink</h5>
                                 <p>
                                     Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse interdum
                                     eleifend augue, quis rhoncus purus fermentum.
                                 </p>
-                                <a href="/" className="htlfndr-read-more-button">
-                                    read more
-                                </a>
                             </div>
                             <div className="col-sm-4 htlfndr-icon-box">
                                 <Image
@@ -76,9 +73,6 @@ function Home() {
                                     Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse interdum
                                     eleifend augue, quis rhoncus purus fermentum.
                                 </p>
-                                <a href="/" className="htlfndr-read-more-button">
-                                    read more
-                                </a>
                             </div>
                             <div className="col-sm-4 htlfndr-icon-box">
                                 <Image
@@ -93,33 +87,29 @@ function Home() {
                                     Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse interdum
                                     eleifend augue, quis rhoncus purus fermentum.
                                 </p>
-                                <a href="/" className="htlfndr-read-more-button">
-                                    read more
-                                </a>
                             </div>
                         </div>
                     </div>
                 </section>
                 <section className="container-fluid htlfndr-categories-portfolio">
-                    <h2 className="htlfndr-section-title bigger-title">discover the world</h2>
+                    <h2 className="htlfndr-section-title bigger-title">discover the location</h2>
                     <div className="htlfndr-section-under-title-line"></div>
                     <div className="container">
                         <div className="row">
                             <div className="col-sm-4 col-xs-6">
                                 <div className="htlfndr-category-box">
-                                    <Image
-                                        src="https://th.bing.com/th/id/OIP.ESJ_lUju-X5N6DgEXjLXOAHaEo?w=316&h=197&c=7&r=0&o=5&dpr=1.3&pid=1.7"
-                                        height="311"
-                                        width="370"
+                                    <img
+                                        src="https://th.bing.com/th/id/OIP.-IZ6tYUaBZtm-rqmV_0H6QHaEc?rs=1&pid=ImgDetMain"
+                                        style={{ height: '311px', width: '370px' }}
                                         alt="category-Image"
                                     />
                                     <div className="category-description">
                                         <div className="htlfndr-icon-flag-border">
                                             <i className="htlfndr-icon-flag flag-germany"></i>
                                         </div>
-                                        <h2 className="subcategory-name">berlin</h2>
+                                        <h2 className="subcategory-name">Cầu Vàng</h2>
                                         <a href="/" className="htlfndr-category-permalink"></a>
-                                        <h5 className="category-name">germany</h5>
+                                        <h5 className="category-name">Đà Nẵng</h5>
                                         <p className="category-properties">
                                             <span>374</span> properties
                                         </p>
@@ -128,19 +118,18 @@ function Home() {
                             </div>
                             <div className="col-sm-4 col-xs-6">
                                 <div className="htlfndr-category-box">
-                                    <Image
-                                        src="https://th.bing.com/th/id/OIP.ESJ_lUju-X5N6DgEXjLXOAHaEo?w=316&h=197&c=7&r=0&o=5&dpr=1.3&pid=1.7"
-                                        height="311"
-                                        width="370"
+                                    <img
+                                        src="https://th.bing.com/th/id/OIP.7xul3PG_QTojIuV9sdzUAAHaE6?w=266&h=180&c=7&r=0&o=5&dpr=1.3&pid=1.7"
+                                        style={{ height: '311px', width: '370px' }}
                                         alt="category-Image"
                                     />
                                     <div className="category-description">
                                         <div className="htlfndr-icon-flag-border">
                                             <i className="htlfndr-icon-flag flag-britain"></i>
                                         </div>
-                                        <h2 className="subcategory-name">london</h2>
+                                        <h2 className="subcategory-name">City Gold</h2>
                                         <a href="/" className="htlfndr-category-permalink"></a>
-                                        <h5 className="category-name">britain</h5>
+                                        <h5 className="category-name">Đà Lạt</h5>
                                         <p className="category-properties">
                                             <span>185</span> properties
                                         </p>
@@ -149,19 +138,18 @@ function Home() {
                             </div>
                             <div className="col-sm-4 col-xs-6">
                                 <div className="htlfndr-category-box">
-                                    <Image
-                                        src="https://th.bing.com/th/id/OIP.ESJ_lUju-X5N6DgEXjLXOAHaEo?w=316&h=197&c=7&r=0&o=5&dpr=1.3&pid=1.7"
-                                        height="311"
-                                        width="370"
+                                    <img
+                                        src="https://th.bing.com/th/id/OIP._H2NpUGKVJgE10s-KCcdnAHaEv?rs=1&pid=ImgDetMain"
+                                        style={{ height: '311px', width: '370px' }}
                                         alt="category-Image"
                                     />
                                     <div className="category-description">
                                         <div className="htlfndr-icon-flag-border">
                                             <i className="htlfndr-icon-flag flag-italy"></i>
                                         </div>
-                                        <h2 className="subcategory-name">rom</h2>
+                                        <h2 className="subcategory-name">Landmark 81</h2>
                                         <a href="/" className="htlfndr-category-permalink"></a>
-                                        <h5 className="category-name">italy</h5>
+                                        <h5 className="category-name">TP HCM</h5>
                                         <p className="category-properties">
                                             <span>98</span> properties
                                         </p>
@@ -170,19 +158,18 @@ function Home() {
                             </div>
                             <div className="col-sm-4 col-xs-6">
                                 <div className="htlfndr-category-box">
-                                    <Image
-                                        src="https://th.bing.com/th/id/OIP.ESJ_lUju-X5N6DgEXjLXOAHaEo?w=316&h=197&c=7&r=0&o=5&dpr=1.3&pid=1.7"
-                                        height="311"
-                                        width="370"
+                                    <img
+                                        src="https://th.bing.com/th/id/OIP.nt656956KKGK1HEdPue-FwHaEa?w=261&h=180&c=7&r=0&o=5&dpr=1.3&pid=1.7"
+                                        style={{ height: '311px', width: '370px' }}
                                         alt="category-Image"
                                     />
                                     <div className="category-description">
                                         <div className="htlfndr-icon-flag-border">
                                             <i className="htlfndr-icon-flag flag-france"></i>
                                         </div>
-                                        <h2 className="subcategory-name">paris</h2>
+                                        <h2 className="subcategory-name">Đảo Phú Quý</h2>
                                         <a href="/" className="htlfndr-category-permalink"></a>
-                                        <h5 className="category-name">france</h5>
+                                        <h5 className="category-name">Bình Thuận</h5>
                                         <p className="category-properties">
                                             <span>281</span> properties
                                         </p>
@@ -191,19 +178,18 @@ function Home() {
                             </div>
                             <div className="col-sm-4 col-xs-6">
                                 <div className="htlfndr-category-box">
-                                    <Image
-                                        src="https://th.bing.com/th/id/OIP.ESJ_lUju-X5N6DgEXjLXOAHaEo?w=316&h=197&c=7&r=0&o=5&dpr=1.3&pid=1.7"
-                                        height="311"
-                                        width="370"
+                                    <img
+                                        src="https://th.bing.com/th/id/R.5c44e0ce2ccd44009f8e56292713013a?rik=p5dZKW7%2bfZocnQ&pid=ImgRaw&r=0"
+                                        style={{ height: '311px', width: '370px' }}
                                         alt="category-Image"
                                     />
                                     <div className="category-description">
                                         <div className="htlfndr-icon-flag-border">
                                             <i className="htlfndr-icon-flag flag-russia"></i>
                                         </div>
-                                        <h2 className="subcategory-name">moscow</h2>
+                                        <h2 className="subcategory-name">Hội An</h2>
                                         <a href="/" className="htlfndr-category-permalink"></a>
-                                        <h5 className="category-name">russia</h5>
+                                        <h5 className="category-name">Quảng Nam</h5>
                                         <p className="category-properties">
                                             <span>38</span> properties
                                         </p>
@@ -212,19 +198,18 @@ function Home() {
                             </div>
                             <div className="col-sm-4 col-xs-6">
                                 <div className="htlfndr-category-box">
-                                    <Image
-                                        src="https://th.bing.com/th/id/OIP.ESJ_lUju-X5N6DgEXjLXOAHaEo?w=316&h=197&c=7&r=0&o=5&dpr=1.3&pid=1.7"
-                                        height="311"
-                                        width="370"
+                                    <img
+                                        src="https://th.bing.com/th/id/R.1394cd318a5011ed736f0fa78244c6f9?rik=1GCAvnXonIFLGw&pid=ImgRaw&r=0"
+                                        style={{ height: '311px', width: '370px' }}
                                         alt="category-Image"
                                     />
                                     <div className="category-description">
                                         <div className="htlfndr-icon-flag-border">
                                             <i className="htlfndr-icon-flag flag-japan"></i>
                                         </div>
-                                        <h2 className="subcategory-name">tokio</h2>
+                                        <h2 className="subcategory-name">Vinpearl</h2>
                                         <a href="/" className="htlfndr-category-permalink"></a>
-                                        <h5 className="category-name">japan</h5>
+                                        <h5 className="category-name">Cần Thơ</h5>
                                         <p className="category-properties">
                                             <span>318</span> properties
                                         </p>
@@ -234,7 +219,7 @@ function Home() {
                         </div>
                     </div>
                 </section>
-                <section className="container-fluid htlfndr-visitors-cards">
+                {/* <section className="container-fluid htlfndr-visitors-cards">
                     <h2 className="htlfndr-section-title bigger-title">visitors experienced</h2>
                     <div className="htlfndr-section-under-title-line"></div>
                     <div className="container">
@@ -307,7 +292,7 @@ function Home() {
                             </div>
                         </div>
                     </div>
-                </section>
+                </section> */}
             </main>
         </>
     );

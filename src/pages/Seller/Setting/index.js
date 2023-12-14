@@ -1,16 +1,68 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
+import { useEffect, useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { toast } from 'react-toastify';
+import { updateProfile, getProfile } from '~/actions/userActions';
+import Loading from '~/components/Loading';
+
 function Setting() {
+    const [user, setUser] = useState({});
+    const { register, handleSubmit } = useForm();
+    const [loading, setLoading] = useState(false);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const result = await getProfile();
+                setUser(result);
+            } catch (error) {
+                console.log(error);
+            }
+        };
+
+        fetchData();
+    }, []);
+
+    const submitForm = async (data) => {
+        const avatarBlob = await fetch(user['avatar']).then((r) => r.blob());
+        let fullData = { ...data, avatarFile: avatarBlob };
+
+        const formData = new FormData();
+        for (const key in fullData) {
+            if (fullData[key] === '') {
+                fullData[key] = user[key];
+            }
+            formData.append(key, fullData[key]);
+        }
+
+        try {
+            const updateInfo = async () => {
+                setLoading(true);
+                const result = await updateProfile(formData);
+                if (result?.success) {
+                    toast.success('Profile updated successfully.');
+                } else {
+                    toast.error('Profile updated unsuccessfully.');
+                }
+                setLoading(false);
+            };
+            updateInfo();
+        } catch (error) {
+            console.log(error);
+        }
+    };
     return (
         <div className="sb2-2">
+            {loading && <Loading />}
             <div className="sb2-2-2">
                 <ul>
                     <li>
-                        <a href="#">
+                        <a>
                             <i className="fa fa-home" aria-hidden="true"></i> Home
                         </a>
                     </li>
                     <li className="active-bre">
-                        <a href="#"> Ui Form</a>
+                        <a> Profile</a>
                     </li>
                 </ul>
             </div>
@@ -20,47 +72,60 @@ function Setting() {
                         <div className="box-inn-sp">
                             <div className="inn-title">
                                 <h4>Setting</h4>
-                                <p>Airtport Hotels The Right Way To Start A Short Break Holiday</p>
                             </div>
                             <div className="tab-inn">
-                                <form>
+                                <form onSubmit={handleSubmit(submitForm)}>
                                     <div className="row">
                                         <div className="input-field col s6">
                                             <br />
                                             <input
-                                                id="website"
+                                                id="username"
                                                 type="text"
-                                                value="www.websitename.com"
+                                                defaultValue={user?.username}
+                                                style={{ height: '3rem' }}
                                                 className="validate"
+                                                readOnly={true}
+                                                {...register('username')}
                                             />
-                                            <label htmlFor="website">Website</label>
+                                            <label htmlFor="username">Username</label>
                                         </div>
                                         <div className="input-field col s6">
                                             <br />
                                             <input
-                                                id="blog_name"
+                                                id="email"
                                                 type="text"
-                                                value="www.websitename.com/blog"
+                                                defaultValue={user?.email}
+                                                style={{ height: '3rem' }}
                                                 className="validate"
+                                                {...register('email')}
                                             />
-                                            <label htmlFor="blog_name">Blog</label>
+                                            <label htmlFor="email">Email</label>
                                         </div>
                                     </div>
                                     <div className="row">
                                         <div className="input-field col s6">
                                             <br />
-                                            <input id="phone" type="text" value="+01 1234 4654" className="validate" />
-                                            <label htmlFor="phone">Mobile</label>
+                                            <input
+                                                id="fullname"
+                                                type="text"
+                                                defaultValue={user?.fullname}
+                                                style={{ height: '3rem' }}
+                                                className="validate"
+                                                {...register('fullname')}
+                                            />
+                                            <label htmlFor="fullname">Fullname</label>
                                         </div>
                                         <div className="input-field col s6">
                                             <br />
                                             <input
-                                                id="cphone"
+                                                id="phone"
                                                 type="text"
-                                                value="+01 6541 32145"
+                                                defaultValue={user?.phone}
+                                                style={{ height: '3rem' }}
                                                 className="validate"
+                                                {...register('phone')}
                                             />
-                                            <label htmlFor="cphone">Phone</label>
+                                            <label htmlFor="phone">Phone</label>
                                         </div>
                                     </div>
                                     <div className="row">
@@ -69,7 +134,8 @@ function Setting() {
                                             <input
                                                 id="password"
                                                 type="password"
-                                                value="aksdjfhasdf"
+                                                defaultValue="aksdjfhasdf"
+                                                style={{ height: '3rem' }}
                                                 className="validate"
                                             />
                                             <label htmlFor="password">Password</label>
@@ -79,41 +145,22 @@ function Setting() {
                                             <input
                                                 id="password1"
                                                 type="password"
-                                                value="asdfaefrerfg"
+                                                defaultValue="asdfaefrerfg"
+                                                style={{ height: '3rem' }}
                                                 className="validate"
                                             />
                                             <label htmlFor="password1">Confirm Password</label>
                                         </div>
                                     </div>
-                                    <div className="row">
-                                        <div className="input-field col s6">
-                                            <br />
-                                            <input
-                                                id="f_name"
-                                                type="text"
-                                                value="www.websitename.com/facebook"
-                                                className="validate"
-                                            />
-                                            <label htmlFor="f_name">Facebook</label>
-                                        </div>
-                                        <div className="input-field col s6">
-                                            <br />
-                                            <input
-                                                id="g_name"
-                                                type="text"
-                                                value="www.websitename.com/google plus"
-                                                className="validate"
-                                            />
-                                            <label htmlFor="g_name">Google plus</label>
-                                        </div>
-                                    </div>
-                                    <div className="row">
+
+                                    {/* <div className="row">
                                         <div className="input-field col s12">
                                             <br />
                                             <input
                                                 id="email"
                                                 type="email"
                                                 value="marshahi@mail.com"
+                                                style={{ height: '3rem' }}
                                                 className="validate"
                                             />
                                             <label htmlFor="email">Email</label>
@@ -124,11 +171,12 @@ function Setting() {
                                                 id="email1"
                                                 type="email"
                                                 value="marshahi@mail.com"
+                                                style={{ height: '3rem' }}
                                                 className="validate"
                                             />
                                             <label htmlFor="email1">Alternate Email</label>
                                         </div>
-                                    </div>
+                                    </div> */}
                                     <div className="row">
                                         <div className="input-field col s12">
                                             <input type="submit" className="waves-effect waves-light btn-large" />

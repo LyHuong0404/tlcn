@@ -6,8 +6,8 @@ import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import images from '~/assets/images';
 
-function Sort() {
-    const [sort, setSort] = useState(10);
+function Sort(props) {
+    const [sort, setSort] = useState('price');
     const [show, setShow] = useState(10);
     const [gridColumn, setGridColumn] = useState(3);
 
@@ -26,10 +26,11 @@ function Sort() {
     const handleRowColumn = () => {
         setGridColumn(1);
     };
+
     return (
         <section className="htlfndr-search-result-sorting row" style={{ marginLeft: '-22px' }}>
             <div className="col-md-12">
-                <div className="dropdown htlfndr-sort">
+                <div className="htlfndr-sort">
                     <FormControl sx={{ m: 1, minWidth: 100 }} size="small">
                         <InputLabel
                             id="demo-simple-select-sort"
@@ -44,23 +45,20 @@ function Sort() {
                         </InputLabel>
                         <Select
                             data-toggle="dropdown"
-                            aria-haspopup="true"
-                            aria-expanded="true"
+                            aria-haspopup="false"
+                            aria-expanded="false"
                             role="button"
                             labelId="demo-simple-select-sort"
                             id="demo-simple-select"
                             value={sort}
-                            label='sort'
+                            label="sort"
                             onChange={handleChangeSort}
                         >
-                            <MenuItem value={10}>
+                            <MenuItem value={'price'}>
                                 <span style={{ fontSize: '1.4rem' }}>Price</span>
                             </MenuItem>
-                            <MenuItem value={20}>
+                            <MenuItem value={'rating'}>
                                 <span style={{ fontSize: '1.4rem' }}>Rating</span>
-                            </MenuItem>
-                            <MenuItem value={30}>
-                                <span style={{ fontSize: '1.4rem' }}>Popular</span>
                             </MenuItem>
                         </Select>
                     </FormControl>
@@ -86,7 +84,7 @@ function Sort() {
                             labelId="demo-simple-select-show"
                             id="demo-simple-select"
                             value={show}
-                            label='show'
+                            label="show"
                             onChange={handleChangeShow}
                         >
                             <MenuItem value={10}>

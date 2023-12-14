@@ -2,7 +2,7 @@ function Settings() {
     return (
         <div className="htlfndr-user-panel col-md-9 col-sm-8 htlfndr-setting-page" id="htlfndr-user-tab-5">
             <div className="htlfndr-setting">
-                <h2>
+                {/* <h2>
                     Change <b>Personal Infomation</b>
                 </h2>
                 <form className="htlfndr-form-setting" id="htlfndr-settings-form" method="post">
@@ -103,7 +103,7 @@ function Settings() {
                         </div>
                     </div>
                     <input type="submit" value="Save changes" className="btn-primary" />
-                </form>
+                </form> */}
                 <h2>
                     Change <b>Password</b>
                 </h2>

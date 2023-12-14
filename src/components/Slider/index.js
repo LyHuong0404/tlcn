@@ -9,9 +9,32 @@ import 'swiper/css/bundle';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import 'swiper/css/scrollbar';
-import { searchRooms } from '~/actions/userActions';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import Select from 'react-select';
+import { useForm, Controller } from 'react-hook-form';
+import { useSelector } from 'react-redux';
+import { getWards, getDistricts } from '~/actions/addressActions';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPeopleLine } from '@fortawesome/free-solid-svg-icons';
+
+const CustomIcon = () => <FontAwesomeIcon icon={faPeopleLine} />;
+const customStyles = {
+    control: (provided) => ({
+        ...provided,
+        width: '230px',
+        height: '30px',
+        alignContent: 'center',
+        backgroundColor: '#fff',
+    }),
+};
+
+const optionsPeople = [
+    { label: '1 people in room', value: '1' },
+    { label: '2 people in room', value: '2' },
+    { label: '3 people in room', value: '3' },
+    { label: '4 people in room', value: '4' },
+];
 
 const slides = [
     {
@@ -29,10 +52,50 @@ const slides = [
 ];
 
 function Slider() {
+    const { control, handleSubmit, setValue } = useForm();
+    const { provins } = useSelector((state) => state.provins);
+    const [districts, setDistricts] = useState([]);
+    const [wards, setWards] = useState([]);
     const navigate = useNavigate();
 
-    const handleSearch = () => {
-        navigate('/search', { state: { searchText: '', step: 1 } });
+    const handleChangeProvince = (e) => {
+        const fetchData = async () => {
+            const result = await getDistricts(e.code);
+            const districtOptions = result?.map((district) => ({
+                code: district.code,
+                label: district.name,
+                value: district.name,
+            }));
+            setDistricts(districtOptions);
+            setValue('districtCode', null);
+            setValue('wardCode', null);
+        };
+        fetchData();
+    };
+
+    const handleChangeDistrict = (e) => {
+        const fetchData = async () => {
+            const result = await getWards(e.code);
+            const wardOptions = result?.map((ward) => ({
+                code: ward.code,
+                label: ward.name,
+                value: ward.name,
+            }));
+
+    setValue('wardCode', null);
+            setWards(wardOptions);
+        };
+        fetchData();
+    };
+
+    const provinceOptions = provins.map((province) => ({
+        code: province.code,
+        label: province.name,
+        value: province.name,
+    }));
+
+    const submitForm = async (data) => {
+        await navigate('/search', { state: { data: data, step: 1 } });
     };
 
     return (
@@ -68,60 +131,99 @@ function Slider() {
                     ))}
                 </Swiper>
             </div>
-            <aside className="htlfndr-form-in-slider htlfndr-search-form-inline">
-                <div className="container">
-                    <h5>Where are you going?</h5>
+            <form onSubmit={handleSubmit(submitForm)}>
+                <aside className="htlfndr-form-in-slider htlfndr-search-form-inline">
+                    <div className="container">
+                        <h5>What are you looking for?</h5>
+                        <div id="htlfndr-input-1" className="htlfndr-input-wrapper">
+                            <Controller
+                                name="provinceCode"
+                                control={control}
+                                render={({ field }) => (
+                                    <Select
+                                        {...field}
+                                        options={provinceOptions}
+                                        placeholder="Select a province..."
+                                        isSearchable={true}
+                                        styles={customStyles}
+                                        onChange={(selectedOption) => {
+                                            setValue('provinceCode', selectedOption);
+                                            handleChangeProvince(selectedOption);
+                                        }}
+                                    />
+                                )}
+                            />
 
-                    <div id="htlfndr-input-1" className="htlfndr-input-wrapper">
-                        <input
-                            type="text"
-                            name="htlfndr-city"
-                            id="htlfndr-city"
-                            className="search-hotel-input"
-                            placeholder="Enter city, region or district"
-                        />
-                        <p className="htlfndr-search-checkbox">
-                            <input type="checkbox" id="htlfndr-checkbox" name="htlfndr-checkbox" value="no-dates" />
-                            <label htmlFor="htlfndr-checkbox">I don't have specific dates yet</label>
-                        </p>
+                            <p className="htlfndr-search-checkbox">
+                                <label htmlFor="htlfndr-checkbox">Specific information</label>
+                            </p>
+                        </div>
+                        <div className="htlfndr-input-wrapper">
+                            <Controller
+                                name="districtCode"
+                                control={control}
+                                render={({ field }) => (
+                                    <Select
+                                        {...field}
+                                        options={districts}
+                                        placeholder="Select a district..."
+                                        isSearchable={true}
+                                        styles={customStyles}
+                                        onChange={(selectedOption) => {
+                                            setValue('districtCode', selectedOption);
+                                            handleChangeDistrict(selectedOption);
+                                        }}
+                                    />
+                                )}
+                            />
+                        </div>
+                        <div className="htlfndr-input-wrapper">
+                            <Controller
+                                name="wardCode"
+                                control={control}
+                                render={({ field }) => (
+                                    <Select
+                                        {...field}
+                                        options={wards}
+                                        placeholder="Select a ward..."
+                                        isSearchable={true}
+                                        styles={customStyles}
+                                    />
+                                )}
+                            />
+                        </div>
+                        <div id="htlfndr-input-4" className="htlfndr-input-wrapper">
+                            <Controller
+                                name="totalPerson"
+                                control={control}
+                                render={(props) => (
+                                    <Select
+                                        {...props}
+                                        options={optionsPeople}
+                                        placeholder="Select people..."
+                                        styles={customStyles}
+                                        // components={{
+                                        //     IndicatorSeparator: () => null,
+                                        // }}
+                                        // formatOptionLabel={({ label }) => (
+                                        //     <span>
+                                        //         <CustomIcon style={{ margin: '20px' }} />
+                                        //         {label}
+                                        //     </span>
+                                        // )}
+                                        onChange={(selectedOption) => {
+                                            setValue('totalPerson', selectedOption);
+                                        }}
+                                    />
+                                )}
+                            />
+                        </div>
+                        <div id="htlfndr-input-5">
+                            <input type="submit" value="search" />
+                        </div>
                     </div>
-                    <div id="htlfndr-input-date-in" className="htlfndr-input-wrapper">
-                        <label htmlFor="htlfndr-date-in" className="sr-only">
-                            Date in
-                        </label>
-                        <input type="text" name="htlfndr-date-in" id="htlfndr-date-in" className="search-hotel-input" />
-                        <button type="button" className="htlfndr-clear-datepicker"></button>
-                    </div>
-                    <div id="htlfndr-input-date-out" className="htlfndr-input-wrapper">
-                        <label htmlFor="htlfndr-date-out" className="sr-only">
-                            Date out
-                        </label>
-                        <input
-                            type="text"
-                            name="htlfndr-date-out"
-                            id="htlfndr-date-out"
-                            className="search-hotel-input"
-                        />
-                        <button type="button" className="htlfndr-clear-datepicker"></button>
-                    </div>
-                    <div id="htlfndr-input-4" className="htlfndr-input-wrapper">
-                        <label htmlFor="htlfndr-dropdown" className="sr-only">
-                            Number person in room
-                        </label>
-                        <select name="htlfndr-dropdown" id="htlfndr-dropdown" className="htlfndr-dropdown">
-                            <option value="1 adult">1 adult</option>
-                            <option value="2 adults in 1 room">2 adults in 1 room</option>
-                            <option value="3 adults in 1 room">3 adults in 1 room</option>
-                            <option value="4 adults in 1 room">4 adults in 1 room</option>
-                            <option value="2 adults in 2 room">2 adults in 2 room</option>
-                            <option value="need more">Need more?</option>
-                        </select>
-                    </div>
-                    <div id="htlfndr-input-5">
-                        <input type="submit" value="search" onClick={handleSearch} />
-                    </div>
-                </div>
-            </aside>
+                </aside>
+            </form>
         </section>
     );
 }

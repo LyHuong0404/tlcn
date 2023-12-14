@@ -5,7 +5,7 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import styles from './ConfirmDialog.module.scss';
 
-function ConfirmDialog({ open, onClose, onDeleteSuccess }) {
+function ConfirmDialog({ open, onClose, onDeleteSuccess, title }) {
     const handleConfirmation = (choice) => {
         if (choice === 'Yes') {
             onDeleteSuccess();
@@ -22,7 +22,7 @@ function ConfirmDialog({ open, onClose, onDeleteSuccess }) {
             <DialogTitle id="alert-dialog-title">{'Notifications'}</DialogTitle>
             <DialogContent>
                 <DialogContentText id="alert-dialog-description">
-                    Are you sure want to delete this room?
+                    {title}
                 </DialogContentText>
             </DialogContent>
 

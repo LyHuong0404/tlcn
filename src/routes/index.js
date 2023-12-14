@@ -3,6 +3,7 @@ import { lazy } from 'react';
 import config from '~/config';
 
 const DefaultLayout = lazy(() => import('~/layouts/DefaultLayout'));
+const AuthoSignUp = lazy(() => import('~/pages/AuthoSignUp'));
 const Profile = lazy(() => import('~/pages/User/Profile'));
 const Login = lazy(() => import('~/pages/Login'));
 const Signup = lazy(() => import('~/pages/Signup'));
@@ -24,21 +25,26 @@ const ViewProfileAdmin = lazy(() => import('~/pages/Admin/Profile/ViewProfile'))
 const EditProfileAdmin = lazy(() => import('~/pages/Admin/Profile/EditProfile'));
 const ChangePasswordAdmin = lazy(() => import('~/pages/Admin/Profile/ChangePassword'));
 const ListRoomAdmin = lazy(() => import('~/pages/Admin/RoomListing/All'));
-const AllCustomersSeller = lazy(() => import('~/pages/Seller/Users/AllUsers'));
 const SettingSeller = lazy(() => import('~/pages/Seller/Setting'));
-const ViewCustomerSeller = lazy(() => import('~/pages/Seller/Users/View'));
 const ListRoomTypesAdmin = lazy(() => import('~/pages/Admin/RoomType'));
 const AddRoomTypeAdmin = lazy(() => import('~/pages/Admin/AddRoomType'));
 const AllReviews = lazy(() => import('~/pages/User/AllReviews'));
 const MakeAppointment = lazy(() => import('~/pages/Room/Appointment'));
 const AllAppointmentsSeller = lazy(() => import('~/pages/Seller/Appointments'));
-const UpdateAppointmentUser = lazy(() => import('~/pages/User/Appointment/UpdateAppointment'));
 const AllAppointmentsUser = lazy(() => import('~/pages/User/Appointment/AllAppointments'));
+const UpdateRoomSeller = lazy(() => import('~/pages/Seller/Room/UpdateRoom'));
+const Test = lazy(() => import('~/components/Test'));
+const Address = lazy(() => import('~/components/Address'));
+const VR = lazy(() => import('~/components/VR'));
+const PaymentSuccess = lazy(() => import('~/pages/PaymentSuccess'));
+const PaymentFail = lazy(() => import('~/pages/PaymentFail'));
+const TemplateMail = lazy(() => import('~/components/TemplateMail'));
 
 const publicRoutes = [
     {
         path: config.routes.home,
         component: Home,
+        // component: TemplateMail,
     },
     {
         path: config.routes.search,
@@ -50,11 +56,6 @@ const publicRoutes = [
         component: Hotel,
         layout: RoomLayout,
     },
-    // {
-    //     path: config.routes.detailroom,
-    //     component: DetailRoom,
-    //     layout: RoomLayout,
-    // },
     {
         path: config.routes.moreavailableroom,
         component: MoreAvailableRoom,
@@ -66,51 +67,11 @@ const publicRoutes = [
         layout: RoomLayout,
     },
     {
-        path: config.routes.appointment, //set appointment
-        component: MakeAppointment,
-        layout: RoomLayout,
-    },
-    {
-        path: config.routes.allappointmentsuser,
-        component: AllAppointmentsUser,
-        layout: DefaultLayout,
-    },
-    {
-        path: config.routes.updateAppointment,
-        component: UpdateAppointmentUser,
+        path: '/test',
+        component: VR,
+        layout: null,
     },
 
-    //seller
-    {
-        path: config.routes.dashboard,
-        component: DashBoardSeller,
-        layout: DefaultLayoutSeller,
-    },
-    {
-        path: config.routes.allrooms,
-        component: AllRoomSeller,
-        layout: DefaultLayoutSeller,
-    },
-    {
-        path: config.routes.addroom,
-        component: AddRoomSeller,
-        layout: DefaultLayoutSeller,
-    },
-    {
-        path: config.routes.allcustomers,
-        component: AllCustomersSeller,
-        layout: DefaultLayoutSeller,
-    },
-    {
-        path: config.routes.viewcustomer,
-        component: ViewCustomerSeller,
-        layout: DefaultLayoutSeller,
-    },
-    {
-        path: config.routes.allappointments,
-        component: AllAppointmentsSeller,
-        layout: DefaultLayoutSeller,
-    },
     //admin
     {
         path: config.routes.dashboards,
@@ -137,21 +98,26 @@ const publicRoutes = [
         component: AddRoomTypeAdmin,
         layout: DefaultLayoutAdmin,
     },
-];
-
-const privateRoutes = [
     {
-        path: config.routes.login,
+        path: config.authRoutes.login,
         component: Login,
         layout: null,
     },
     {
-        path: config.routes.signup,
+        path: config.authRoutes.signup,
         component: Signup,
         layout: null,
     },
     {
-        path: config.routes.forgotpassword,
+        path: config.authRoutes.authosignup,
+        component: AuthoSignUp,
+        layout: null,
+    },
+];
+
+const privateRoutes = [
+    {
+        path: config.authRoutes.forgotpassword,
         component: ForgotPassword,
         layout: null,
     },
@@ -159,11 +125,56 @@ const privateRoutes = [
         path: config.authRoutes.profile,
         component: Profile,
     },
+    {
+        path: config.authRoutes.appointment, //set appointment
+        component: MakeAppointment,
+        layout: RoomLayout,
+    },
+    {
+        path: config.authRoutes.allappointmentsuser,
+        component: AllAppointmentsUser,
+        layout: DefaultLayout,
+    },
+    {
+        path: config.authRoutes.paymentSuccess,
+        component: PaymentSuccess,
+        layout: null,
+    },
+    {
+        path: config.authRoutes.paymentError,
+        component: PaymentFail,
+        layout: null,
+    },
 
     // seller
     {
         path: config.routes.setting,
         component: SettingSeller,
+        layout: DefaultLayoutSeller,
+    },
+    {
+        path: config.routes.dashboard,
+        component: DashBoardSeller,
+        layout: DefaultLayoutSeller,
+    },
+    {
+        path: config.routes.allrooms,
+        component: AllRoomSeller,
+        layout: DefaultLayoutSeller,
+    },
+    {
+        path: config.routes.addroom,
+        component: AddRoomSeller,
+        layout: DefaultLayoutSeller,
+    },
+    {
+        path: config.routes.allappointments,
+        component: AllAppointmentsSeller,
+        layout: DefaultLayoutSeller,
+    },
+    {
+        path: config.routes.updateRoom,
+        component: UpdateRoomSeller,
         layout: DefaultLayoutSeller,
     },
 

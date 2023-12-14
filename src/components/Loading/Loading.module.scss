@@ -1,0 +1,27 @@
+.wrapper {
+    display: block;
+}
+
+.edit_form {
+    z-index: 99999;
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    display: flex;
+}
+
+.edit_form_overlay {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+.edit_form_body {
+    margin: auto;
+    height: fit-content;
+    border-radius: 5px;
+    z-index: 1;
+}

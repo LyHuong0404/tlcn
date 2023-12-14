@@ -1,16 +1,26 @@
-import { Route, Routes } from 'react-router-dom';
-import { Fragment } from 'react';
+import { Route, Routes, useLocation } from 'react-router-dom';
+import { Fragment, useEffect } from 'react';
 
 import DefaultLayout from './layouts/DefaultLayout';
 import { publicRoutes, privateRoutes } from './routes';
 import { Suspense } from 'react';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import Loader from './Loader';
+import { useSelector } from 'react-redux';
+import { ProtectedRoute } from './components/ProtectedRoute';
 
 function App() {
+    const location = useLocation();
+    const { user } = useSelector((state) => state.auth);
+
+    useEffect(() => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }, [location.pathname]);
+
     return (
         <div className="App">
-            <Suspense>
+            <Suspense fallback={<Loader />}>
                 <Routes>
                     {publicRoutes.map((route, index) => {
                         let Layout = DefaultLayout;
@@ -49,16 +59,18 @@ function App() {
                                 key={index}
                                 path={route.path}
                                 element={
-                                    <Layout>
-                                        <Page />
-                                    </Layout>
+                                    <ProtectedRoute user={user} children={<Page />}>
+                                        <Layout>
+                                            <Page />
+                                        </Layout>
+                                    </ProtectedRoute>
                                 }
                             />
                         );
                     })}
                 </Routes>
             </Suspense>
-            <ToastContainer />
+            <ToastContainer autoClose={2000} />
         </div>
     );
 }

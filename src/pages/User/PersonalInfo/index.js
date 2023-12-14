@@ -55,8 +55,12 @@ function PersonalInfo() {
                 <table className="htlfndr-personal-info-table">
                     <tbody>
                         <tr>
-                            <th className="htlfndr-scope-row">name:</th>
+                            <th className="htlfndr-scope-row">username:</th>
                             <td>{user.username}</td>
+                        </tr>
+                        <tr>
+                            <th className="htlfndr-scope-row">fullname:</th>
+                            <td>{user.fullname}</td>
                         </tr>
                         <tr>
                             <th className="htlfndr-scope-row">e-mail:</th>
@@ -67,29 +71,13 @@ function PersonalInfo() {
                             <td>{user.phone}</td>
                         </tr>
                         <tr>
-                            <th className="htlfndr-scope-row">home airport:</th>
-                            <td>London Heathrow Airport (LHR)</td>
-                        </tr>
-                        <tr>
-                            <th className="htlfndr-scope-row">street address:</th>
-                            <td>46 Gray's Inn Rd, London, WC1X 8LP</td>
-                        </tr>
-                        <tr>
-                            <th className="htlfndr-scope-row">city:</th>
-                            <td>london</td>
-                        </tr>
-                        <tr>
-                            <th className="htlfndr-scope-row">state/ province/ region:</th>
-                            <td>london</td>
-                        </tr>
-                        <tr>
-                            <th className="htlfndr-scope-row">postal code:</th>
-                            <td>69106</td>
-                        </tr>
-                        <tr>
                             <th className="htlfndr-scope-row">country:</th>
-                            <td>United Kingdom</td>
+                            <td>Việt Nam</td>
                         </tr>
+                        <tr>
+                            <th className="htlfndr-scope-row">role:</th>
+                            <td>{user.roles[0]}</td>
+                        </tr>                                                
                     </tbody>
                 </table>
             </div>

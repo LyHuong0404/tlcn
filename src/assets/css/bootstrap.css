@@ -127,7 +127,9 @@ input[type="submit"] {
 }
 button[disabled],
 html input[disabled] {
-    cursor: default;
+    /* cursor: default; */
+    cursor: auto !important;
+    background-color: #cccccc !important;
 }
 button::-moz-focus-inner,
 input::-moz-focus-inner {
