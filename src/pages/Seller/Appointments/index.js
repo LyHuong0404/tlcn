@@ -4,7 +4,13 @@ import { useCallback, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import ConfirmDialog from '~/components/ConfirmDialog';
 import Image from '~/components/Image';
-import { getAllAppointment, confirmAppointment, rejectAppointment } from '~/actions/sellerActions';
+import {
+    getAllAppointment,
+    confirmAppointment,
+    rejectAppointment,
+    OKAppointment,
+    CancelAppointment,
+} from '~/actions/sellerActions';
 import { DatePicker, Select, Space } from 'antd';
 import { format } from 'date-fns';
 import dayjs from 'dayjs';
@@ -12,6 +18,7 @@ import 'dayjs/locale/zh-cn';
 import config from '~/config';
 import { Tooltip } from 'react-tooltip';
 import 'react-tooltip/dist/react-tooltip.css';
+import { useTranslation } from 'react-i18next';
 const { RangePicker } = DatePicker;
 
 const status = [
@@ -22,6 +29,7 @@ const status = [
 ];
 
 function Appointments() {
+    const { t } = useTranslation();
     const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
     const [roomId, setRoomId] = useState();
     const [appointments, setAppointments] = useState([]);
@@ -87,6 +95,30 @@ function Appointments() {
         }
     };
 
+    const handleOKAppointment = (id) => {
+        try {
+            const fetchData = async () => {
+                await OKAppointment(id);
+                getAllAppointments();
+            };
+            fetchData();
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
+    const handleCancelAppointment = (id) => {
+        try {
+            const fetchData = async () => {
+                await CancelAppointment(id);
+                getAllAppointments();
+            };
+            fetchData();
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
     const handleChange = (value) => {
         setStatusFilter(value);
         setCurrentPage(0);
@@ -95,17 +127,16 @@ function Appointments() {
     const getStatusColor = (status) => {
         if (status === 'REQUEST') {
             return 'orange';
-        } else if (status === 'CONFIRM') {
-            return '#19e319';
+        } else if (status === 'CONFIRM' || status === 'OK') {
+            return '#117e11';
         } else {
-            return '#ff0000';
+            return '#ed2a2a';
         }
     };
 
     const handleSetPage = (event, page) => {
         setCurrentPage(page - 1);
     };
-
 
     const handleDateChange = (dates) => {
         setStartDate(format(dates[0].$d, 'yyyy-MM-dd'));
@@ -120,13 +151,15 @@ function Appointments() {
                         <div className="box-inn-sp">
                             <div className="inn-title display-app-small-search">
                                 <div>
-                                    <h4>All Appointments</h4>
-                                    <span>Total: {totalElement}</span>
+                                    <h4>{t('All Appointments')}</h4>
+                                    <span>
+                                        {t('Total')}: {totalElement}
+                                    </span>
                                 </div>
                                 <div style={{ display: 'flex' }}>
                                     <Space wrap>
                                         <Select
-                                            placeholder="Status"
+                                            placeholder={t('Status')}
                                             style={{
                                                 width: 120,
                                                 marginRight: 5,
@@ -155,13 +188,13 @@ function Appointments() {
                                     <table className="table table-hover">
                                         <thead>
                                             <tr>
-                                                <th>User</th>
-                                                <th>Room</th>
-                                                <th>Phone</th>
+                                                <th>{t('User')}</th>
+                                                <th>{t('Room')}</th>
+                                                <th>{t('Phone')}</th>
                                                 <th>Email</th>
-                                                <th>Date Time</th>
-                                                <th>Status</th>
-                                                <th>Action</th>
+                                                <th>{t('Date Time')}</th>
+                                                <th>{t("Status")}</th>
+                                                <th>{t('Action')}</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -202,7 +235,7 @@ function Appointments() {
                                                     </td>
                                                     <td
                                                         style={{
-                                                            width: '170px',
+                                                            width: '120px',
                                                             overflow: 'hidden',
                                                             textOverflow: 'ellipsis',
                                                         }}
@@ -220,7 +253,7 @@ function Appointments() {
                                                     </td>
                                                     <td
                                                         style={{
-                                                            width: '160px',
+                                                            width: '150px',
                                                             overflow: 'hidden',
                                                             textOverflow: 'ellipsis',
                                                         }}
@@ -236,7 +269,13 @@ function Appointments() {
                                                         {appointment.status}
                                                     </td>
 
-                                                    <td>
+                                                    <td
+                                                        style={{
+                                                            width: '40px',
+                                                            overflow: 'hidden',
+                                                            textOverflow: 'ellipsis',
+                                                        }}
+                                                    >
                                                         {appointment.status === 'REQUEST' && (
                                                             <>
                                                                 <a
@@ -249,10 +288,6 @@ function Appointments() {
                                                                     <i className="fa fa-check" aria-hidden="true"></i>
                                                                 </a>
                                                                 <Tooltip id="my-tooltip" />
-                                                            </>
-                                                        )}
-                                                        {appointment.status === 'REQUEST' && (
-                                                            <>
                                                                 <a
                                                                     data-tooltip-id="my_tooltip"
                                                                     data-tooltip-content="Reject"
@@ -264,12 +299,36 @@ function Appointments() {
                                                                 <Tooltip id="my_tooltip" />
                                                             </>
                                                         )}
+
+                                                        {appointment.status === 'CONFIRM' && (
+                                                            <>
+                                                                <a
+                                                                    data-tooltip-id="my-tooltip"
+                                                                    data-tooltip-content="OK"
+                                                                    onClick={() => handleOKAppointment(appointment.id)}
+                                                                >
+                                                                    <i className="fa fa-key" aria-hidden="true"></i>
+                                                                </a>
+                                                                <Tooltip id="my-tooltip" />
+                                                                <a
+                                                                    data-tooltip-id="my_tooltip"
+                                                                    data-tooltip-content="Cancel"
+                                                                    onClick={() =>
+                                                                        handleCancelAppointment(appointment.id)
+                                                                    }
+                                                                    style={{ cursor: 'pointer' }}
+                                                                >
+                                                                    <i className="fa fa-times" aria-hidden="true"></i>
+                                                                </a>
+                                                                <Tooltip id="my_tooltip" />
+                                                            </>
+                                                        )}
                                                     </td>
                                                 </tr>
                                             ))}
                                         </tbody>
                                     </table>
-                                    {totalElement === 0 && <div>No data to display</div>}
+                                    {totalElement === 0 && <div>{t('No data to display')}</div>}
                                 </div>
                             </div>
                             {totalPage > 1 ? (

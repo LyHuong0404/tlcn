@@ -16,6 +16,7 @@ import { useSelector } from 'react-redux';
 import { SearchOutlined } from '@ant-design/icons';
 import { Input } from 'antd';
 import useDebounce from '~/components/hooks';
+import { useTranslation } from 'react-i18next';
 
 const customStyles = {
     control: (provided) => ({
@@ -28,6 +29,7 @@ const customStyles = {
 };
 
 function AllRooms() {
+    const { t } = useTranslation();
     const { provins } = useSelector((state) => state.provins);
     const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
     const [roomId, setRoomId] = useState();
@@ -108,11 +110,11 @@ function AllRooms() {
                 <ul>
                     <li>
                         <Link to="/seller/dashboard">
-                            <i className="fa fa-home" aria-hidden="true"></i> Home
+                            <i className="fa fa-home" aria-hidden="true"></i> {t('Home')}
                         </Link>
                     </li>
                     <li className="active-bre">
-                        <a className="txt-none"> All Room</a>
+                        <a className="txt-none"> {t('All Rooms')}</a>
                     </li>
                 </ul>
             </div>
@@ -122,13 +124,15 @@ function AllRooms() {
                         <div className="box-inn-sp">
                             <div className="inn-title display-app-small-search">
                                 <div>
-                                    <h4>All Rooms</h4>
-                                    <span>Total: {totalRoom}</span>
+                                    <h4>{t('All Rooms')}</h4>
+                                    <span>
+                                        {t('Total')}: {totalRoom}
+                                    </span>
                                 </div>
                                 <div style={{ display: 'flex' }}>
                                     <Select
                                         options={provinceOptions}
-                                        placeholder="Select a province..."
+                                        placeholder={t('Select a province...')}
                                         isSearchable={true}
                                         styles={customStyles}
                                         onChange={(selectedOption) => {
@@ -137,7 +141,7 @@ function AllRooms() {
                                     />
                                     <Input
                                         style={{ marginLeft: '5px' }}
-                                        placeholder="Search..."
+                                        placeholder={t('Search...')}
                                         suffix={<SearchOutlined />}
                                         value={searchValue}
                                         onChange={handleChangeSearch}
@@ -149,13 +153,13 @@ function AllRooms() {
                                     <table className="table table-hover">
                                         <thead>
                                             <tr>
-                                                <th>Avatar</th>
-                                                <th>Name</th>
-                                                <th>Address</th>
-                                                <th>Price</th>
-                                                <th>Day Public</th>
-                                                <th>Total</th>
-                                                <th>Action</th>
+                                                <th>{t('Avatar')}</th>
+                                                <th>{t('Name')}</th>
+                                                <th>{t('Address')}</th>
+                                                <th>{t('Price')}</th>
+                                                <th>{t('Day Public')}</th>
+                                                {/* <th>Total</th> */}
+                                                <th>{t('Action')}</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -163,7 +167,7 @@ function AllRooms() {
                                                 <tr key={room.id}>
                                                     <td
                                                         style={{
-                                                            width: '70px',
+                                                            width: '110px',
                                                             overflow: 'hidden',
                                                             textOverflow: 'ellipsis',
                                                         }}
@@ -174,7 +178,7 @@ function AllRooms() {
                                                     </td>
                                                     <td
                                                         style={{
-                                                            width: '170px',
+                                                            width: '190px',
                                                             overflow: 'hidden',
                                                             textOverflow: 'ellipsis',
                                                         }}
@@ -203,14 +207,14 @@ function AllRooms() {
                                                     </td>
                                                     <td
                                                         style={{
-                                                            width: '110px',
+                                                            width: '130px',
                                                             overflow: 'hidden',
                                                             textOverflow: 'ellipsis',
                                                         }}
                                                     >
                                                         {room.dayPublic}
                                                     </td>
-                                                    <td
+                                                    {/* <td
                                                         style={{
                                                             width: '110px',
                                                             overflow: 'hidden',
@@ -218,7 +222,7 @@ function AllRooms() {
                                                         }}
                                                     >
                                                         {room.dayPublic}
-                                                    </td>
+                                                    </td> */}
                                                     <td>
                                                         <Link
                                                             to={config.routes.detailRoomLink(room.id)}
@@ -249,7 +253,7 @@ function AllRooms() {
                                             ))}
                                         </tbody>
                                     </table>
-                                    {totalRoom === 0 && <div>No data to display</div>}
+                                    {totalRoom === 0 && <div>{t('No data to display')}</div>}
                                 </div>
                             </div>
                             {totalPage > 1 ? (

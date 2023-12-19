@@ -19,7 +19,7 @@ const routes = {
     updateRoomLink: (id) => `/seller/updateRoom/${id}`,
 
     //admin
-    dashboards: '/admin/dashboards',
+    dashboards: '/admin/dashboard',
     users: '/admin/users',
     adduser: '/admin/adduser',
     viewprofile: '/admin/viewprofile',

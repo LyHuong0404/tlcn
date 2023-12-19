@@ -1,5 +1,5 @@
 import images from '~/assets/images';
-import styles from './TemplateMail.module.scss';
+
 
 function TemplateMail() {
     return (

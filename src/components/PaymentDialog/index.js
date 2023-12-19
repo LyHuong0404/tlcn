@@ -6,15 +6,16 @@ import { payment } from '~/actions/otherActions';
 import { useSelector } from 'react-redux';
 import { Input } from 'antd';
 import { DollarOutlined, BarcodeOutlined } from '@ant-design/icons';
+import { useTranslation } from 'react-i18next';
 
 function PaymentDialog({ onClose }) {
+    const { t } = useTranslation();
     const { user } = useSelector((state) => state.auth);
     const [isOpen, setIsOpen] = useState(true);
     const [amount, setAmount] = useState(null);
     const [bankCode, setBankCode] = useState(null);
 
     const submitForm = (e) => {
-        console.log(1);
         e.preventDefault();
         try {
             if (amount !== null && bankCode !== null) {
@@ -39,13 +40,13 @@ function PaymentDialog({ onClose }) {
                 <div className={styles.edit_form_overlay}></div>
                 <div className={styles.edit_form_body}>
                     <div className={styles.title}>
-                        <h5>Notifications</h5>
+                        <h5>{t('Notifications')}</h5>
                     </div>
                     <div className={styles.content}>
                         <div className={styles.form_survey}>
                             <p style={{ textAlign: 'center', color: '#ed2a2a' }}>
-                                Your balance is not enough. <br />
-                                Please add more balance to continue!
+                                {t('Your balance is not enough.')} <br />
+                                {t('Please add more balance to continue!')}
                             </p>
                             <div className={styles.form_image}>
                                 <Image src={images.paynow} />
@@ -55,21 +56,23 @@ function PaymentDialog({ onClose }) {
                                 <div className={styles.input_text}>
                                     <Input
                                         style={{ marginBottom: '10px', width: '70%' }}
-                                        placeholder="Amount"
+                                        placeholder={t('Amount')}
                                         prefix={<DollarOutlined />}
                                         value={amount}
                                         onChange={(e) => setAmount(e.target.value)}
                                     />
                                     <Input
                                         style={{ width: '70%' }}
-                                        placeholder="BankCode"
+                                        placeholder={t('BankCode')}
                                         prefix={<BarcodeOutlined />}
                                         onChange={(e) => setBankCode(e.target.value)}
+                                        value="NCB"
+                                        readOnly
                                     />
                                 </div>
                                 <div style={{ display: 'flex', justifyContent: 'center' }}>
                                     <button onClick={submitForm} className={styles.btn_submit}>
-                                        Send
+                                        {t('Send')}
                                     </button>
                                     <button
                                         className={styles.btn_cancel}
@@ -78,7 +81,7 @@ function PaymentDialog({ onClose }) {
                                             setIsOpen(!isOpen);
                                         }}
                                     >
-                                        Cancel
+                                        {t('Cancel')}
                                     </button>
                                 </div>
                             </form>

@@ -4,8 +4,10 @@ import images from '~/assets/images';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMailBulk, faPhone } from '@fortawesome/free-solid-svg-icons';
 import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 function PaymentFail() {
+    const { t } = useTranslation();
     return (
         <div className={styles.wrapper}>
             <div className={styles.edit_form}>
@@ -19,10 +21,10 @@ function PaymentFail() {
                         <div className={styles.icon_status}>
                             <Image src={images.payment_error} style={{ width: '60px', height: '60px' }} />
                         </div>
-                        <p className={styles.message}>Payment Error!</p>
-                        <Link to="/">
+                        <p className={styles.message}>{t('Payment Error!')}</p>
+                        {/* <Link to="/">
                             <button className={styles.button}>Back Home</button>
-                        </Link>
+                        </Link> */}
                     </div>
 
                     <div className={styles.footer}>

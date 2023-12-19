@@ -10,7 +10,7 @@ html[data-useragent*='MSIE'] .htlfndr-search-form-block input[type='submit'] {
     padding-top: 4px;
 }
 html[data-useragent*='MSIE'] .htlfndr-progress {
-    *zoom: 1;
+    zoom: 1;
 }
 html[data-useragent*='MSIE'] .htlfndr-post-format-quote .htlfndr-entry-content blockquote:before,
 html[data-useragent*='rv:11.0'] .htlfndr-post-format-quote .htlfndr-entry-content blockquote:before {

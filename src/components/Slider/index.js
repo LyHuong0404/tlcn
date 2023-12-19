@@ -17,6 +17,7 @@ import { useSelector } from 'react-redux';
 import { getWards, getDistricts } from '~/actions/addressActions';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPeopleLine } from '@fortawesome/free-solid-svg-icons';
+import { useTranslation } from 'react-i18next';
 
 const CustomIcon = () => <FontAwesomeIcon icon={faPeopleLine} />;
 const customStyles = {
@@ -52,6 +53,7 @@ const slides = [
 ];
 
 function Slider() {
+    const { t } = useTranslation();
     const { control, handleSubmit, setValue } = useForm();
     const { provins } = useSelector((state) => state.provins);
     const [districts, setDistricts] = useState([]);
@@ -82,7 +84,7 @@ function Slider() {
                 value: ward.name,
             }));
 
-    setValue('wardCode', null);
+            setValue('wardCode', null);
             setWards(wardOptions);
         };
         fetchData();
@@ -123,7 +125,7 @@ function Slider() {
                                         <i className="fa fa-star-o"></i>
                                         <i className="fa fa-star-o"></i>
                                     </div>
-                                    <h1 className="htlfndr-slider-title">find your perfect room</h1>
+                                    <h1 className="htlfndr-slider-title">{t('find your perfect room')}</h1>
                                     <div className="htlfndr-slider-under-title-line"></div>
                                 </div>
                             </div>
@@ -134,7 +136,7 @@ function Slider() {
             <form onSubmit={handleSubmit(submitForm)}>
                 <aside className="htlfndr-form-in-slider htlfndr-search-form-inline">
                     <div className="container">
-                        <h5>What are you looking for?</h5>
+                        <h5>{t('What are you looking for?')}</h5>
                         <div id="htlfndr-input-1" className="htlfndr-input-wrapper">
                             <Controller
                                 name="provinceCode"
@@ -143,7 +145,7 @@ function Slider() {
                                     <Select
                                         {...field}
                                         options={provinceOptions}
-                                        placeholder="Select a province..."
+                                        placeholder={t('Select a province...')}
                                         isSearchable={true}
                                         styles={customStyles}
                                         onChange={(selectedOption) => {
@@ -155,7 +157,7 @@ function Slider() {
                             />
 
                             <p className="htlfndr-search-checkbox">
-                                <label htmlFor="htlfndr-checkbox">Specific information</label>
+                                <label htmlFor="htlfndr-checkbox">{t('Specific information')}</label>
                             </p>
                         </div>
                         <div className="htlfndr-input-wrapper">
@@ -166,7 +168,7 @@ function Slider() {
                                     <Select
                                         {...field}
                                         options={districts}
-                                        placeholder="Select a district..."
+                                        placeholder={t('Select a district...')}
                                         isSearchable={true}
                                         styles={customStyles}
                                         onChange={(selectedOption) => {
@@ -185,7 +187,7 @@ function Slider() {
                                     <Select
                                         {...field}
                                         options={wards}
-                                        placeholder="Select a ward..."
+                                        placeholder={t('Select a ward...')}
                                         isSearchable={true}
                                         styles={customStyles}
                                     />
@@ -200,17 +202,8 @@ function Slider() {
                                     <Select
                                         {...props}
                                         options={optionsPeople}
-                                        placeholder="Select people..."
+                                        placeholder={t('Select people...')}
                                         styles={customStyles}
-                                        // components={{
-                                        //     IndicatorSeparator: () => null,
-                                        // }}
-                                        // formatOptionLabel={({ label }) => (
-                                        //     <span>
-                                        //         <CustomIcon style={{ margin: '20px' }} />
-                                        //         {label}
-                                        //     </span>
-                                        // )}
                                         onChange={(selectedOption) => {
                                             setValue('totalPerson', selectedOption);
                                         }}
@@ -219,7 +212,7 @@ function Slider() {
                             />
                         </div>
                         <div id="htlfndr-input-5">
-                            <input type="submit" value="search" />
+                            <input type="submit" value={t('search')} />
                         </div>
                     </div>
                 </aside>

@@ -19,43 +19,36 @@ const userSlice = createSlice({
     name: 'auth',
     initialState,
     reducers: {},
-    extraReducers: {
-        // Register user
-        [AuthoSignup.pending]: (state) => {
-            state.loading = true;
-            state.error = null;
-        },
-        [AuthoSignup.fulfilled]: (state, { payload }) => {
-            state.loading = false;
-            state.success = true;
-        },
-        [AuthoSignup.rejected]: (state, { payload }) => {
-            state.loading = false;
-            state.error = payload;
-            state.success = false;
-        },
-        // Login user
-        [login.pending]: (state) => {
-            state.loading = true;
-            state.error = null;
-        },
-        [login.fulfilled]: (state, { payload }) => {
-            state.loading = false;
-            state.user = payload.user;
-            state.token = payload.accessToken;
-            state.isAuthenticated = true;
-        },
-        [login.rejected]: (state, { payload }) => {
-            state.loading = false;
-            state.error = payload;
-        },
-        // [logout.fulfilled]: (state) => {
-        //     state.loading = false;
-        //     state.user = null;
-        //     state.token = null;
-        //     state.error = null;
-        // },
+    extraReducers: (builder) => {
+        builder
+            .addCase(AuthoSignup.pending, (state) => {
+                state.loading = true;
+                state.error = null;
+            })
+            .addCase(AuthoSignup.fulfilled, (state, { payload }) => {
+                state.loading = false;
+                state.success = true;
+            })
+            .addCase(AuthoSignup.rejected, (state, { payload }) => {
+                state.loading = false;
+                state.error = payload;
+                state.success = false;
+            })
+            .addCase(login.pending, (state) => {
+                state.loading = true;
+                state.error = null;
+            })
+            .addCase(login.fulfilled, (state, { payload }) => {
+                state.loading = false;
+                state.user = payload.user;
+                state.token = payload.accessToken;
+                state.isAuthenticated = true;
+            })
+            .addCase(login.rejected, (state, { payload }) => {
+                state.loading = false;
+                state.error = payload;
+            });
     },
 });
 export default userSlice.reducer;
-// export const { logout } = userSlice.actions;
+export const { logout } = userSlice.actions;

@@ -9,11 +9,9 @@ import '~/assets/css/font-awesome.min.css';
 import '~/assets/js/jquery-1.11.3.min.js';
 import styles from './AllAppointments.module.scss';
 import Image from '~/components/Image';
-import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrashCan } from '@fortawesome/free-solid-svg-icons';
 import { faEdit } from '@fortawesome/free-regular-svg-icons';
-import config from '~/config';
 import { useState, useEffect } from 'react';
 import { userAllAppointment, deleteAppointment } from '~/actions/userActions';
 import ConfirmDialog from '~/components/ConfirmDialog';
@@ -22,8 +20,10 @@ import { Pagination } from '@mui/material';
 import { useCallback } from 'react';
 import { toast } from 'react-toastify';
 import UpdateAppointmentDialog from '~/components/UpdateAppointmentDialog';
+import { useTranslation } from 'react-i18next';
 
 function AllAppointments() {
+    const { t } = useTranslation();
     const [dataAppointments, setDataAppointments] = useState([]);
     const [appointment, setAppointment] = useState();
     const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
@@ -87,23 +87,26 @@ function AllAppointments() {
             <table className="table">
                 <thead>
                     <tr>
-                        <th>Image</th>
-                        <th>Name</th>
-                        <th>Price</th>
-                        <th>Location</th>
-                        <th>Date Time</th>
-                        <th>Action</th>
+                        <th>{t('Image')}</th>
+                        <th>{t('Room Name')}</th>
+                        <th>{t('Price')}</th>
+                        <th>{t('Location')}</th>
+                        <th>{t('Date Time')}</th>
+                        <th>{t('Action')}</th>
                     </tr>
                 </thead>
                 <tbody>
                     {dataAppointments?.map((appointment, index) => (
                         <tr key={index}>
-                            <td className="htlfndr-scope-row" style={{
+                            <td
+                                className="htlfndr-scope-row"
+                                style={{
                                     width: '150px',
                                     overflow: 'hidden',
                                     textOverflow: 'ellipsis',
-                                }}>
-                                <a href="/">
+                                }}
+                            >
+                                <a>
                                     <Image
                                         src={appointment.room.avatarUrl}
                                         alt="user avatar"
@@ -120,11 +123,15 @@ function AllAppointments() {
                             >
                                 {appointment.room.subject}
                             </td>
-                            <td style={{
+                            <td
+                                style={{
                                     width: '100px',
                                     overflow: 'hidden',
                                     textOverflow: 'ellipsis',
-                                }}>{appointment.room.price}</td>
+                                }}
+                            >
+                                {appointment.room.price}
+                            </td>
                             <td
                                 style={{
                                     width: '280px',

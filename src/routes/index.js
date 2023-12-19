@@ -22,23 +22,22 @@ const AddRoomSeller = lazy(() => import('~/pages/Seller/Room/AddRoom'));
 const ListUsersAdmin = lazy(() => import('~/pages/Admin/UserList'));
 const AddUserAdmin = lazy(() => import('~/pages/Admin/AddUser'));
 const ViewProfileAdmin = lazy(() => import('~/pages/Admin/Profile/ViewProfile'));
-const EditProfileAdmin = lazy(() => import('~/pages/Admin/Profile/EditProfile'));
+const EditProfileUser = lazy(() => import('~/pages/Admin/Profile/EditProfile'));
 const ChangePasswordAdmin = lazy(() => import('~/pages/Admin/Profile/ChangePassword'));
-const ListRoomAdmin = lazy(() => import('~/pages/Admin/RoomListing/All'));
 const SettingSeller = lazy(() => import('~/pages/Seller/Setting'));
-const ListRoomTypesAdmin = lazy(() => import('~/pages/Admin/RoomType'));
-const AddRoomTypeAdmin = lazy(() => import('~/pages/Admin/AddRoomType'));
 const AllReviews = lazy(() => import('~/pages/User/AllReviews'));
 const MakeAppointment = lazy(() => import('~/pages/Room/Appointment'));
 const AllAppointmentsSeller = lazy(() => import('~/pages/Seller/Appointments'));
 const AllAppointmentsUser = lazy(() => import('~/pages/User/Appointment/AllAppointments'));
 const UpdateRoomSeller = lazy(() => import('~/pages/Seller/Room/UpdateRoom'));
-const Test = lazy(() => import('~/components/Test'));
-const Address = lazy(() => import('~/components/Address'));
-const VR = lazy(() => import('~/components/VR'));
 const PaymentSuccess = lazy(() => import('~/pages/PaymentSuccess'));
 const PaymentFail = lazy(() => import('~/pages/PaymentFail'));
 const TemplateMail = lazy(() => import('~/components/TemplateMail'));
+const AppointmentsAdmin = lazy(() => import('~/pages/Admin/Appointments'));
+const PaymentsAdmin = lazy(() => import('~/pages/Admin/Payment'));
+const getUserAppointments = lazy(() => import('~/pages/Admin/UserAppointments'));
+const getUserPayment = lazy(() => import('~/pages/Admin/UserPayment'));
+const EditProfileAdmin = lazy(() => import('~/pages/Admin/Profile/EditAdminProfile'));
 
 const publicRoutes = [
     {
@@ -66,38 +65,7 @@ const publicRoutes = [
         component: AllReviews,
         layout: RoomLayout,
     },
-    {
-        path: '/test',
-        component: VR,
-        layout: null,
-    },
 
-    //admin
-    {
-        path: config.routes.dashboards,
-        component: DashBoardAdmin,
-        layout: DefaultLayoutAdmin,
-    },
-    {
-        path: config.routes.users,
-        component: ListUsersAdmin,
-        layout: DefaultLayoutAdmin,
-    },
-    {
-        path: config.routes.adduser,
-        component: AddUserAdmin,
-        layout: DefaultLayoutAdmin,
-    },
-    {
-        path: config.routes.roomtypes,
-        component: ListRoomTypesAdmin,
-        layout: DefaultLayoutAdmin,
-    },
-    {
-        path: config.routes.addroomtype,
-        component: AddRoomTypeAdmin,
-        layout: DefaultLayoutAdmin,
-    },
     {
         path: config.authRoutes.login,
         component: Login,
@@ -180,6 +148,11 @@ const privateRoutes = [
 
     //admin
     {
+        path: config.authRoutes.appointments,
+        component: AppointmentsAdmin,
+        layout: DefaultLayoutAdmin,
+    },
+    {
         path: config.routes.viewprofile,
         component: ViewProfileAdmin,
         layout: DefaultLayoutAdmin,
@@ -189,14 +162,45 @@ const privateRoutes = [
         component: EditProfileAdmin,
         layout: DefaultLayoutAdmin,
     },
+
     {
         path: config.routes.changepassword,
         component: ChangePasswordAdmin,
         layout: DefaultLayoutAdmin,
     },
     {
-        path: config.routes.listrooms,
-        component: ListRoomAdmin,
+        path: config.routes.dashboards,
+        component: DashBoardAdmin,
+        layout: DefaultLayoutAdmin,
+    },
+    {
+        path: config.routes.users,
+        component: ListUsersAdmin,
+        layout: DefaultLayoutAdmin,
+    },
+    {
+        path: config.routes.adduser,
+        component: AddUserAdmin,
+        layout: DefaultLayoutAdmin,
+    },
+    {
+        path: config.authRoutes.payments,
+        component: PaymentsAdmin,
+        layout: DefaultLayoutAdmin,
+    },
+    {
+        path: config.authRoutes.getUser,
+        component: EditProfileUser,
+        layout: DefaultLayoutAdmin,
+    },
+    {
+        path: config.authRoutes.getUserAppointments,
+        component: getUserAppointments,
+        layout: DefaultLayoutAdmin,
+    },
+    {
+        path: config.authRoutes.getUserPayment,
+        component: getUserPayment,
         layout: DefaultLayoutAdmin,
     },
 ];

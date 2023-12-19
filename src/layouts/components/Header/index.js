@@ -14,36 +14,38 @@ import Image from '~/components/Image';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import styles from './Header.module.scss';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Tippy from '@tippyjs/react/headless';
-import { getProfile } from '~/actions/userActions';
 import Survey from '~/components/Survey';
+import PaymentDialog from '~/components/PaymentDialog';
+import { useSelector } from 'react-redux';
+import { userLogout } from '~/actions/authActions';
+import { useTranslation } from 'react-i18next';
 
 function Header() {
-    const [user, setUser] = useState({});
+    const { t, i18n } = useTranslation();
+    const navigate = useNavigate();
+    const { user } = useSelector((state) => state.auth);
     const [active, setActive] = useState(1);
 
-    const [language, setLanguage] = useState('en');
+    const [language, setLanguage] = useState(localStorage.getItem('language') || 'en');
     const [menuActive, setMenuActive] = useState(1);
     const [openSurvey, setOpenSurvey] = useState(false);
+    const [isOpen, setIsOpen] = useState(false);
 
-    const handleChangeLang = (event) => {
-        setLanguage(event.target.value);
+    const handleChangeLang = (e) => {
+        const selectedLanguage = e.target.value;
+        setLanguage(selectedLanguage);
+        i18n.changeLanguage(selectedLanguage);
+        localStorage.setItem('language', selectedLanguage);
     };
 
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const result = await getProfile();
-                setUser(result);
-            } catch (error) {
-                console.log(error);
-            }
-        };
-        fetchData();
-    }, []);
+    const handleLogout = async () => {
+        await userLogout();
+        navigate('/auth/login');
+    };
 
     return (
         <>
@@ -72,14 +74,17 @@ function Header() {
                                         </p>
                                     </a>
                                 </div>
-                                {/* <div className="htlfndr-user-signed-in" style={{ right: '68px' }}>
-                                    <Link className="htlfndr-user-avatar" >
-                                        <Image src={images.bellring} alt="user avatar" style={{width: '35px', height: '35px'}}/>
-                                    </Link>
-                                    <Link className="htlfndr-user-avatar" >
-                                        <Image src={images.bell} alt="bell" style={{width: '35px', height: '35px'}}/>
-                                    </Link>
-                                </div> */}
+                                {user && (
+                                    <div className="htlfndr-user-signed-in" style={{ right: '68px' }}>
+                                        <Link className="htlfndr-user-avatar" onClick={() => setIsOpen(!isOpen)}>
+                                            <Image
+                                                src={images.card}
+                                                alt="card"
+                                                style={{ width: '35px', height: '35px' }}
+                                            />
+                                        </Link>
+                                    </div>
+                                )}
                                 {user ? (
                                     <div>
                                         <Tippy
@@ -97,7 +102,7 @@ function Header() {
                                                         >
                                                             <Link to="/profile">
                                                                 <i className="fa fa-user"></i>
-                                                                Personal Info
+                                                                {t('Personal Info')}
                                                             </Link>
                                                         </li>
                                                         <li
@@ -111,9 +116,33 @@ function Header() {
                                                         >
                                                             <Link>
                                                                 <i className="fa fa-pencil-square-o"></i>
-                                                                Survey
+                                                                {t('Survey')}
                                                             </Link>
                                                         </li>
+                                                        {user?.roles?.length > 2 && (
+                                                            <>
+                                                                <li
+                                                                    className={`${styles.menu} ${
+                                                                        active === 3 ? styles.active : ''
+                                                                    }`}
+                                                                >
+                                                                    <Link to="/seller/dashboard">
+                                                                        <i className="fa fa-home"></i>
+                                                                        Seller Home
+                                                                    </Link>
+                                                                </li>
+                                                                <li
+                                                                    className={`${styles.menu} ${
+                                                                        active === 3 ? styles.active : ''
+                                                                    }`}
+                                                                >
+                                                                    <Link to="/admin/dashboard">
+                                                                        <i className="fa fa-unlock"></i>
+                                                                        {t('Admin Home')}
+                                                                    </Link>
+                                                                </li>
+                                                            </>
+                                                        )}
                                                         {user?.roles?.length === 2 && (
                                                             <li
                                                                 className={`${styles.menu} ${
@@ -126,20 +155,8 @@ function Header() {
                                                                 </Link>
                                                             </li>
                                                         )}
-                                                        {user?.roles?.length === 3 && (
-                                                            <li
-                                                                className={`${styles.menu} ${
-                                                                    active === 3 ? styles.active : ''
-                                                                }`}
-                                                            >
-                                                                <Link to="/seller/dashboard">
-                                                                    <i className="fa fa-home"></i>
-                                                                    Admin Home
-                                                                </Link>
-                                                            </li>
-                                                        )}
 
-                                                        <li>
+                                                        <li onClick={handleLogout}>
                                                             <a>
                                                                 <i className="fa fa-sign-out"></i>
                                                                 Logout
@@ -151,13 +168,11 @@ function Header() {
                                         >
                                             <div className="htlfndr-user-signed-in">
                                                 <Link to="/profile" className="htlfndr-user-avatar">
-                                                    <Image
-                                                        src={user.avatar}
-                                                        alt="user avatar"
-                                                        // className="avatar-header"
-                                                    />
+                                                    <Image src={user.avatar} alt="user avatar" />
                                                 </Link>
-                                                <h5 className="htlfndr-user-greeting">Hi, {user.username}!</h5>
+                                                <h5 className="htlfndr-user-greeting">
+                                                    {t('Hi')}, {user.username}!
+                                                </h5>
                                             </div>
                                         </Tippy>
                                     </div>
@@ -170,7 +185,7 @@ function Header() {
                                                     data-toggle="modal"
                                                     data-target="#htlfndr-sing-up"
                                                 >
-                                                    <span>sign up</span>
+                                                    <span>{t('sign up')}</span>
                                                 </a>
                                             </li>
                                             <li id="htlfndr-singin-link">
@@ -179,7 +194,7 @@ function Header() {
                                                     data-toggle="modal"
                                                     data-target="#htlfndr-sing-in"
                                                 >
-                                                    <span>sign in</span>
+                                                    <span>{t('sign in')}</span>
                                                 </a>
                                             </li>
                                         </ul>
@@ -187,7 +202,7 @@ function Header() {
                                 )}
                                 <div className="collapse navbar-collapse navbar-right" id="htlfndr-first-nav">
                                     <ul className="nav navbar-nav htlfndr-language">
-                                        <li id="htlfndr-dropdown-language" style={{top: '-4px'}}>
+                                        <li id="htlfndr-dropdown-language">
                                             <div className="htlfndr-dropdown-container aaa">
                                                 <FormControl
                                                     sx={{ m: 0, minWidth: 100 }}
@@ -203,9 +218,9 @@ function Header() {
                                                     >
                                                         <MenuItem value="en" className={styles.aaa}>
                                                             <Image className={styles.custom_image_eng} />
-                                                            <span className={styles.name_language}>ENG</span>
+                                                            <span className={styles.name_language}>EN</span>
                                                         </MenuItem>
-                                                        <MenuItem value="vn" className={styles.aaa}>
+                                                        <MenuItem value="vi" className={styles.aaa}>
                                                             <Image className={styles.custom_image_vn} />
                                                             <span className={styles.name_language}>VN</span>
                                                         </MenuItem>
@@ -239,7 +254,7 @@ function Header() {
                                             className={menuActive === 1 ? 'active' : ''}
                                             onClick={() => setMenuActive(1)}
                                         >
-                                            <Link to="/">home</Link>
+                                            <Link to="/">{t('home')}</Link>
                                         </li>
                                         <li
                                             className={menuActive === 2 ? 'active' : ''}
@@ -251,38 +266,19 @@ function Header() {
                                             className={menuActive === 3 ? 'active' : ''}
                                             onClick={() => setMenuActive(3)}
                                         >
-                                            <Link >about</Link>
+                                            <Link>about</Link>
                                         </li>
                                         <li
                                             className={menuActive === 4 ? 'active' : ''}
                                             onClick={() => setMenuActive(4)}
                                         >
-                                            <Link to="/profile">user profile</Link>
+                                            <Link to="/profile">{t('user profile')}</Link>
                                         </li>
-                                        <li className="dropdown">
-                                            <a href="/">Pages</a>
-                                            <ul className="dropdown-menu">
-                                                <li
-                                                    className={menuActive === 5 ? styles.active : ''}
-                                                    onClick={() => {
-                                                        setMenuActive(5);
-                                                    }}
-                                                >
-                                                    <Link to="/search">Search Rooms</Link>
-                                                </li>
-                                                <li
-                                                    className={menuActive === 6 ? styles.active : ''}
-                                                    onClick={() => setMenuActive(6)}
-                                                >
-                                                    <Link to="contact-us.html">Contact Us</Link>
-                                                </li>
-                                                <li
-                                                    className={menuActive === 7 ? styles.active : ''}
-                                                    onClick={() => setMenuActive(7)}
-                                                >
-                                                    <Link to="thanks-page.html">Thanks Page</Link>
-                                                </li>
-                                            </ul>
+                                        <li
+                                            className={menuActive === 5 ? 'active' : ''}
+                                            onClick={() => setMenuActive(5)}
+                                        >
+                                            <Link to="/search">{t('Search Rooms')}</Link>
                                         </li>
                                     </ul>
                                 </div>
@@ -292,6 +288,7 @@ function Header() {
                 </header>
             </div>
             {openSurvey && <Survey onClose={() => setOpenSurvey(!openSurvey)} />}
+            {isOpen && <PaymentDialog onClose={() => setIsOpen(!isOpen)} title="" />}
         </>
     );
 }

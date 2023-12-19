@@ -1,21 +1,22 @@
-
 import styles from './UpdateAppointmentDialog.module.scss';
 import { useState } from 'react';
-import { format, parse  } from 'date-fns';
+import { format, parse } from 'date-fns';
 import { updateAppointment } from '~/actions/userActions';
 import { toast } from 'react-toastify';
+import { useTranslation } from 'react-i18next';
 
 function UpdateAppointmentDialog({ open, onClose, data }) {
-    const [isOpen, setIsOpen] = useState(open)
+    const { t } = useTranslation();
+    const [isOpen, setIsOpen] = useState(open);
     const [day, setDate] = useState(format(parse(data.day, 'dd-MM-yyyy', new Date()), 'yyyy-MM-dd'));
     const [time, setTime] = useState(data.time);
-    
-    const handleConfirmation = async() => {  
-        const appointmentId = data.id;     
+
+    const handleConfirmation = async () => {
+        const appointmentId = data.id;
         try {
             await updateAppointment({ appointmentId, day, time });
-            toast.success("Appointment updated successfully.")
-        } catch(error) {
+            toast.success('Appointment updated successfully.');
+        } catch (error) {
             console.log(error);
         }
         onClose();
@@ -34,10 +35,15 @@ function UpdateAppointmentDialog({ open, onClose, data }) {
             <div className={styles.delete_form}>
                 <div className={styles.delete_form_overlay}></div>
                 <div className={styles.delete_form_body}>
-                    <p className={styles.title}>Update Appointment</p>
+                    <p className={styles.title}>{t('Update Appointment')}</p>
                     <div className={styles.datetime}>
-                        <input type='date' value={day} onChange={handleChangeDate} style={{width: '100%', marginBottom: '10px'}}/>
-                        <input type='time' value={time} onChange={handleChangeTime} style={{width: '100%'}}/>
+                        <input
+                            type="date"
+                            value={day}
+                            onChange={handleChangeDate}
+                            style={{ width: '100%', marginBottom: '10px' }}
+                        />
+                        <input type="time" value={time} onChange={handleChangeTime} style={{ width: '100%' }} />
                     </div>
                     <div className={styles.action}>
                         <button
@@ -45,7 +51,7 @@ function UpdateAppointmentDialog({ open, onClose, data }) {
                             className={styles.button_delete}
                             onClick={handleConfirmation}
                         >
-                            Update
+                            {t('Update')}
                         </button>
                         <button
                             style={{ marginLeft: '0px', borderTop: '1px solid #e3e3e4' }}
@@ -55,7 +61,7 @@ function UpdateAppointmentDialog({ open, onClose, data }) {
                                 setIsOpen(!isOpen);
                             }}
                         >
-                            Cancel
+                            {t('Cancel')}
                         </button>
                     </div>
                 </div>

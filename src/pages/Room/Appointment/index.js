@@ -4,11 +4,12 @@ import Image from '~/components/Image';
 import { makeAppointment } from '~/actions/userActions';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import images from '~/assets/images';
 import { useState } from 'react';
 import PaymentDialog from '~/components/PaymentDialog';
+import { useTranslation } from 'react-i18next';
 
 function Appointment() {
+    const { t } = useTranslation();
     const {
         register,
         handleSubmit,
@@ -38,6 +39,13 @@ function Appointment() {
         }
     };
 
+    const renderStars = (averageStar) => {
+        const stars = Array.from({ length: 5 }, (_, index) => (
+            <i key={index} className={`fa fa-star ${index < averageStar ? 'htlfndr-star-color' : ''}`}></i>
+        ));
+
+        return <>{stars}</>;
+    };
     return (
         <div className="row htlfndr-page-content">
             {isOpen && <PaymentDialog onClose={() => setIsOpen(!isOpen)} />}
@@ -47,10 +55,10 @@ function Appointment() {
                         <section className="htlfndr-form-section">
                             <header>
                                 <h2 className="htlfndr-form-section-title">
-                                    Time to <span>make an appointment</span>?
+                                    {t('Time to')} <span>{t('make an appointment')}</span>?
                                 </h2>
                                 <h5 className="htlfndr-form-section-description">
-                                    Please tell us your appointment time.
+                                    {t('Please tell us your appointment time.')}
                                 </h5>
                             </header>
                             <div id="htlfndr-accordion-3" className="htlfndr-form-block">
@@ -62,7 +70,7 @@ function Appointment() {
                                                 htmlFor="htlfndr-first-adult-name"
                                                 className="htlfndr-required htlfndr-top-label"
                                             >
-                                                Date
+                                                {t('Date')}
                                             </label>
                                             <input
                                                 type="date"
@@ -74,7 +82,7 @@ function Appointment() {
                                             />
                                             {errors.day && (
                                                 <div style={{ textAlign: 'left' }}>
-                                                    <label className="error-message">Date is required.</label>
+                                                    <label className="error-message">{t('Date is required.')}</label>
                                                 </div>
                                             )}
                                         </div>
@@ -83,7 +91,7 @@ function Appointment() {
                                                 htmlFor="htlfndr-first-adult-last-name"
                                                 className="htlfndr-required htlfndr-top-label"
                                             >
-                                                Time
+                                                {t('Time')}
                                             </label>
                                             <input
                                                 type="time"
@@ -95,7 +103,7 @@ function Appointment() {
                                             />
                                             {errors.time && (
                                                 <div style={{ textAlign: 'left' }}>
-                                                    <label className="error-message">Time is required.</label>
+                                                    <label className="error-message">{t('Time is required.')}</label>
                                                 </div>
                                             )}
                                         </div>
@@ -105,7 +113,7 @@ function Appointment() {
                         </section>
                         <br />
                         <input id="policy" type="checkbox" name="policy" onChange={() => setIsDisabled(!isDisabled)} />
-                        <label htmlFor="policy">I agree to deduct 2 points when creating an appointment.</label>
+                        <label htmlFor="policy">{t('I agree to deduct 2 points when creating an appointment.')}</label>
 
                         <section
                             className="htlfndr-form-section htlfndr-form-review-section"
@@ -128,7 +136,7 @@ function Appointment() {
                     <div className="htlfndr-booking-details">
                         <div className="widget">
                             <div className="htlfndr-widget-main-content htlfndr-widget-padding">
-                                <h3 className="widget-title">appointment details</h3>
+                                <h3 className="widget-title">{t('appointment details')}</h3>
                                 <div className="htlfndr-widget-block htlfndr-table-view">
                                     <div className="htlfndr-hotel-thumbnail">
                                         <a href="hotel-page-v1.html">
@@ -139,22 +147,16 @@ function Appointment() {
                                         <a href="hotel-page-v1.html">
                                             <h3>{room?.subject}</h3>
                                         </a>
-                                        <div className="htlfndr-rating-stars">
-                                            <i className="fa fa-star htlfndr-star-color"></i>
-                                            <i className="fa fa-star htlfndr-star-color"></i>
-                                            <i className="fa fa-star htlfndr-star-color"></i>
-                                            <i className="fa fa-star htlfndr-star-color"></i>
-                                            <i className="fa fa-star htlfndr-star-color"></i>
-                                        </div>
+                                        <div className="htlfndr-rating-stars">{renderStars(room?.averageStar)}</div>
                                         <p className="htlfndr-location">{room?.address}</p>
                                     </div>
                                 </div>
                                 <div className="htlfndr-widget-block htlfndr-bigger-font">
                                     <p className="htlfndr-details">
-                                        <span>persons:</span> <span>{room?.totalPerson}</span>
+                                        <span>{t('persons')}:</span> <span>{room?.totalPerson}</span>
                                     </p>
                                     <p className="htlfndr-total-price" style={{ marginTop: '0', marginBottom: '55px' }}>
-                                        1 month price:
+                                        {t('1 month price')}:
                                     </p>
                                     <br />
                                     <div className="htlfndr-hotel-price">

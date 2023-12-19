@@ -122,3 +122,29 @@ export const rejectAppointment = async (id) => {
         console.log(err);
     }
 };
+
+export const OKAppointment = async (id) => {
+    try {
+        const response = await httprequest.get('ok-appointment', {
+            params: {
+                appointmentId: id,
+            },
+        });
+        return response.data;
+    } catch (err) {
+        console.log(err);
+    }
+};
+
+export const CancelAppointment = async (id) => {
+    try {
+        const response = await httprequest.get('cancel-appointment', {
+            params: {
+                appointmentId: id,
+            },
+        });
+        return response.data;
+    } catch (err) {
+        console.log(err);
+    }
+};

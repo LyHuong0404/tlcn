@@ -13,6 +13,7 @@ import { getDistricts, getWards } from '~/actions/addressActions';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCloudUploadAlt, faTimesCircle } from '@fortawesome/free-solid-svg-icons';
 import Loading from '~/components/Loading';
+import { useTranslation } from 'react-i18next';
 
 const customStyles = {
     control: (provided) => ({
@@ -25,6 +26,7 @@ const customStyles = {
 
 //dùng param
 function UpdateRoom() {
+    const { t } = useTranslation();
     const params = useParams();
     const roomID = params.id;
     const { provins } = useSelector((state) => state.provins);
@@ -210,41 +212,41 @@ function UpdateRoom() {
                     <ul>
                         <li>
                             <Link to="/seller/dashboard">
-                                <i className="fa fa-home" aria-hidden="true"></i> Home
+                                <i className="fa fa-home" aria-hidden="true"></i> {t('Home')}
                             </Link>
                         </li>
                         <li className="active-bre">
-                            <a className="txt-none"> Update Room</a>
+                            <a className="txt-none"> {t('Update Room')}</a>
                         </li>
                     </ul>
                 </div>
                 <div className="sb2-2-add-blog sb2-2-1">
-                    <h2>Update Room Detail</h2>
+                    <h2>{t('Update Room Detail')}</h2>
                     <ul className="nav nav-tabs tab-list" style={{ marginTop: '10px' }}>
                         <li className={menuActive === 1 ? 'active' : ''} onClick={() => setMenuActive(1)}>
                             <Link data-toggle="tab">
-                                <i className="fa fa-info" aria-hidden="true"></i> <span>Detail</span>
+                                <i className="fa fa-info" aria-hidden="true"></i> <span>{t('Detail')}</span>
                             </Link>
                         </li>
                         <li className={menuActive === 2 ? 'active' : ''} onClick={() => setMenuActive(2)}>
                             <Link data-toggle="tab">
-                                <i className="fa fa-bed" aria-hidden="true"></i> <span>Facilities</span>
+                                <i className="fa fa-bed" aria-hidden="true"></i> <span>{t('Facilities')}</span>
                             </Link>
                         </li>
 
                         <li className={menuActive === 3 ? 'active' : ''} onClick={() => setMenuActive(3)}>
                             <Link data-toggle="tab">
-                                <i className="fa fa-money" aria-hidden="true"></i> <span>Price & Avatar</span>
+                                <i className="fa fa-money" aria-hidden="true"></i> <span>{t('Price & Avatar')}</span>
                             </Link>
                         </li>
                         <li className={menuActive === 4 ? 'active' : ''} onClick={() => setMenuActive(4)}>
                             <Link data-toggle="tab">
-                                <i className="fa fa-picture-o" aria-hidden="true"></i> <span>Photo Gallery</span>
+                                <i className="fa fa-picture-o" aria-hidden="true"></i> <span>{t('Photo Gallery')}</span>
                             </Link>
                         </li>
                         <li className={menuActive === 5 ? 'active' : ''} onClick={() => setMenuActive(5)}>
                             <Link data-toggle="tab">
-                                <i className="fa fa-map-marker" aria-hidden="true"></i> <span>Address</span>
+                                <i className="fa fa-map-marker" aria-hidden="true"></i> <span>{t('Address')}</span>
                             </Link>
                         </li>
                     </ul>
@@ -253,7 +255,7 @@ function UpdateRoom() {
                             <div id="home" className={`tab-pane fade ${menuActive === 1 ? 'in active' : ''}`}>
                                 <div className="box-inn-sp">
                                     <div className="inn-title">
-                                        <h4>Listing Information</h4>
+                                        <h4>{t('Listing Information')}</h4>
                                     </div>
                                     <div className={styles.box}>
                                         <div className="row">
@@ -268,7 +270,7 @@ function UpdateRoom() {
                                                     style={{ height: '3rem' }}
                                                     {...register('subject', { required: true })}
                                                 />
-                                                <label htmlFor="list-title">Name</label>
+                                                <label htmlFor="list-title">{t('Name')}</label>
                                             </div>
                                         </div>
                                         <div className="row">
@@ -283,7 +285,7 @@ function UpdateRoom() {
                                                     style={{ height: '3rem' }}
                                                     {...register('width', { required: true })}
                                                 />
-                                                <label htmlFor="t2-width">Width (m)</label> <br />
+                                                <label htmlFor="t2-width">{t('Width')} (m)</label> <br />
                                             </div>
 
                                             <div className="input-field col s3">
@@ -297,7 +299,7 @@ function UpdateRoom() {
                                                     style={{ height: '3rem' }}
                                                     {...register('height', { required: true })}
                                                 />
-                                                <label htmlFor="t2-height">Height (m)</label> <br />
+                                                <label htmlFor="t2-height">{t('Height')} (m)</label> <br />
                                             </div>
                                             <div className="input-field col s3">
                                                 <br />
@@ -310,7 +312,7 @@ function UpdateRoom() {
                                                     defaultValue={room.totalPerson}
                                                     {...register('totalPerson', { required: true })}
                                                 />
-                                                <label htmlFor="guests">Guests</label> <br />
+                                                <label htmlFor="guests">{t('Guests')}</label> <br />
                                             </div>
                                         </div>
                                         <div className="row">
@@ -323,7 +325,7 @@ function UpdateRoom() {
                                                     defaultValue={room.description}
                                                     {...register('description', { required: true })}
                                                 ></textarea>
-                                                <label htmlFor="textarea1">Descriptions:</label> <br />
+                                                <label htmlFor="textarea1">{t('Descriptions')}:</label> <br />
                                             </div>
                                         </div>
                                     </div>
@@ -335,7 +337,7 @@ function UpdateRoom() {
                         {menuActive === 2 ? (
                             <div id="menu4" className={`tab-pane fade ${menuActive === 2 ? 'in active' : ''}`}>
                                 <div className="inn-title">
-                                    <h4>Facilities</h4>
+                                    <h4>{t('Facilities')}</h4>
                                 </div>
                                 <div className="row">
                                     <div className="col s12">
@@ -352,7 +354,7 @@ function UpdateRoom() {
                                                     defaultChecked={room.isFreeParking}
                                                     {...register('isFreeParking')}
                                                 />
-                                                <label htmlFor="item10">FreeParking</label>
+                                                <label htmlFor="item10">{t('Free Parking')}</label>
                                                 <br />
 
                                                 <input
@@ -364,7 +366,7 @@ function UpdateRoom() {
                                                     {...register('tvAvailable')}
                                                 />
 
-                                                <label htmlFor="item11">Television</label>
+                                                <label htmlFor="item11">{t('Television')}</label>
                                                 <br />
 
                                                 <input
@@ -375,7 +377,7 @@ function UpdateRoom() {
                                                     defaultChecked={room.furnitureAvailable}
                                                     {...register('furnitureAvailable')}
                                                 />
-                                                <label htmlFor="item12">Furniture Available</label>
+                                                <label htmlFor="item12">{t('Furniture Available')}</label>
                                                 <br />
 
                                                 <input
@@ -386,7 +388,7 @@ function UpdateRoom() {
                                                     defaultChecked={room.airConditionAvailable}
                                                     {...register('airConditionAvailable')}
                                                 />
-                                                <label htmlFor="item13">Air Conditioner Available</label>
+                                                <label htmlFor="item13">{t('Air Conditioning')}</label>
                                                 <br />
                                             </div>
                                             <div>
@@ -398,7 +400,7 @@ function UpdateRoom() {
                                                     defaultChecked={room.attic}
                                                     {...register('attic')}
                                                 />
-                                                <label htmlFor="item14">Attic</label>
+                                                <label htmlFor="item14">{t('Attic')}</label>
                                                 <br />
 
                                                 <input
@@ -410,7 +412,7 @@ function UpdateRoom() {
                                                     {...register('privateToilet')}
                                                 />
 
-                                                <label htmlFor="item15">Private Toilet</label>
+                                                <label htmlFor="item15">{t('Private Toilet')}</label>
                                                 <br />
 
                                                 <input
@@ -421,7 +423,7 @@ function UpdateRoom() {
                                                     defaultChecked={room.allowedPet}
                                                     {...register('allowedPet')}
                                                 />
-                                                <label htmlFor="item16">Allow Pet</label>
+                                                <label htmlFor="item16">{t('Allow Pet')}</label>
                                                 <br />
                                             </div>
                                         </div>
@@ -435,10 +437,10 @@ function UpdateRoom() {
                             <div id="menu4" className={`tab-pane fade ${menuActive === 3 ? 'in active' : ''}`}>
                                 <div style={{ display: 'flex', justifyContent: 'space-around' }}>
                                     <div className="inn-title">
-                                        <h4>Avatar</h4>
+                                        <h4>{t('Avatar')}</h4>
                                     </div>
                                     <div className="inn-title">
-                                        <h4>Price</h4>
+                                        <h4>{t('Price')}</h4>
                                     </div>
                                 </div>
                                 <div className="row">
@@ -464,7 +466,7 @@ function UpdateRoom() {
                                         <div className={styles.box} style={{ padding: '0 20px 25px 20px' }}>
                                             <div className="input-field">
                                                 <br />
-                                                <label htmlFor="t2-price">Price / month (VNĐ)</label>
+                                                <label htmlFor="t2-price">{t('Price')} / {t('month')} (VNĐ)</label>
                                                 <input
                                                     id="t2-price"
                                                     type="number"
@@ -479,7 +481,7 @@ function UpdateRoom() {
                                             <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                                                 <div className="input-field">
                                                     <br />
-                                                    <label htmlFor="t3-price">Water Price (VNĐ)</label>
+                                                    <label htmlFor="t3-price">{t('Water Price')} (VNĐ)</label>
                                                     <input
                                                         id="t3-price"
                                                         type="number"
@@ -492,7 +494,7 @@ function UpdateRoom() {
                                                 </div>
                                                 <div className="input-field">
                                                     <br />
-                                                    <label htmlFor="t4-price">Electricity Price (VNĐ)</label>
+                                                    <label htmlFor="t4-price">{t('Electricity Price')} (VNĐ)</label>
                                                     <input
                                                         id="t4-price"
                                                         type="number"
@@ -514,7 +516,7 @@ function UpdateRoom() {
                         {menuActive === 4 ? (
                             <div id="menu2" className={`tab-pane fade ${menuActive === 4 ? 'in active' : ''}`}>
                                 <div className="inn-title">
-                                    <h4>Photo Gallery</h4>
+                                    <h4>{t('Photo Gallery')}</h4>
                                 </div>
                                 <div className={styles.box_upload}>
                                     <label htmlFor="file-input" className={styles.file_input}>
@@ -535,11 +537,11 @@ function UpdateRoom() {
                                                         style={{ fontSize: '70px' }}
                                                     />
                                                     <div className={styles.text}>
-                                                        <p>Drop files here or click to upload.</p>
-                                                        <span>
+                                                        <p>{t('Drop files here or click to upload.')}</p>
+                                                        {/* <span>
                                                             (This is just a demo dropzone. Selected files are
                                                             <strong> not</strong> actually uploaded.)
-                                                        </span>
+                                                        </span> */}
                                                     </div>
                                                 </>
                                             )}
@@ -577,7 +579,7 @@ function UpdateRoom() {
                         {menuActive === 5 ? (
                             <div id="menu1" className={`tab-pane fade ${menuActive === 5 ? 'in active' : ''}`}>
                                 <div className="inn-title">
-                                    <h4>Room Address</h4>
+                                    <h4>{t('Room Address')}</h4>
                                 </div>
                                 <div className={styles.box}>
                                     <div className="row">
@@ -592,12 +594,12 @@ function UpdateRoom() {
                                                 style={{ height: '3rem' }}
                                                 {...register('addressDetail')}
                                             />
-                                            <label htmlFor="addressDetail">Detailed Address</label>
+                                            <label htmlFor="addressDetail">{t('Detailed Address')}</label>
                                         </div>
                                     </div>
                                     <div className="row">
                                         <div className="input-field col s12">
-                                            <label htmlFor="address">Address</label>
+                                            <label htmlFor="address">{t('Address')}</label>
                                         </div>
                                     </div>
                                     <br />
@@ -607,7 +609,7 @@ function UpdateRoom() {
                                                 <Select
                                                     id="selectOption"
                                                     options={provinceOptions || []}
-                                                    placeholder="Select a province"
+                                                    placeholder={t('Select a province')}
                                                     isSearchable
                                                     styles={customStyles}
                                                     value={provinceRef}
@@ -620,7 +622,7 @@ function UpdateRoom() {
                                                 <Select
                                                     id="selectOption"
                                                     options={districts || []}
-                                                    placeholder="Select a district"
+                                                    placeholder={t('Select a district')}
                                                     isSearchable
                                                     styles={customStyles}
                                                     value={districtRef}
@@ -639,7 +641,7 @@ function UpdateRoom() {
                                                             {...field}
                                                             id="selectOption"
                                                             options={wards || []}
-                                                            placeholder="Select a ward"
+                                                            placeholder={t('Select a ward')}
                                                             isSearchable
                                                             styles={customStyles}
                                                             value={wardRef}

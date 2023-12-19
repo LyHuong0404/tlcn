@@ -1,21 +1,35 @@
 /* eslint-disable jsx-a11y/iframe-has-title */
 /* eslint-disable jsx-a11y/anchor-is-valid */
+import { getAllRooms } from '~/actions/sellerActions';
 import Image from '~/components/Image';
+import { format } from 'date-fns';
+import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 function DashBoard() {
+    const { t } = useTranslation();
+    const [rooms, setRooms] = useState([]);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            const result = await getAllRooms(10, 0, null, null);
+            result?.content?.map((element) => (element.dayPublic = format(new Date(element.dayPublic), 'dd-MM-yyyy')));
+            setRooms(result?.content);
+        };
+        fetchData();
+    }, []);
+
     return (
         <div className="sb2-2">
             <div className="sb2-2-2">
                 <ul>
                     <li>
                         <a className="txt-none">
-                            <i className="fa fa-home" aria-hidden="true"></i> Home
+                            <i className="fa fa-home" aria-hidden="true"></i> {t('Home')}
                         </a>
                     </li>
                     <li className="active-bre">
-                        <a className="txt-none">
-                            Dashboard
-                        </a>
+                        <a className="txt-none">{t('Dashboard')}</a>
                     </li>
                 </ul>
             </div>
@@ -78,7 +92,7 @@ function DashBoard() {
                     </ul>
                 </div>
             </div>
-            <div className="sb2-2-3">
+            {/* <div className="sb2-2-3">
                 <div className="row">
                     <div className="col-md-6">
                         <div className="box-inn-sp">
@@ -374,56 +388,25 @@ function DashBoard() {
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> */}
 
             <div className="sb2-2-3">
                 <div className="row">
                     <div className="col-md-12">
                         <div className="box-inn-sp">
                             <div className="inn-title">
-                                <h4>User Details</h4>
-                                <p>Airtport Hotels The Right Way To Start A Short Break Holiday</p>
-                                <a className="dropdown-button drop-down-meta" href="#" data-activates="dr-users">
-                                    <i className="material-icons">more_vert</i>
-                                </a>
-                                <ul id="dr-users" className="dropdown-content">
-                                    <li>
-                                        <a href="#!">Add New</a>
-                                    </li>
-                                    <li>
-                                        <a href="#!">Edit</a>
-                                    </li>
-                                    <li>
-                                        <a href="#!">Update</a>
-                                    </li>
-                                    <li className="divider"></li>
-                                    <li>
-                                        <a href="#!">
-                                            <i className="material-icons">delete</i>Delete
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#!">
-                                            <i className="material-icons">subject</i>View All
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#!">
-                                            <i className="material-icons">play_for_work</i>Download
-                                        </a>
-                                    </li>
-                                </ul>
+                                <h4>List New Rooms</h4>
+                                {/* <p>Airtport Hotels The Right Way To Start A Short Break Holiday</p> */}
                             </div>
                             <div className="tab-inn">
                                 <div className="table-responsive table-desi">
                                     <table className="table table-hover">
                                         <thead>
                                             <tr>
-                                                <th>User</th>
-                                                <th>Name</th>
-                                                <th>Phone</th>
-                                                <th>Email</th>
-                                                <th>Country</th>
+                                                <th>{t('Avatar')}</th>
+                                                <th>{t('Name')}</th>
+                                                <th>{t('Address')}</th>
+                                                <th>{t('Price')}</th>
                                                 <th>Listings</th>
                                                 <th>Enquiry</th>
                                                 <th>Bookings</th>
@@ -431,146 +414,33 @@ function DashBoard() {
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr>
-                                                <td>
-                                                    <span className="list-img">
-                                                        <Image src="images/user/1.png" alt="" />
-                                                    </span>
-                                                </td>
-                                                <td>
-                                                    <a href="#">
-                                                        <span className="list-enq-name">Marsha Hogan</span>
-                                                        <span className="list-enq-city">Illunois, United States</span>
-                                                    </a>
-                                                </td>
-                                                <td>+01 3214 6522</td>
-                                                <td>chadengle@dummy.com</td>
-                                                <td>Australia</td>
-                                                <td>
-                                                    <span className="label label-primary">02</span>
-                                                </td>
-                                                <td>
-                                                    <span className="label label-danger">12</span>
-                                                </td>
-                                                <td>
-                                                    <span className="label label-success">24</span>
-                                                </td>
-                                                <td>
-                                                    <span className="label label-info">36</span>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <span className="list-img">
-                                                        <Image src="images/user/2.png" alt="" />
-                                                    </span>
-                                                </td>
-                                                <td>
-                                                    <a href="#">
-                                                        <span className="list-enq-name">Marsha Hogan</span>
-                                                        <span className="list-enq-city">Illunois, United States</span>
-                                                    </a>
-                                                </td>
-                                                <td>+01 3214 6522</td>
-                                                <td>chadengle@dummy.com</td>
-                                                <td>Australia</td>
-                                                <td>
-                                                    <span className="label label-primary">02</span>
-                                                </td>
-                                                <td>
-                                                    <span className="label label-danger">12</span>
-                                                </td>
-                                                <td>
-                                                    <span className="label label-success">24</span>
-                                                </td>
-                                                <td>
-                                                    <span className="label label-info">36</span>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <span className="list-img">
-                                                        <Image src="images/user/3.png" alt="" />
-                                                    </span>
-                                                </td>
-                                                <td>
-                                                    <a href="#">
-                                                        <span className="list-enq-name">Marsha Hogan</span>
-                                                        <span className="list-enq-city">Illunois, United States</span>
-                                                    </a>
-                                                </td>
-                                                <td>+01 3214 6522</td>
-                                                <td>chadengle@dummy.com</td>
-                                                <td>Australia</td>
-                                                <td>
-                                                    <span className="label label-primary">02</span>
-                                                </td>
-                                                <td>
-                                                    <span className="label label-danger">12</span>
-                                                </td>
-                                                <td>
-                                                    <span className="label label-success">24</span>
-                                                </td>
-                                                <td>
-                                                    <span className="label label-info">36</span>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <span className="list-img">
-                                                        <Image src="images/user/4.png" alt="" />
-                                                    </span>
-                                                </td>
-                                                <td>
-                                                    <a href="#">
-                                                        <span className="list-enq-name">Marsha Hogan</span>
-                                                        <span className="list-enq-city">Illunois, United States</span>
-                                                    </a>
-                                                </td>
-                                                <td>+01 3214 6522</td>
-                                                <td>chadengle@dummy.com</td>
-                                                <td>Australia</td>
-                                                <td>
-                                                    <span className="label label-primary">02</span>
-                                                </td>
-                                                <td>
-                                                    <span className="label label-danger">12</span>
-                                                </td>
-                                                <td>
-                                                    <span className="label label-success">24</span>
-                                                </td>
-                                                <td>
-                                                    <span className="label label-info">36</span>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <span className="list-img">
-                                                        <Image src="images/user/5.png" alt="" />
-                                                    </span>
-                                                </td>
-                                                <td>
-                                                    <a href="#">
-                                                        <span className="list-enq-name">Marsha Hogan</span>
-                                                        <span className="list-enq-city">Illunois, United States</span>
-                                                    </a>
-                                                </td>
-                                                <td>+01 3214 6522</td>
-                                                <td>chadengle@dummy.com</td>
-                                                <td>Australia</td>
-                                                <td>
-                                                    <span className="label label-primary">02</span>
-                                                </td>
-                                                <td>
-                                                    <span className="label label-danger">12</span>
-                                                </td>
-                                                <td>
-                                                    <span className="label label-success">24</span>
-                                                </td>
-                                                <td>
-                                                    <span className="label label-info">36</span>
-                                                </td>
-                                            </tr>
+                                            {rooms?.map((room, index) => (
+                                                <tr key={index}>
+                                                    <td>
+                                                        <span className="list-img">
+                                                            <Image src={room.avatarUrl} alt={room.subject} />
+                                                        </span>
+                                                    </td>
+                                                    <td>
+                                                        <span className="list-enq-name">{room.subject}</span>
+                                                    </td>
+                                                    <td>{room.address}</td>
+                                                    <td>{room.price}</td>
+
+                                                    <td>
+                                                        <span className="label label-primary">02</span>
+                                                    </td>
+                                                    <td>
+                                                        <span className="label label-danger">12</span>
+                                                    </td>
+                                                    <td>
+                                                        <span className="label label-success">24</span>
+                                                    </td>
+                                                    <td>
+                                                        <span className="label label-info">36</span>
+                                                    </td>
+                                                </tr>
+                                            ))}
                                         </tbody>
                                     </table>
                                 </div>
@@ -579,7 +449,8 @@ function DashBoard() {
                     </div>
                 </div>
             </div>
-            <div className="sb2-2-3">
+
+            {/* <div className="sb2-2-3">
                 <div className="row">
                     <div className="col-md-6">
                         <div className="box-inn-sp">
@@ -910,9 +781,9 @@ function DashBoard() {
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> */}
 
-            <div className="sb2-2-3">
+            {/* <div className="sb2-2-3">
                 <div className="row">
                     <div className="col-md-6">
                         <div className="box-inn-sp">
@@ -1191,9 +1062,9 @@ function DashBoard() {
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> */}
 
-            <div className="sb2-2-3">
+            {/* <div className="sb2-2-3">
                 <div className="row">
                     <div className="col-md-12">
                         <div className="box-inn-sp">
@@ -1242,7 +1113,7 @@ function DashBoard() {
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> */}
         </div>
     );
 }

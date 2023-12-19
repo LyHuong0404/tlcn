@@ -2,8 +2,12 @@
 import Image from '~/components/Image';
 import { useState, useEffect } from 'react';
 import styles from './ViewProfile.module.scss';
+import { getProfile } from '~/actions/userActions';
+import { useTranslation } from 'react-i18next';
 
 function ViewProfile() {
+    const { t } = useTranslation();
+    const [user, setUser] = useState({});
     const [filePreview, setFilePreview] = useState('');
     const [avatar, setAvatar] = useState('');
 
@@ -12,6 +16,19 @@ function ViewProfile() {
             avatar && URL.revokeObjectURL(avatar);
         };
     }, [avatar]);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const result = await getProfile();
+                setUser(result);
+            } catch (error) {
+                console.log(error);
+            }
+        };
+
+        fetchData();
+    }, []);
 
     const handleAvatar = (e) => {
         const src = URL.createObjectURL(e.target.files[0]);
@@ -24,17 +41,17 @@ function ViewProfile() {
                 <div className="row no-gutters">
                     <div className="col" style={{ display: 'flex', alignItems: 'center' }}>
                         <div className="heading-messages">
-                            <h1>Profile</h1>
+                            <h1>{t('Profile')}</h1>
                         </div>
                     </div>
                     <div className="col-md-4">
                         <div className="breadcrumb" style={{ fontSize: '16px' }}>
                             <div className="breadcrumb-item">
                                 <i className="fas fa-angle-right"></i>
-                                <a href="#">Profile</a>
+                                <a>{t('Profile')}</a>
                             </div>
                             <div className="breadcrumb-item active">
-                                <i className="fas fa-angle-right"></i>View Profile
+                                <i className="fas fa-angle-right"></i>{t('View Profile')}
                             </div>
                         </div>
                     </div>
@@ -43,7 +60,7 @@ function ViewProfile() {
                     <div className="row">
                         <div className="col">
                             <div className="details-text">
-                                <h1>Profile Details</h1>
+                                <h1>{t('Profile Details')}</h1>
                             </div>
                         </div>
                     </div>
@@ -54,57 +71,49 @@ function ViewProfile() {
                                 <div className="row">
                                     <div className="col-sm-6 col-5">
                                         <div className="heading-part">
-                                            <p htmlFor="Name">Name:</p>
+                                            <p htmlFor="Id">ID #:</p>
 
-                                            <p htmlFor="LastName">Last Name:</p>
+                                            <p htmlFor="Name">{t('User Name')}:</p>
 
-                                            <p htmlFor="inputPassword4">Telephone:</p>
+                                            <p htmlFor="LastName">{t('Full Name')}:</p>
+
+                                            <p htmlFor="inputPassword4">{t('Phone')}:</p>
 
                                             <p htmlFor="inputEmail4">Email:</p>
+                                            <p htmlFor="Role">{t('Role')}:</p>
                                         </div>
                                     </div>
 
                                     <div className="col-sm-6 col-7">
                                         <div className="details-part">
-                                            <p>John</p>
+                                            <p>{user.id}</p>
 
-                                            <p>Doe</p>
+                                            <p>{user.username}</p>
 
-                                            <p>9200222934</p>
-
-                                            <p>johndoe@yahoo.com</p>
+                                            <p>{user.fullname}</p>
+                                            <p>{user.phone}</p>
+                                            <p>{user.email}</p>
+                                            <p>{t('ADMIN, SELLER, USER')}</p>
                                         </div>
                                     </div>
                                 </div>
 
-                                <div className="personal-info" style={{ fontSize: '16px' }}>
-                                    <h3 htmlFor="examplehtmlFormControlTextarea1" style={{ marginLeft: '20px' }}>
-                                        Details
-                                    </h3>
-                                    <p>
-                                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos labore enim
-                                        maiores beatae. Magni asperiores necessitatibus saepe eaque reprehenderit.
-                                    </p>
-                                </div>
+                                <div className="personal-info" style={{ fontSize: '16px' }}></div>
                             </div>
                         </div>
                         <div className="col">
                             <div className="upload-photo-wrapper">
                                 <div className="upload-heading">
-                                    <h5>Photo</h5>
+                                    <h5>{t('Avatar')}</h5>
                                 </div>
 
-                                <div
-                                    className={`needsclick dz-clickable ${avatar ? '' : 'dropzone background_avatar'}`}
-                                    id="demo-upload"
-                                >
+                                <div className={`${avatar ? 'dropzone background_avatar' : ''}`} id="demo-upload">
                                     <div className="dz-message">
-                                        {avatar ? (
+                                        {user ? (
                                             <label>
                                                 <Image
                                                     className={styles.image}
-                                                    src={avatar ? filePreview : ''}
-                                                    // src={avatar ? filePreview : currentUser.avatar}
+                                                    src={avatar ? filePreview : user.avatar}
                                                     alt="avatar"
                                                 />
                                                 <input

@@ -2,22 +2,42 @@
 /* eslint-disable jsx-a11y/no-redundant-roles */
 import Image from '~/components/Image';
 import styles from './Sidebar.module.scss';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { addToWishlist } from '~/actions/userActions';
 import { toast } from 'react-toastify';
 import { Tooltip } from 'react-tooltip';
 import 'react-tooltip/dist/react-tooltip.css';
+import { useSelector } from 'react-redux';
+import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 function Sidebar({ data }) {
-    // const navigate = useNavigate();
+    const { t } = useTranslation();
+    const navigate = useNavigate();
+    const { user } = useSelector((state) => state.auth);
+    const [isFollowed, setIsFollowed] = useState(data?.isFollowed || false);
+
     const handleAddToWishList = async (roomID) => {
-        try {
-            const result = await addToWishlist(roomID);
-            if (result.success) {
-                toast.success('Wishlist added successfully');
+        if (user) {
+            try {
+                const result = await addToWishlist(roomID);
+                if (result.success) {
+                    setIsFollowed(!isFollowed);
+                    toast.success('Wishlist added successfully');
+                }
+            } catch (error) {
+                console.log(error);
             }
-        } catch (error) {
-            console.log(error);
+        } else {
+            navigate('/auth/login');
+        }
+    };
+
+    const handleBook = () => {
+        if (user) {
+            navigate('/user/appointment', { state: { room: data?.room, step: 3 } });
+        } else {
+            navigate('/auth/login');
         }
     };
 
@@ -27,10 +47,16 @@ function Sidebar({ data }) {
             className="col-sm-12 col-md-4 col-lg-3 htlfndr-sidebar htlfndr-sidebar-in-right"
             role="complementary"
         >
-            {!data?.isFollowed && (
+            {!isFollowed ? (
                 <p className="htlfndr-add-to-wishlist">
                     <a onClick={() => handleAddToWishList(data?.room?.id)}>
-                        <i className="fa fa-plus"></i> Add to Wishlist
+                        <i className="fa fa-plus"></i> {t('Add To Wishlist')}
+                    </a>
+                </p>
+            ) : (
+                <p className="htlfndr-add-to-wishlist">
+                    <a onClick={() => handleAddToWishList(data?.room?.id)}>
+                        <i className="fa fa-plus"></i> {t('Remove To Wishlist')}
                     </a>
                 </p>
             )}
@@ -59,28 +85,20 @@ function Sidebar({ data }) {
                     </div>
                     <div className="htlfndr-hotel-price">
                         <span className="htlfndr-cost">{data?.room?.price}</span>
-                        <span className="htlfndr-per-night">/ month</span>
+                        <span className="htlfndr-per-night">/ {t('month')}</span>
                     </div>
                 </div>
-                <Link
-                    to="/user/appointment"
-                    state={{
-                        room: data?.room,
-                        step: 3,
-                    }}
-                    className="htlfndr-book-now-button"
-                    role="button"
-                >
-                    <i className="fa fa-bookmark" style={{ marginRight: '10px' }} aria-hidden="true"></i>Book
-                </Link>
+                <button onClick={handleBook} className="htlfndr-book-now-button" role="button">
+                    <i className="fa fa-bookmark" style={{ marginRight: '10px' }} aria-hidden="true"></i>{t('Make appointment')}
+                </button>
 
-                {!data?.isFollowed ? (
+                {!isFollowed ? (
                     <button
                         className="htlfndr-book-now-button"
                         role="button"
                         onClick={() => handleAddToWishList(data?.room?.id)}
                     >
-                        <i className="fa fa-heart" aria-hidden="true"></i> Add To Wishlist
+                        <i className="fa fa-heart" aria-hidden="true"></i> {t('Add To Wishlist')}
                     </button>
                 ) : (
                     <button
@@ -88,7 +106,7 @@ function Sidebar({ data }) {
                         role="button"
                         onClick={() => handleAddToWishList(data?.room?.id)}
                     >
-                        <i className="fa fa-heart" aria-hidden="true"></i> Unfollow
+                        <i className="fa fa-heart" aria-hidden="true"></i> {t('Unfollow')}
                     </button>
                 )}
 
@@ -100,11 +118,11 @@ function Sidebar({ data }) {
                         <p className="htlfndr-phone">
                             <a>{data?.owner?.phone}</a>
                         </p>
-                        <p className="htlfndr-reviews">{data?.room?.totalReview} (Reviews)</p>
+                        <p className="htlfndr-reviews">{data?.room?.totalReview} ({t('Reviews')})</p>
                     </div>
                 </div>
             </div>
-            <div className="widget htlfndr-near-properties">
+            {/* <div className="widget htlfndr-near-properties">
                 <div className="htlfndr-widget-main-content">
                     <h3 className="widget-title">properties near</h3>
                     <div className="htlfdr-hotel-post">
@@ -222,7 +240,7 @@ function Sidebar({ data }) {
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> */}
         </aside>
     );
 }

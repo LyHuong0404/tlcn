@@ -5,8 +5,10 @@ import { useState, useEffect, useCallback } from 'react';
 import { userWishlist } from '~/actions/userActions';
 import Image from '~/components/Image';
 import styles from './Wishlist.module.scss';
+import { useTranslation } from 'react-i18next';
 
 function Wishlist() {
+    const { t } = useTranslation();
     const [wishlist, setWishlist] = useState([]);
     const [totalPage, setTotalPage] = useState(0);
     const [currentPage, setCurrentPage] = useState(0);
@@ -32,6 +34,14 @@ function Wishlist() {
         setCurrentPage(page - 1);
     };
 
+    const renderStars = (averageStar) => {
+        const stars = Array.from({ length: 5 }, (_, index) => (
+            <i key={index} className={`fa fa-star ${index < averageStar ? 'htlfndr-star-color' : ''}`}></i>
+        ));
+
+        return <>{stars}</>;
+    };
+
     return (
         <div className="htlfndr-wishlist-page" id="htlfndr-user-tab-4">
             <div className="htlfndr-user-panel col-md-9 col-sm-8 htlfndr-search-result htlfndr-grid-view">
@@ -50,13 +60,10 @@ function Wishlist() {
                             <div className="htlfndr-hotel-description">
                                 <div className="htlfndr-description-content">
                                     <div className="htlfndr-rating-stars" data-rating="3">
-                                        <i className="fa fa-star htlfndr-star-color"></i>&nbsp;
-                                        <i className="fa fa-star htlfndr-star-color"></i>&nbsp;
-                                        <i className="fa fa-star htlfndr-star-color"></i>&nbsp;
-                                        <i className="fa fa-star"></i>&nbsp; <i className="fa fa-star"></i>
-                                        &nbsp;
+                                        {renderStars(room?.averageStar)}
+
                                         <p className="htlfndr-hotel-reviews">
-                                            (<span>188</span> reviews)
+                                            (<span>{room.averageStar}</span> {t('reviews')})
                                         </p>
                                     </div>
                                     <h2 className="htlfndr-entry-title">
@@ -72,10 +79,10 @@ function Wishlist() {
                                 <div className="htlfndr-hotel-price">
                                     <span className="htlfndr-cost">{room.price}</span>
                                 </div>
-                                <span className="htlfndr-per-night">per month</span>
+                                <span className="htlfndr-per-night">{t('per month')}</span>
                             </div>
-                            <a href="hotel-page-v3.html" role="button" className="htlfndr-select-hotel-button">
-                                select
+                            <a role="button" className="htlfndr-select-hotel-button">
+                                {t('select')}
                             </a>
                         </div>
                     ))}

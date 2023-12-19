@@ -2,7 +2,17 @@ import { Link, useLocation } from 'react-router-dom';
 import config from '~/config';
 import Image from '../Image';
 import styles from './RecommendRoom.module.scss';
+import { useTranslation } from 'react-i18next';
 function RecommendRoom({ data }) {
+    const { t } = useTranslation();
+
+    const renderStars = (averageStar) => {
+        const stars = Array.from({ length: 5 }, (_, index) => (
+            <i key={index} className={`fa fa-star ${index < averageStar ? 'htlfndr-star-color' : ''}`}></i>
+        ));
+
+        return <>{stars}</>;
+    };
     return (
         <div className="row">
             {data?.map((room) => (
@@ -17,12 +27,12 @@ function RecommendRoom({ data }) {
                             <div className="htlfndr-content-block">
                                 <Image className={styles.top_recommands} src={room.avatarUrl} alt={room.subject} />
                                 <div className="htlfndr-post-content">
-                                    <p className="htlfndr-the-excerpt">
+                                    <div className="htlfndr-the-excerpt">
                                         {room.address}
                                         <p className="htlfndr-read-more-arrow">
                                             <i className="fa fa-angle-right"></i>
                                         </p>
-                                    </p>
+                                    </div>
                                     <div className="htlfndr-services">
                                         <div className="row">
                                             {room.attic && (
@@ -43,12 +53,14 @@ function RecommendRoom({ data }) {
                                                 <div className="col-sm-6 col-xs-6 htlfndr-service">Television</div>
                                             )}
                                             {room.airConditionAvailable && (
-                                                <div className="col-sm-6 col-xs-6 htlfndr-service">Air Conditioning</div>
+                                                <div className="col-sm-6 col-xs-6 htlfndr-service">
+                                                    Air Conditioning
+                                                </div>
                                             )}
                                             {room.isFreeParking && (
-                                                <div className="col-sm-6 col-xs-6 htlfndr-service">Free Parking</div>
+                                                <div className="col-sm-6 col-xs-6 htlfndr-service">{t('Free Parking')}</div>
                                             )}
-                                            <div className="col-sm-6 col-xs-6 htlfndr-service">Free Wi-Fi</div>
+                                            <div className="col-sm-6 col-xs-6 htlfndr-service">{t('Free Wi-Fi')}</div>
                                         </div>
                                     </div>
                                 </div>
@@ -57,16 +69,13 @@ function RecommendRoom({ data }) {
                                 <div className="htlfndr-left-side-footer">
                                     <h5 className="entry-title">{room.subject}</h5>
                                     <div className="htlfndr-entry-rating-stars">
-                                        <i className="fa fa-star htlfndr-star-color"></i>
-                                        <i className="fa fa-star htlfndr-star-color"></i>
-                                        <i className="fa fa-star htlfndr-star-color"></i>
-                                        <i className="fa fa-star"></i>
-                                        <i className="fa fa-star"></i>
+                                    {renderStars(room.averageStar)}
+
                                     </div>
                                 </div>
                                 <div className="htlfndr-right-side-footer">
                                     <span className="htlfndr-cost">{room.price}</span>
-                                    <span className="htlfndr-per-night">per month</span>
+                                    <span className="htlfndr-per-night">/ {t('month')}</span>
                                 </div>
                             </footer>
                         </article>

@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import '~/assets/css/cssAuth/animate.min.css';
 import '~/assets/css/cssAuth/bootstrap-select.min.css';
 import '~/assets/css/cssAuth/bootstrap-submenu.css';
@@ -17,8 +17,10 @@ import Image from '~/components/Image';
 import { signup } from '~/actions/authActions';
 import images from '~/assets/images';
 import Loading from '~/components/Loading';
+import { useTranslation } from 'react-i18next';
 
 function Signup() {
+    const { t } = useTranslation();
     const [password, setPassword] = useState('');
     const [errorPassword, setErrorPassword] = useState('');
     const [email, setEmail] = useState('');
@@ -132,7 +134,7 @@ function Signup() {
                                 <a href="index.html" className="logo">
                                     <Image src={images.user} alt="logo" />
                                 </a>
-                                <h3>Create an account</h3>
+                                <h3>{t('Create an account')}</h3>
                                 <form onSubmit={submitForm}>
                                     <div className="form-group clearfix">
                                         <input
@@ -156,7 +158,7 @@ function Signup() {
                                             name="name"
                                             type="text"
                                             className={`form-control ${errorUsername ? 'status-error' : ''}`}
-                                            placeholder="Username"
+                                            placeholder={t('Username')}
                                             aria-label="Username"
                                             value={username}
                                             onChange={handleCheckValidUsername}
@@ -173,29 +175,29 @@ function Signup() {
                                             name="password"
                                             type="password"
                                             className={`form-control ${errorPassword ? 'status-error' : ''}`}
-                                            placeholder="Password"
+                                            placeholder={t('Password')}
                                             autoComplete="username"
                                             value={password}
                                             onChange={handleCheckValidpw}
                                         />
                                         {errorPassword && (
                                             <div style={{ textAlign: 'left' }}>
-                                                <label className="error-message">{errorPassword}</label>
+                                                <label className="error-message">{t(errorPassword)}</label>
                                             </div>
                                         )}
                                     </div>
 
                                     <div className="form-group clearfix">
                                         <button type="submit" className="btn-auth">
-                                            SIGN UP
+                                            {t('SIGN UP')}
                                         </button>
                                     </div>
-                                    <div className="extra-login clearfix">
+                                    {/* <div className="extra-login clearfix">
                                         <span>Or Login With</span>
-                                    </div>
+                                    </div> */}
                                 </form>
                                 <div className="clearfix"></div>
-                                <div className="social-list">
+                                {/* <div className="social-list">
                                     <a href="#" className="facebook-bg">
                                         <i className="fa fa-facebook"></i>
                                     </a>
@@ -208,22 +210,22 @@ function Signup() {
                                     <a href="#" className="linkedin-bg">
                                         <i className="fa fa-linkedin"></i>
                                     </a>
-                                </div>
+                                </div> */}
                                 <p className="option">
-                                    Already a member? <a href="login.html">Login here</a>
+                                    {t('Already a member?')} <Link to="/auth/login">{t('Login here')}</Link>
                                 </p>
                             </div>
                         </div>
                         <div className="col-lg-6 bg-color-15 none-992 bg-img">
                             <div className="info clearfix">
                                 <h1>
-                                    Welcome to <span>Hotel Alpha</span>
+                                    {t('Welcome to')} <br />
+                                    <span>Room Finder</span>
                                 </h1>
                                 <p>
-                                    Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem
-                                    Ipsum has been the industry's standard dummy text ever since the 1500s, when an
-                                    unknown printer took a galley of type and scrambled it to make a type unknown
-                                    printer took a galley of type and scrambled{' '}
+                                    {t(
+                                        'Incredibly friendly locals will tell you all about Georgia most picturesque, breathtaking, and gastronomic must-visit places. A quick search of our database will show you the best-fitting matches out of 100+ candidates. You can choose photos, or reviews from previous passengers.',
+                                    )}
                                 </p>
                             </div>
                         </div>

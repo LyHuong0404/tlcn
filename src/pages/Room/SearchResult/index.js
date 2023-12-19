@@ -17,6 +17,7 @@ import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
 import MuiSelect from '@mui/material/Select';
 import { Controller, useForm } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 
 const customStyles = {
     control: (provided) => ({
@@ -36,14 +37,15 @@ const optionsPeople = [
 ];
 
 function SearchResult() {
+    const { t } = useTranslation();
     const location = useLocation();
     const { control } = useForm();
     const searchData = location?.state?.data;
     const { provins } = useSelector((state) => state.provins);
-    const [totalPerson, setTotalPerson] = useState(searchData?.totalPerson || null);
-    const [provinceSearch, setProvinceSearch] = useState(searchData?.provinceCode || null);
-    const [districtSearch, setDistrictSearch] = useState(searchData?.districtCode || null);
-    const [wardSearch, setWardSearch] = useState(searchData?.wardCode || null);
+    const [totalPerson, setTotalPerson] = useState(searchData?.totalPerson || undefined);
+    const [provinceSearch, setProvinceSearch] = useState(searchData?.provinceCode || undefined);
+    const [districtSearch, setDistrictSearch] = useState(searchData?.districtCode || undefined);
+    const [wardSearch, setWardSearch] = useState(searchData?.wardCode || undefined);
     const [districts, setDistricts] = useState([]);
     const [wards, setWards] = useState([]);
     const [price, setPrice] = useState([0, 10000000]);
@@ -53,12 +55,12 @@ function SearchResult() {
     const [rooms, setRooms] = useState([]);
     const [loading, setLoading] = useState(false);
     const [attic, setAttic] = useState(null);
-    const [furnitureAvailable, setFurnitureAvailable] = useState(null);
-    const [airConditionAvailable, setAirConditionAvailable] = useState(null);
-    const [isFreeParking, setIsFreeParking] = useState(null);
-    const [privateToilet, setPrivateToilet] = useState(null);
-    const [allowedPet, setAllowedPet] = useState(null);
-    const [tvAvailable, setTvAvailable] = useState(null);
+    const [furnitureAvailable, setFurnitureAvailable] = useState(undefined);
+    const [airConditionAvailable, setAirConditionAvailable] = useState(undefined);
+    const [isFreeParking, setIsFreeParking] = useState(undefined);
+    const [privateToilet, setPrivateToilet] = useState(undefined);
+    const [allowedPet, setAllowedPet] = useState(undefined);
+    const [tvAvailable, setTvAvailable] = useState(undefined);
     const [sort, setSort] = useState('price');
     const [show, setShow] = useState(9);
 
@@ -241,7 +243,6 @@ function SearchResult() {
         setShow(event.target.value);
     };
 
-
     return (
         <>
             <aside className="htlfndr-sidebar htlfndr-sidebar-in-top htlfndr-full-form" role="search">
@@ -261,7 +262,7 @@ function SearchResult() {
                                         : null
                                 }
                                 options={provinceOptions}
-                                placeholder="Select a province..."
+                                placeholder={t('Select a province...')}
                                 isSearchable={true}
                                 styles={customStyles}
                                 onChange={handleChangeProvince}
@@ -275,7 +276,7 @@ function SearchResult() {
                                         : null
                                 }
                                 options={districts}
-                                placeholder="Select a district..."
+                                placeholder={t('Select a district...')}
                                 isSearchable={true}
                                 styles={customStyles}
                                 onChange={handleChangeDistrict}
@@ -286,7 +287,7 @@ function SearchResult() {
                             <Select
                                 value={wardSearch?.value ? { value: wardSearch.value, label: wardSearch.label } : null}
                                 options={wards}
-                                placeholder="Select a ward..."
+                                placeholder={t('Select a ward...')}
                                 isSearchable={true}
                                 styles={customStyles}
                                 onChange={handleChangeWard}
@@ -305,17 +306,8 @@ function SearchResult() {
                                         }
                                         {...props}
                                         options={optionsPeople}
-                                        placeholder="Select people..."
+                                        placeholder={t('Select people...')}
                                         styles={customStyles}
-                                        // components={{
-                                        //     IndicatorSeparator: () => null,
-                                        // }}
-                                        // formatOptionLabel={({ label }) => (
-                                        //     <span>
-                                        //         <CustomIcon style={{ margin: '20px' }} />
-                                        //         {label}
-                                        //     </span>
-                                        // )}
                                         onChange={(selectedOption) => {
                                             setTotalPerson(selectedOption);
                                         }}
@@ -324,7 +316,6 @@ function SearchResult() {
                             />
                         </div>
                         <div id="htlfndr-input-5">
-                            {loading && <div className="loading-spinner">Loading...</div>}
                             <input type="submit" value="search" />
                         </div>
                         <div className="clearfix"></div>
@@ -440,7 +431,7 @@ function SearchResult() {
                 {/* Product */}
                 <main className="col-sm-8 col-md-9 col-lg-9 htlfndr-search-result htlfndr-grid-view" role="main">
                     <h2 className="htlfndr-search-result-title">
-                        <span>{rooms?.totalElement}</span> results found
+                        <span>{rooms?.totalElement}</span> {t('results found')}
                     </h2>
                     {/* Sort */}
                     <section className="htlfndr-search-result-sorting row" style={{ marginLeft: '-22px' }}>
@@ -470,10 +461,10 @@ function SearchResult() {
                                         onChange={handleChangeSort}
                                     >
                                         <MenuItem value={'price'}>
-                                            <span style={{ fontSize: '1.4rem' }}>Price</span>
+                                            <span style={{ fontSize: '1.4rem' }}>{t('Price')}</span>
                                         </MenuItem>
                                         <MenuItem value={'avgStar'}>
-                                            <span style={{ fontSize: '1.4rem' }}>Rating</span>
+                                            <span style={{ fontSize: '1.4rem' }}>{t('Rating')}</span>
                                         </MenuItem>
                                     </MuiSelect>
                                 </FormControl>
@@ -489,7 +480,7 @@ function SearchResult() {
                                             fontFamily: "'Montserrat', 'Helvetica Neue', Helvetica, Arial, sans-serif",
                                         }}
                                     >
-                                        Show
+                                        {t('Show')}
                                     </InputLabel>
                                     <MuiSelect
                                         data-toggle="dropdown"
@@ -503,47 +494,17 @@ function SearchResult() {
                                         onChange={handleChangeShow}
                                     >
                                         <MenuItem value={9}>
-                                            <span style={{ fontSize: '1.4rem' }}>9 items</span>
+                                            <span style={{ fontSize: '1.4rem' }}>9 {t('items')}</span>
                                         </MenuItem>
                                         <MenuItem value={18}>
-                                            <span style={{ fontSize: '1.4rem' }}>18 items</span>
+                                            <span style={{ fontSize: '1.4rem' }}>18 {t('items')}</span>
                                         </MenuItem>
                                         <MenuItem value={27}>
-                                            <span style={{ fontSize: '1.4rem' }}>27 items</span>
+                                            <span style={{ fontSize: '1.4rem' }}>27 {t('items')}</span>
                                         </MenuItem>
                                     </MuiSelect>
                                 </FormControl>
                             </div>
-                            {/* <div className="htlfndr-view" style={{ marginTop: '16px' }}>
-                    <button
-                        id="htlfndr-grid"
-                        type="button"
-                        className="htlfndr-active"
-                        data-toggle="tooltip"
-                        data-placement="top"
-                        title="Grid view"
-                        role="button"
-                        onClick={handleGridColumn}
-                    >
-                        <span></span>
-                        <span></span>
-                        <span></span>
-                        <span></span>
-                    </button>
-                    <button
-                        id="htlfndr-row"
-                        type="button"
-                        data-toggle="tooltip"
-                        data-placement="top"
-                        title="Row view"
-                        role="button"
-                        onClick={handleRowColumn}
-                    >
-                        <span></span>
-                        <span></span>
-                        <span></span>
-                    </button>
-                </div> */}
                         </div>
                     </section>
                     <Product data={rooms?.content}></Product>

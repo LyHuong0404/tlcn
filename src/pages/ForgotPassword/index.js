@@ -1,4 +1,5 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
+import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import '~/assets/css/cssAuth/animate.min.css';
 import '~/assets/css/cssAuth/bootstrap-select.min.css';
@@ -11,27 +12,30 @@ import '~/assets/css/cssAuth/jquery.mCustomScrollbar.css';
 import '~/assets/css/cssAuth/leaflet.css';
 import '~/assets/css/cssAuth/slick.css';
 import '~/assets/css/cssAuth/style.css';
+import images from '~/assets/images';
 
 import Image from '~/components/Image';
 
 function ForgotPassword() {
+    const { t } = useTranslation();
+
     return (
         <div className="login-section">
             <div className="container-fluid">
                 <div className="row login-box">
                     <div className="col-lg-6 align-self-center pad-0 form-section">
                         <div className="form-inner">
-                            <a href="index.html" className="logo">
-                                <Image src="img/logos/logo.png" alt="logo" />
+                            <a href="" className="logo">
+                                <Image src={images.logo1} alt="logo" />
                             </a>
-                            <h3>Recover your password</h3>
-                            <form action="#" method="GET">
+                            <h3>{t('Recover your password')}</h3>
+                            <form>
                                 <div className="form-group clearfix">
                                     <input
                                         name="email"
                                         type="email"
                                         className="form-control"
-                                        placeholder="Email Address"
+                                        placeholder={t('Email Address')}
                                         aria-label="Email Address"
                                     />
                                 </div>
@@ -59,7 +63,7 @@ function ForgotPassword() {
                                     <i className="fa fa-linkedin"></i>
                                 </a>
                             </div>
-                            <p className='option'>
+                            <p className="option">
                                 Already a member? <Link href="/auth/login">Login here</Link>
                             </p>
                         </div>
@@ -67,13 +71,14 @@ function ForgotPassword() {
                     <div className="col-lg-6 bg-color-15 none-992 bg-img">
                         <div className="info clearfix">
                             <h1>
-                                Welcome to <span>Hotel Alpha</span>
+                                Welcome to <br />
+                                <span>Room Finder</span>
                             </h1>
                             <p>
-                                Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum
-                                has been the industry's standard dummy text ever since the 1500s, when an unknown
-                                printer took a galley of type and scrambled it to make a type unknown printer took a
-                                galley of type and scrambled{' '}
+                                Incredibly friendly locals will tell you all about Georgia's most picturesque,
+                                breathtaking, and gastronomic must-visit places. A quick search of our database will
+                                show you the best-fitting matches out of 100+ candidates. You can choose photos, or
+                                reviews from previous passengers.
                             </p>
                         </div>
                     </div>

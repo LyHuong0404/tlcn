@@ -1,7 +1,7 @@
 import { Navigation, Pagination, Scrollbar, A11y, Zoom } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import styles from './Infor.module.scss';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Image from '~/components/Image';
 import { Rating } from '@mui/material';
 // Import Swiper styles
@@ -12,17 +12,35 @@ import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import 'swiper/css/scrollbar';
 import 'swiper/css/zoom';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import RoomLocation from '~/components/RoomLocation';
 import { useForm } from 'react-hook-form';
 import { addReview } from '~/actions/userActions';
+import { getListReviews } from '~/actions/otherActions';
+import { useTranslation } from 'react-i18next';
 
 function Infor({ data }) {
+    const { t } = useTranslation();
+    const params = useParams();
+    const id = params.id;
     const { register, handleSubmit } = useForm();
     const [photoActive, setPhotoActive] = useState(true);
     const [mapActive, setMapActive] = useState(false);
     const [menuActive, setMenuActive] = useState(1);
     const [rating, setRating] = useState(5);
+    const [review, setReview] = useState({});
+
+    useEffect(() => {
+        try {
+            const fetchData = async () => {
+                const rs = await getListReviews(id, 0);
+                setReview(rs?.content[0]);
+            };
+            fetchData();
+        } catch (error) {
+            console.log(error);
+        }
+    }, []);
 
     const handleActive = () => {
         setPhotoActive(!photoActive);
@@ -49,6 +67,14 @@ function Infor({ data }) {
             console.log(error);
         }
     };
+
+    const renderStars = (averageStar) => {
+        const stars = Array.from({ length: 5 }, (_, index) => (
+            <i key={index} className={`fa fa-star ${index < averageStar ? 'htlfndr-star-color' : ''}`}></i>
+        ));
+
+        return <>{stars}</>;
+    };
     return (
         <main
             id="htlfndr-main-content"
@@ -61,14 +87,14 @@ function Infor({ data }) {
                     style={{ padding: '11px' }}
                     className={photoActive ? styles.outline_active : styles.outline}
                 >
-                    PHOTO
+                    {t('PHOTO')}
                 </button>
                 <button
                     onClick={handleActive}
                     style={{ padding: '11px' }}
                     className={mapActive ? styles.outline_active : styles.outline}
                 >
-                    MAP
+                    {t('MAP')}
                 </button>
                 {mapActive ? (
                     <RoomLocation address={data?.room?.address} />
@@ -108,33 +134,28 @@ function Infor({ data }) {
                         onClick={() => setMenuActive(1)}
                         className={`group-button ${menuActive === 1 ? styles.active : styles.outline}`}
                     >
-                        DESCRIPTION
+                        {t('DESCRIPTION')}
                     </button>
-                    <button
-                        onClick={() => setMenuActive(2)}
-                        className={`group-button ${menuActive === 2 ? styles.active : styles.outline}`}
-                    >
-                        AVAILABILITY
-                    </button>
+
                     <button
                         onClick={() => setMenuActive(3)}
                         className={`group-button ${menuActive === 3 ? styles.active : styles.outline}`}
                     >
-                        AMENITIES
+                        {t('AMENITIES')}
                     </button>
 
                     <button
                         onClick={() => setMenuActive(4)}
                         className={`group-button ${menuActive === 4 ? styles.active : styles.outline}`}
                     >
-                        REVIEWS
+                        {t('REVIEWS')}
                     </button>
                     {data?.isCanReview && (
                         <button
                             onClick={() => setMenuActive(5)}
                             className={`group-button ${menuActive === 5 ? styles.active : styles.outline}`}
                         >
-                            WRITE A REVIEW
+                            {t('WRITE A REVIEW')}
                         </button>
                     )}
 
@@ -147,44 +168,50 @@ function Infor({ data }) {
                                 <table>
                                     <tbody>
                                         <tr>
-                                            <th scope="row">type:</th>
-                                            <td>motel</td>
+                                            <th scope="row">{t('type')}:</th>
+                                            <td>{t('boarding house')}</td>
                                         </tr>
                                         <tr>
-                                            <th scope="row">rating stars:</th>
-                                            <td>{`${data?.room?.averageStar} stars`}</td>
+                                            <th scope="row">{t('rating stars')}:</th>
+                                            <td>
+                                                {data?.room?.averageStar} {t('stars')}
+                                            </td>
                                         </tr>
                                         <tr>
-                                            <th scope="row">width:</th>
+                                            <th scope="row">{t('width')}:</th>
                                             <td>{`${data?.room?.width} m2`}</td>
                                         </tr>
                                         <tr>
-                                            <th scope="row">height:</th>
+                                            <th scope="row">{t('height')}:</th>
                                             <td>{`${data?.room?.height} m2`}</td>
                                         </tr>
 
                                         <tr>
-                                            <th scope="row">phone no:</th>
-                                            <td>1-800-123-0000</td>
+                                            <th scope="row">{t('phone')}:</th>
+                                            <td>{data?.room?.phone}</td>
                                         </tr>
                                         <tr>
-                                            <th scope="row">Person:</th>
+                                            <th scope="row">{t('Person')}:</th>
                                             <td>{data?.room?.totalPerson}</td>
                                         </tr>
                                         <tr>
-                                            <th scope="row">Electricity fee:</th>
-                                            <td>{`${data?.room?.priceElectric}/block`}</td>
+                                            <th scope="row">{t('Electricity fee')}:</th>
+                                            <td>
+                                                {data?.room?.priceElectric}/{t('block')}
+                                            </td>
                                         </tr>
                                         <tr>
-                                            <th scope="row">water fee:</th>
-                                            <td>{`${data?.room?.priceWater}/block`}</td>
+                                            <th scope="row">{t('water fee')}:</th>
+                                            <td>
+                                                {data?.room?.priceWater}/{t('block')}
+                                            </td>
                                         </tr>
                                         <tr>
-                                            <th scope="row">Price/month:</th>
+                                            <th scope="row">{t('Price/month')}:</th>
                                             <td>{data?.room?.price}</td>
                                         </tr>
                                         <tr>
-                                            <th scope="row">address:</th>
+                                            <th scope="row">{t('address')}:</th>
                                             <td>{data?.room?.address}</td>
                                         </tr>
                                     </tbody>
@@ -200,16 +227,15 @@ function Infor({ data }) {
                                         />
                                     </div>
                                     <div className="media-body">
-                                        <h5>motel manager</h5>
+                                        <h5>{t('manager')}</h5>
                                         <h4 className="media-heading">{data?.room?.ownerName}</h4>
                                     </div>
                                 </div>
                                 <blockquote>
                                     <p>
-                                        Lodging always puts prestige first. Security is always guaranteed and necessary
-                                        amenities are provided for rooms. If you are interested in us or are looking for
-                                        a room, please make an appointment with us. Our room always welcomes you to join
-                                        this shared house. Thanks!
+                                        {t(
+                                            'Lodging always puts prestige first. Security is always guaranteed and necessary amenities are provided for rooms. If you are interested in us or are looking for a room, please make an appointment with us. Our room always welcomes you to join this shared house. Thanks!',
+                                        )}
                                     </p>
                                 </blockquote>
                             </div>
@@ -306,13 +332,12 @@ function Infor({ data }) {
                     <div id="htlfndr-hotel-description-tab-3" className="htlfndr-hotel-description-tab">
                         <article className="htlfndr-tab-article htlfndr-third-tab-post">
                             <header>
-                                <h3>amenities of room</h3>
+                                <h3>{t('amenities of room')}</h3>
                             </header>
                             <p className="htlfndr-post-excerpt">
-                                Lodging always puts prestige first. Security is always guaranteed and necessary
-                                amenities are provided for rooms. If you are interested in us or are looking for a room,
-                                please make an appointment with us. Our room always welcomes you to join this shared
-                                house. Thanks!
+                                {t(
+                                    'Lodging always puts prestige first. Security is always guaranteed and necessary amenities are provided for rooms. If you are interested in us or are looking for a room, please make an appointment with us. Our room always welcomes you to join this shared house. Thanks!',
+                                )}
                             </p>
 
                             <footer className="row htlfndr-amenities">
@@ -327,7 +352,7 @@ function Infor({ data }) {
                                         <div className="htlfndr-amenities-icon">
                                             <i className="fa fa-expand"></i>
                                         </div>
-                                        <p>Attic</p>
+                                        <p>{t('Attic')}</p>
                                     </div>
                                 )}
                                 {data?.room?.privateToilet && (
@@ -335,7 +360,7 @@ function Infor({ data }) {
                                         <div className="htlfndr-amenities-icon">
                                             <i className="fa fa-adjust"></i>
                                         </div>
-                                        <p>Private Toilet</p>
+                                        <p>{t('Private Toilet')}</p>
                                     </div>
                                 )}
                                 {data?.room?.allowedPet && (
@@ -343,7 +368,7 @@ function Infor({ data }) {
                                         <div className="htlfndr-amenities-icon">
                                             <i className="fa fa-paw"></i>
                                         </div>
-                                        <p>Allow Pet</p>
+                                        <p>{t('Allow Pet')}</p>
                                     </div>
                                 )}
                                 {data?.room?.furnitureAvailable && (
@@ -351,7 +376,7 @@ function Infor({ data }) {
                                         <div className="htlfndr-amenities-icon">
                                             <i className="fa fa-plug"></i>
                                         </div>
-                                        <p>Furniture Available</p>
+                                        <p>{t('Furniture Available')}</p>
                                     </div>
                                 )}
                                 {data?.room?.tvAvailable && (
@@ -359,7 +384,7 @@ function Infor({ data }) {
                                         <div className="htlfndr-amenities-icon">
                                             <i className="fa fa-cc-amex"></i>
                                         </div>
-                                        <p>Television</p>
+                                        <p>{t('Television')}</p>
                                     </div>
                                 )}
                                 {data?.room?.airConditionAvailable && (
@@ -367,7 +392,7 @@ function Infor({ data }) {
                                         <div className="htlfndr-amenities-icon">
                                             <i className="fa fa-server"></i>
                                         </div>
-                                        <p>Air Conditioning</p>
+                                        <p>{t('Air Conditioning')}</p>
                                     </div>
                                 )}
                                 {data?.room?.isFreeParking && (
@@ -375,7 +400,7 @@ function Infor({ data }) {
                                         <div className="htlfndr-amenities-icon">
                                             <i className="fa fa-bicycle"></i>
                                         </div>
-                                        <p>Free Parking</p>
+                                        <p>{t('Free Parking')}</p>
                                     </div>
                                 )}
                             </footer>
@@ -386,143 +411,108 @@ function Infor({ data }) {
                 )}
                 {menuActive === 4 ? (
                     <div id="htlfndr-hotel-description-tab-4" className="htlfndr-hotel-description-tab">
-                        <div className="htlfndr-hotel-marks">
-                            <div className="htlfndr-overview-rating">
-                                <div className="htlfndr-rating-stars">
-                                    <i className="fa fa-star htlfndr-star-color"></i>
-                                    <i className="fa fa-star htlfndr-star-color"></i>
-                                    <i className="fa fa-star htlfndr-star-color"></i>
-                                    <i className="fa fa-star htlfndr-star-color"></i>
-                                    <i className="fa fa-star htlfndr-star-color"></i>
-                                </div>
-                                <dl>
-                                    <dt>
-                                        <span>{data?.room?.averageStar}</span> out of 5
-                                    </dt>
-                                    <dd>
-                                        based on <span>{data?.room?.totalReview}</span> Reviews
-                                    </dd>
-                                </dl>
-                            </div>
-                            <div className="htlfndr-detailed-rating">
-                                <table>
-                                    <tbody>
-                                        <tr>
-                                            <th>Amentinies</th>
-                                            <td className="htlfndr-meter-cell">
-                                                <meter className="htlfndr-meter" value="0.75" min="0" max="1">
-                                                    <div className="meter-gauge">
-                                                        <span style={{ width: '75.00%' }}></span>
-                                                    </div>
-                                                </meter>
-                                            </td>
-                                            <td className="htlfndr-rating-cell">4.5</td>
-                                        </tr>
-                                        <tr>
-                                            <th>room comfort</th>
-                                            <td className="htlfndr-meter-cell">
-                                                <meter className="htlfndr-meter" value="0.6" min="0" max="1">
-                                                    <div className="meter-gauge">
-                                                        <span style={{ width: '60.00%' }}></span>
-                                                    </div>
-                                                </meter>
-                                            </td>
-                                            <td className="htlfndr-rating-cell">3</td>
-                                        </tr>
-                                        <tr>
-                                            <th>Security</th>
-                                            <td className="htlfndr-meter-cell">
-                                                <meter className="htlfndr-meter" value="0.9" min="0" max="1">
-                                                    <div className="meter-gauge">
-                                                        <span style={{ width: '90.00%' }}></span>
-                                                    </div>
-                                                </meter>
-                                            </td>
-                                            <td className="htlfndr-rating-cell">4.8</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                        <div className="clearfix"></div>
-                        <div className="htlfndr-visitor-review">
-                            <div className="htlfndr-review-left-side">
-                                <div className="htlfndr-visitor-avatar">
-                                    <Image src="images/visitor-avatar-1-1.jpg" alt="visitor photo" />
-                                </div>
-                                <div className="htlfndr-visitor-flag">
-                                    <Image src="images/icon-flag-ukraine.png" alt="visitor flag" />
-                                </div>
-                                <dl>
-                                    <dt>john doe</dt>
-                                    <dd>kiev, ukraine</dd>
-                                </dl>
-                            </div>
-                            <div className="htlfndr-review-right-side">
-                                <article className="htlfndr-visitor-post">
-                                    <header>
-                                        <h3>Tempus vestibulum mus imperdiet nibh sem</h3>
-                                        <h6>posted 12 May 2015 </h6>
-                                    </header>
-                                    <div className="htlfndr-rating-stars">
-                                        <i className="fa fa-star htlfndr-star-color"></i>
-                                        <i className="fa fa-star htlfndr-star-color"></i>
-                                        <i className="fa fa-star htlfndr-star-color"></i>
-                                        <i className="fa fa-star htlfndr-star-color"></i>
-                                        <i className="fa fa-star htlfndr-star-color"></i>
-                                    </div>
-                                    <p>
-                                        Pharetra quis netus vel vehicula class vestibulum nisl donec hendrerit fermentum
-                                        magna sed amet purus sit nec class sit fringilla tellus volutpat per eget
-                                        molestie Platea suspendisse eget tortor pharetra magna nam senectus tristique
-                                        cursus ut odio sollicitudin venenatis natoque dis maecenas magna dignissim
-                                        sociosqu et sociis accumsan interdum dictum netus quis enim phasellus suscipit
-                                        nunc donec purus dui himenaeos nulla sociosqu rhoncus dictumst fusce ultricies
-                                        congue sapien porttitor maecenas fringilla ipsum nam lorem aliquam rhoncus elit
-                                        himenaeos
-                                    </p>
-                                    <footer>
-                                        <div className="row">
-                                            <div className="col-xs-6 col-sm-6 col-md-5 htlfndr-review-footer-marks">
-                                                <h3>room cleanliness</h3>
-                                                <p>
-                                                    <span className="htlfndr-round-mark">4</span>&emsp;out of 5
-                                                </p>
-                                            </div>
-                                            <div className="col-xs-6 col-sm-6 col-md-7 htlfndr-review-footer-marks">
-                                                <h3>room comfort</h3>
-                                                <p>
-                                                    <span className="htlfndr-round-mark">3</span>&emsp;out of 5
-                                                </p>
-                                            </div>
-                                            <div className="clearfix"></div>
-                                            <div className="col-xs-6 col-sm-6 col-md-5 htlfndr-review-footer-marks">
-                                                <h3>service & staff</h3>
-                                                <p>
-                                                    <span className="htlfndr-round-mark">2</span>&emsp;out of 5
-                                                </p>
-                                            </div>
-                                            <div className="col-xs-6 col-sm-6 col-md-7 htlfndr-review-footer-marks">
-                                                <h3>hotel condition</h3>
-                                                <p>
-                                                    <span className="htlfndr-round-mark">4</span>&emsp;out of 5
-                                                </p>
-                                            </div>
+                        {review ? (
+                            <>
+                                <div className="htlfndr-hotel-marks">
+                                    <div className="htlfndr-overview-rating">
+                                        <div className="htlfndr-rating-stars">
+                                            {renderStars(data?.room?.averageStar)}
                                         </div>
-                                    </footer>
-                                </article>
-                            </div>
-                            <div className="htlfndr-second-tab-post" style={{ marginBottom: '0' }}>
-                                <Link
-                                    to="/allreviews"
-                                    state={{
-                                        step: 2,
-                                    }}
-                                >
-                                    <i className="fa fa-eye"></i>View more reviews
-                                </Link>
-                            </div>
-                        </div>
+                                        <dl>
+                                            <dt>
+                                                <span>{data?.room?.averageStar}</span> {t('out of 5')}
+                                            </dt>
+                                            <dd>
+                                                {t('based on')} <span>{data?.room?.totalReview}</span> {t('Reviews')}
+                                            </dd>
+                                        </dl>
+                                    </div>
+                                    <div className="htlfndr-detailed-rating">
+                                        <table>
+                                            <tbody>
+                                                <tr>
+                                                    <th>{t('Amentinies')}</th>
+                                                    <td className="htlfndr-meter-cell">
+                                                        <meter className="htlfndr-meter" value="0.75" min="0" max="1">
+                                                            <div className="meter-gauge">
+                                                                <span style={{ width: '75.00%' }}></span>
+                                                            </div>
+                                                        </meter>
+                                                    </td>
+                                                    <td className="htlfndr-rating-cell">4.5</td>
+                                                </tr>
+                                                <tr>
+                                                    <th>{t('room comfort')}</th>
+                                                    <td className="htlfndr-meter-cell">
+                                                        <meter className="htlfndr-meter" value="0.6" min="0" max="1">
+                                                            <div className="meter-gauge">
+                                                                <span style={{ width: '60.00%' }}></span>
+                                                            </div>
+                                                        </meter>
+                                                    </td>
+                                                    <td className="htlfndr-rating-cell">3</td>
+                                                </tr>
+                                                <tr>
+                                                    <th>{t('Security')}</th>
+                                                    <td className="htlfndr-meter-cell">
+                                                        <meter className="htlfndr-meter" value="0.9" min="0" max="1">
+                                                            <div className="meter-gauge">
+                                                                <span style={{ width: '90.00%' }}></span>
+                                                            </div>
+                                                        </meter>
+                                                    </td>
+                                                    <td className="htlfndr-rating-cell">4.8</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div className="clearfix"></div>
+                                <div className="htlfndr-visitor-review">
+                                    <div className="htlfndr-review-left-side">
+                                        <div className="htlfndr-visitor-avatar">
+                                            <Image
+                                                src={review?.user.avatar}
+                                                alt={review?.user.username}
+                                                style={{ height: '118px' }}
+                                            />
+                                        </div>
+                                        <div className="htlfndr-visitor-flag">
+                                            <Image src={review?.user.avatar} alt={review?.user.username} />
+                                        </div>
+                                        <dl>
+                                            <dt>{review?.user.username}</dt>
+                                        </dl>
+                                    </div>
+                                    <div className="htlfndr-review-right-side">
+                                        <article className="htlfndr-visitor-post">
+                                            <header>
+                                                <h3>{t('REVIEW ROOM')}</h3>
+                                                <h6>{review?.time}</h6>
+                                            </header>
+                                            <div className="htlfndr-rating-stars">
+                                                {renderStars(data?.room?.averageStar)}
+                                            </div>
+                                            <p>{review?.content}</p>
+                                        </article>
+                                    </div>
+                                </div>
+                                <div className="htlfndr-second-tab-post" style={{ marginBottom: '20px' }}>
+                                    <Link
+                                        to="/allreviews"
+                                        state={{
+                                            step: 2,
+                                            id: id,
+                                        }}
+                                    >
+                                        <i className="fa fa-eye"></i>
+                                        {t('View more reviews')}
+                                    </Link>
+                                </div>
+                            </>
+                        ) : (
+                            <p>{t('Room has no comments yet.')}</p>
+                        )}
                     </div>
                 ) : (
                     <></>
@@ -531,7 +521,7 @@ function Infor({ data }) {
                     <div id="htlfndr-hotel-description-tab-5" className="htlfndr-hotel-description-tab">
                         <form onSubmit={handleSubmit(submitForm)} className="htlfndr-review-form">
                             <div className="htlfndr-form-left-side">
-                                <label htmlFor="review-text">review text</label>
+                                <label htmlFor="review-text">{t('review text')}</label>
                                 <textarea
                                     name="review-text"
                                     id="review-text"
@@ -541,7 +531,7 @@ function Infor({ data }) {
                             </div>
                             <div className="htlfndr-form-right-side">
                                 <div className="htlfndr-radio-set">
-                                    <h3>Amentinies</h3>
+                                    <h3>{t('Amentinies')}</h3>
                                     <Rating
                                         size="large"
                                         name="Amentinies"
@@ -550,16 +540,16 @@ function Infor({ data }) {
                                     />
                                 </div>
                                 <div className="htlfndr-radio-set">
-                                    <h3>room comfort</h3>
+                                    <h3>{t('room comfort')}</h3>
                                     <Rating size="large" name="comfort" value={5} />
                                 </div>
                                 <div className="htlfndr-radio-set">
-                                    <h3>Security</h3>
+                                    <h3>{t('Security')}</h3>
                                     <Rating size="large" name="Security" value={5} />
                                 </div>
                             </div>
                             <div className="clearfix"></div>
-                            <input type="submit" value="Leave a Review" className="btn-default" />
+                            <input type="submit" value={t('Leave a Review')} className="btn-default" />
                         </form>
                     </div>
                 ) : (

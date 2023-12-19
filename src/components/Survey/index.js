@@ -10,8 +10,10 @@ import { useForm } from 'react-hook-form';
 import { makeSurvey } from '~/actions/userActions';
 import { toast } from 'react-toastify';
 import { useSelector } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 
 function Survey({ onClose }) {
+    const { t } = useTranslation();
     const { register, handleSubmit } = useForm();
     const { user } = useSelector((state) => state.auth);
     const [price, setPrice] = useState([0, 10000000]);
@@ -76,15 +78,15 @@ function Survey({ onClose }) {
                             <div className={styles.form_image}>
                                 <div style={{ textAlign: 'center' }}>
                                     <h3>
-                                        Hello, <strong>{user.username}</strong>
+                                        {t('Hello')}, <strong>{user.username}</strong>
                                     </h3>
-                                    <p>For better suggestions, help us complete a few questions!</p>
+                                    <p>{t('For better suggestions, help us complete a few questions!')}</p>
                                 </div>
                                 <Image src={images.survey} />
                             </div>
                             <div className={styles.form_survey}>
-                                <p>What kind of room are you looking for?</p>
-                                <span className={styles.title_option}>Price</span>
+                                <p>{t('What kind of room are you looking for?')}</p>
+                                <span className={styles.title_option}>{t('Price')}</span>
                                 <div style={{ margin: '10px 0 0 10px' }}>
                                     <Slider
                                         value={price}
@@ -100,12 +102,12 @@ function Survey({ onClose }) {
                                 </div>
 
                                 <br />
-                                <span className={styles.title_option}>Amenities</span>
+                                <span className={styles.title_option}>{t('Amenities')}</span>
                                 <div style={{ margin: '10px 0 0 5px' }}>
                                     <div style={{ display: 'flex' }}>
                                         <div style={{ width: '50%' }}>
                                             <input type="checkbox" id="attic" name="attic" {...register('attic')} />
-                                            <label htmlFor="attic">Attic</label>
+                                            <label htmlFor="attic">{t('Attic')}</label>
                                         </div>
 
                                         <input
@@ -114,7 +116,7 @@ function Survey({ onClose }) {
                                             name="isFreeParking"
                                             {...register('isFreeParking')}
                                         />
-                                        <label htmlFor="isFreeParking">Free Parking</label>
+                                        <label htmlFor="isFreeParking">{t('Free Parking')}</label>
                                     </div>
                                     <div style={{ display: 'flex' }}>
                                         <div style={{ width: '50%' }}>
@@ -124,7 +126,7 @@ function Survey({ onClose }) {
                                                 name="allowedPet"
                                                 {...register('allowedPet')}
                                             />
-                                            <label htmlFor="allowedPet">Allowed Pet</label>
+                                            <label htmlFor="allowedPet">{t('Allowed Pet')}</label>
                                         </div>
 
                                         <div>
@@ -134,7 +136,7 @@ function Survey({ onClose }) {
                                                 name="airConditionAvailable"
                                                 {...register('airConditionAvailable')}
                                             />
-                                            <label htmlFor="airConditionAvailable">Air Conditioning</label>
+                                            <label htmlFor="airConditionAvailable">{t('Air Conditioning')}</label>
                                         </div>
                                     </div>
                                     <div style={{ display: 'flex' }}>
@@ -145,7 +147,7 @@ function Survey({ onClose }) {
                                                 name="privateToilet"
                                                 {...register('privateToilet')}
                                             />
-                                            <label htmlFor="privateToilet">Private Toilet</label>
+                                            <label htmlFor="privateToilet">{t('Private Toilet')}</label>
                                         </div>
                                         <input
                                             type="checkbox"
@@ -153,11 +155,11 @@ function Survey({ onClose }) {
                                             name="furnitureAvailable"
                                             {...register('furnitureAvailable')}
                                         />
-                                        <label htmlFor="furnitureAvailable">Furniture Available</label>
+                                        <label htmlFor="furnitureAvailable">{t('Furniture Available')}</label>
                                     </div>
                                 </div>
                                 <button type="submit" className={styles.btn_submit}>
-                                    Submit
+                                    {t('Submit')}
                                 </button>
                             </div>
                         </div>

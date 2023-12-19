@@ -9,6 +9,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import Loader from './Loader';
 import { useSelector } from 'react-redux';
 import { ProtectedRoute } from './components/ProtectedRoute';
+import '~/components/i18n/i18n';
 
 function App() {
     const location = useLocation();

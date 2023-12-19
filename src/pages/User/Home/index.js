@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 /* eslint-disable jsx-a11y/img-redundant-alt */
 /* eslint-disable jsx-a11y/anchor-has-content */
 import 'classnames/bind';
@@ -8,15 +9,18 @@ import '~/assets/css/style.css';
 import '~/assets/css/owl.carousel.css';
 import '~/assets/css/select-style.css';
 import '~/assets/css/font-awesome.min.css';
-// import '~/assets/js/jquery-1.11.3.min.js';
 import images from '~/assets/images';
 import Image from '~/components/Image';
 import Slider from '~/components/Slider';
 import { topRecommends } from '~/actions/otherActions';
 import { useEffect, useState } from 'react';
 import RecommendRoom from '~/components/RecommendRoom';
+import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 function Home() {
+    const { t } = useTranslation();
+    const navigate = useNavigate();
     const [recommendRooms, setRecommendRooms] = useState([]);
 
     useEffect(() => {
@@ -31,18 +35,22 @@ function Home() {
         }
     }, []);
 
+    const filterRoom = async (cod) => {
+        let object = { provinceCode: { code: cod } };
+        await navigate('/search', { state: { data: object, step: 1 } });
+    };
     return (
         <>
             <Slider></Slider>
             <main role="main">
                 <section className="container htlfndr-top-destinations">
-                    <h2 className="htlfndr-section-title">top recommends</h2>
+                    <h2 className="htlfndr-section-title">{t('top recommends')}</h2>
                     <div className="htlfndr-section-under-title-line"></div>
                     <RecommendRoom data={recommendRooms} />
                 </section>
                 <section className="container-fluid htlfndr-usp-section">
                     <h2 className="htlfndr-section-title htlfndr-lined-title">
-                        <span>USP section</span>
+                        <span>{t('USP section')}</span>
                     </h2>
                     <div className="container">
                         <div className="row">
@@ -54,10 +62,9 @@ function Home() {
                                     width="100"
                                     alt="icon"
                                 />
-                                <h5 className="htlfndr-section-subtitle">eat and drink</h5>
+                                <h5 className="htlfndr-section-subtitle">{t('eat and drink')}</h5>
                                 <p>
-                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse interdum
-                                    eleifend augue, quis rhoncus purus fermentum.
+                                    {t('Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse interdum eleifend augue, quis rhoncus purus fermentum.')}
                                 </p>
                             </div>
                             <div className="col-sm-4 htlfndr-icon-box">
@@ -68,10 +75,10 @@ function Home() {
                                     width="100"
                                     alt="icon"
                                 />
-                                <h5 className="htlfndr-section-subtitle">best deals</h5>
+                                <h5 className="htlfndr-section-subtitle">{t('best deals')}</h5>
                                 <p>
-                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse interdum
-                                    eleifend augue, quis rhoncus purus fermentum.
+                                {t('Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse interdum eleifend augue, quis rhoncus purus fermentum.')}
+
                                 </p>
                             </div>
                             <div className="col-sm-4 htlfndr-icon-box">
@@ -82,17 +89,17 @@ function Home() {
                                     width="100"
                                     alt="icon"
                                 />
-                                <h5 className="htlfndr-section-subtitle">guarantee</h5>
+                                <h5 className="htlfndr-section-subtitle">{t('guarantee')}</h5>
                                 <p>
-                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse interdum
-                                    eleifend augue, quis rhoncus purus fermentum.
+                                {t('Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse interdum eleifend augue, quis rhoncus purus fermentum.')}
+
                                 </p>
                             </div>
                         </div>
                     </div>
                 </section>
                 <section className="container-fluid htlfndr-categories-portfolio">
-                    <h2 className="htlfndr-section-title bigger-title">discover the location</h2>
+                    <h2 className="htlfndr-section-title bigger-title">{t('discover the location')}</h2>
                     <div className="htlfndr-section-under-title-line"></div>
                     <div className="container">
                         <div className="row">
@@ -103,16 +110,13 @@ function Home() {
                                         style={{ height: '311px', width: '370px' }}
                                         alt="category-Image"
                                     />
-                                    <div className="category-description">
+                                    <div className="category-description" onClick={() => filterRoom(48)}>
                                         <div className="htlfndr-icon-flag-border">
                                             <i className="htlfndr-icon-flag flag-germany"></i>
                                         </div>
                                         <h2 className="subcategory-name">Cầu Vàng</h2>
-                                        <a href="/" className="htlfndr-category-permalink"></a>
+                                        <a className="htlfndr-category-permalink"></a>
                                         <h5 className="category-name">Đà Nẵng</h5>
-                                        <p className="category-properties">
-                                            <span>374</span> properties
-                                        </p>
                                     </div>
                                 </div>
                             </div>
@@ -123,16 +127,13 @@ function Home() {
                                         style={{ height: '311px', width: '370px' }}
                                         alt="category-Image"
                                     />
-                                    <div className="category-description">
+                                    <div className="category-description" onClick={() => filterRoom(79)}>
                                         <div className="htlfndr-icon-flag-border">
                                             <i className="htlfndr-icon-flag flag-britain"></i>
                                         </div>
                                         <h2 className="subcategory-name">City Gold</h2>
-                                        <a href="/" className="htlfndr-category-permalink"></a>
+                                        <a className="htlfndr-category-permalink"></a>
                                         <h5 className="category-name">Đà Lạt</h5>
-                                        <p className="category-properties">
-                                            <span>185</span> properties
-                                        </p>
                                     </div>
                                 </div>
                             </div>
@@ -143,16 +144,13 @@ function Home() {
                                         style={{ height: '311px', width: '370px' }}
                                         alt="category-Image"
                                     />
-                                    <div className="category-description">
+                                    <div className="category-description" onClick={() => filterRoom(79)}>
                                         <div className="htlfndr-icon-flag-border">
                                             <i className="htlfndr-icon-flag flag-italy"></i>
                                         </div>
                                         <h2 className="subcategory-name">Landmark 81</h2>
-                                        <a href="/" className="htlfndr-category-permalink"></a>
+                                        <a className="htlfndr-category-permalink"></a>
                                         <h5 className="category-name">TP HCM</h5>
-                                        <p className="category-properties">
-                                            <span>98</span> properties
-                                        </p>
                                     </div>
                                 </div>
                             </div>
@@ -163,16 +161,13 @@ function Home() {
                                         style={{ height: '311px', width: '370px' }}
                                         alt="category-Image"
                                     />
-                                    <div className="category-description">
+                                    <div className="category-description" onClick={() => filterRoom(60)}>
                                         <div className="htlfndr-icon-flag-border">
                                             <i className="htlfndr-icon-flag flag-france"></i>
                                         </div>
                                         <h2 className="subcategory-name">Đảo Phú Quý</h2>
-                                        <a href="/" className="htlfndr-category-permalink"></a>
+                                        <a className="htlfndr-category-permalink"></a>
                                         <h5 className="category-name">Bình Thuận</h5>
-                                        <p className="category-properties">
-                                            <span>281</span> properties
-                                        </p>
                                     </div>
                                 </div>
                             </div>
@@ -183,16 +178,13 @@ function Home() {
                                         style={{ height: '311px', width: '370px' }}
                                         alt="category-Image"
                                     />
-                                    <div className="category-description">
+                                    <div className="category-description" onClick={() => filterRoom(49)}>
                                         <div className="htlfndr-icon-flag-border">
                                             <i className="htlfndr-icon-flag flag-russia"></i>
                                         </div>
                                         <h2 className="subcategory-name">Hội An</h2>
-                                        <a href="/" className="htlfndr-category-permalink"></a>
+                                        <a className="htlfndr-category-permalink"></a>
                                         <h5 className="category-name">Quảng Nam</h5>
-                                        <p className="category-properties">
-                                            <span>38</span> properties
-                                        </p>
                                     </div>
                                 </div>
                             </div>
@@ -203,96 +195,19 @@ function Home() {
                                         style={{ height: '311px', width: '370px' }}
                                         alt="category-Image"
                                     />
-                                    <div className="category-description">
+                                    <div className="category-description" onClick={() => filterRoom(92)}>
                                         <div className="htlfndr-icon-flag-border">
                                             <i className="htlfndr-icon-flag flag-japan"></i>
                                         </div>
                                         <h2 className="subcategory-name">Vinpearl</h2>
-                                        <a href="/" className="htlfndr-category-permalink"></a>
+                                        <a className="htlfndr-category-permalink"></a>
                                         <h5 className="category-name">Cần Thơ</h5>
-                                        <p className="category-properties">
-                                            <span>318</span> properties
-                                        </p>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </section>
-                {/* <section className="container-fluid htlfndr-visitors-cards">
-                    <h2 className="htlfndr-section-title bigger-title">visitors experienced</h2>
-                    <div className="htlfndr-section-under-title-line"></div>
-                    <div className="container">
-                        <div className="row">
-                            <div className="col-sm-4 col-xs-12 htlfndr-visitor-column">
-                                <div className="htlfndr-visitor-card">
-                                    <div className="visitor-avatar-side">
-                                        <div className="visitor-avatar">
-                                            <Image
-                                                src="https://th.bing.com/th/id/OIP.ESJ_lUju-X5N6DgEXjLXOAHaEo?w=316&h=197&c=7&r=0&o=5&dpr=1.3&pid=1.7"
-                                                height="90"
-                                                width="90"
-                                                alt="user avatar"
-                                            />
-                                        </div>
-                                    </div>
-                                    <div className="visitor-info-side">
-                                        <h5 className="visitor-user-name">Sara Connor</h5>
-                                        <h6 className="visitor-user-firm">Travel Magazine</h6>
-                                        <p className="visitor-user-text">
-                                            Nunc cursus libero purus ac congue arcu cursus ut sed vitae pulvinar massa
-                                            idporta nequetiam nar...
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="col-sm-4 col-xs-12 htlfndr-visitor-column">
-                                <div className="htlfndr-visitor-card">
-                                    <div className="visitor-avatar-side">
-                                        <div className="visitor-avatar">
-                                            <Image
-                                                src="https://th.bing.com/th/id/OIP.ESJ_lUju-X5N6DgEXjLXOAHaEo?w=316&h=197&c=7&r=0&o=5&dpr=1.3&pid=1.7"
-                                                height="90"
-                                                width="90"
-                                                alt="user avatar"
-                                            />
-                                        </div>
-                                    </div>
-                                    <div className="visitor-info-side">
-                                        <h5 className="visitor-user-name">Mira Young</h5>
-                                        <h6 className="visitor-user-firm">Hotel Manager</h6>
-                                        <p className="visitor-user-text">
-                                            Nunc cursus libero purus ac congue arcu cursus ut sed vitae pulvinar massa
-                                            idporta nequetiam nar...
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="col-sm-4 col-xs-12 htlfndr-visitor-column">
-                                <div className="htlfndr-visitor-card">
-                                    <div className="visitor-avatar-side">
-                                        <div className="visitor-avatar">
-                                            <Image
-                                                src="https://th.bing.com/th/id/OIP.ESJ_lUju-X5N6DgEXjLXOAHaEo?w=316&h=197&c=7&r=0&o=5&dpr=1.3&pid=1.7"
-                                                height="90"
-                                                width="90"
-                                                alt="user avatar"
-                                            />
-                                        </div>
-                                    </div>
-                                    <div className="visitor-info-side">
-                                        <h5 className="visitor-user-name">John Smith</h5>
-                                        <h6 className="visitor-user-firm">Hotel Manager</h6>
-                                        <p className="visitor-user-text">
-                                            Nunc cursus libero purus ac congue arcu cursus ut sed vitae pulvinar massa
-                                            idporta nequetiam nar...
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </section> */}
             </main>
         </>
     );

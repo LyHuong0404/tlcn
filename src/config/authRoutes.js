@@ -11,5 +11,13 @@ const authRoutes = {
     allappointmentsuser: '/user/allappointments',
     paymentSuccess: '/payment/success',
     paymentError: '/payment/error',
+    appointments: '/admin/appointments',
+    payments: '/admin/payments',
+    getUser: '/admin/list_user/:id',
+    getUserLink: (id) => `/admin/list_user/${id}`,
+    getUserAppointments: '/admin/appointment_user/:id',
+    getUserAppointmentsLink: (id) => `/admin/appointment_user/${id}`,
+    getUserPayment: '/admin/payment_user/:id',
+    getUserpaymentLink: (id) => `/admin/payment_user/${id}`,
 };
 export default authRoutes;

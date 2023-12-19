@@ -4,10 +4,20 @@ import Image from '~/components/Image';
 import images from '~/assets/images';
 import Tippy from '@tippyjs/react/headless';
 import styles from './Header.module.scss';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import { userLogout } from '~/actions/authActions';
+import { useTranslation } from 'react-i18next';
+
 function Header() {
-    const { user } = useSelector((state) => state.auth)
+    const { t } = useTranslation();
+    const { user } = useSelector((state) => state.auth);
+    const navigate = useNavigate();
+
+    const handleLogout = async () => {
+        await userLogout();
+        navigate('/auth/login');
+    };
     return (
         <div className="container-fluid sb1">
             <div className="row">
@@ -16,17 +26,10 @@ function Header() {
                         <Image src={images.logo1} alt="logo" />
                     </a>
                 </div>
-                <div className="col-md-6 col-sm-6 mob-hide">
-                    {/* <form className="app-search">
-                        <input type="text" placeholder="Search..." className="form-control" />
-                        <a href="#">
-                            <i className="fa fa-search"></i>
-                        </a>
-                    </form> */}
-                </div>
+                <div className="col-md-6 col-sm-6 mob-hide"></div>
                 <div className="col-md-2 tab-hide">
                     <div className="top-not-cen">
-                        <a className="waves-effect btn-noti" href="#">
+                        <a className="waves-effect btn-noti">
                             <i className="fa fa-commenting-o" aria-hidden="true"></i>
                             <span>5</span>
                         </a>
@@ -54,28 +57,51 @@ function Header() {
                                                 aria-hidden="true"
                                                 style={{ marginRight: '20px' }}
                                             ></i>
-                                            Seller Setting
+                                            {t('Seller Setting')}
                                         </Link>
-                                    </li>                                   
+                                    </li>
+                                    {user?.roles?.length > 2 && (
+                                        <>
+                                            <li onClick={() => window.location.reload()}>
+                                                <Link to="/admin/dashboard" className={styles.waves_effect}>
+                                                    <i
+                                                        className="fa fa-unlock"
+                                                        aria-hidden="true"
+                                                        style={{ marginRight: '20px' }}
+                                                    ></i>
+                                                    {t('Admin Home')}
+                                                </Link>
+                                            </li>
+                                            <li onClick={() => window.location.reload()}>
+                                                <Link to="/" className={styles.waves_effect}>
+                                                    <i
+                                                        className="fa fa-home"
+                                                        aria-hidden="true"
+                                                        style={{ marginRight: '20px' }}
+                                                    ></i>
+                                                    {t('Web home')}
+                                                </Link>
+                                            </li>
+                                        </>
+                                    )}
                                     <li className="divider"></li>
-                                    <li>
-                                        <Link to="#" className={styles.waves_effect}>
+                                    <li onClick={handleLogout}>
+                                        <Link className={styles.waves_effect}>
                                             <i
                                                 className="fa fa-sign-in"
                                                 aria-hidden="true"
                                                 style={{ marginRight: '20px' }}
                                             ></i>
-                                            Logout
+                                            {t('Logout')}
                                         </Link>
                                     </li>
                                 </ul>
                             </div>
                         )}
-                        // onHide={() => setHistory((prev) => prev.slice(0, 1))}
                     >
                         <p className="waves-effect dropdown-button top-user-pro" data-activates="top-menu">
-                            <Image src={user.avatar} alt="" />
-                            My Account <i className="fa fa-angle-down" aria-hidden="true"></i>
+                            <Image src={user.avatar} alt="avatar" />
+                            {t('My Account')} <i className="fa fa-angle-down" aria-hidden="true"></i>
                         </p>
                     </Tippy>
                 </div>

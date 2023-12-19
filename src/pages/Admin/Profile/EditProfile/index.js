@@ -2,10 +2,30 @@
 import Image from '~/components/Image';
 import { useState, useEffect } from 'react';
 import styles from './EditProfile.module.scss';
+import { Link, useParams } from 'react-router-dom';
+import { getUser } from '~/actions/adminActions';
+import config from '~/config';
+import { useTranslation } from 'react-i18next';
 
 function EditProfile() {
+    const { t } = useTranslation();
+    const params = useParams();
+    const id = params.id;
+    const [user, setUser] = useState({});
     const [filePreview, setFilePreview] = useState('');
     const [avatar, setAvatar] = useState('');
+
+    useEffect(() => {
+        try {
+            const fetchData = async () => {
+                const rs = await getUser(id);
+                setUser(rs);
+            };
+            fetchData();
+        } catch (error) {
+            console.log(error);
+        }
+    }, []);
 
     useEffect(() => {
         return () => {
@@ -25,27 +45,47 @@ function EditProfile() {
                     <div className="row no-gutters">
                         <div className="col" style={{ display: 'flex', alignItems: 'center' }}>
                             <div className="heading-messages">
-                                <h1>Profile</h1>
+                                <h1>{t('Profile')}</h1>
                             </div>
                         </div>
                         <div className="col-md-4">
                             <div className="breadcrumb" style={{ fontSize: '16px' }}>
                                 <div className="breadcrumb-item">
                                     <i className="fas fa-angle-right"></i>
-                                    <a href="#">Profile</a>
+                                    <a>{t('Profile')}</a>
                                 </div>
                                 <div className="breadcrumb-item active">
-                                    <i className="fas fa-angle-right"></i>Edit Profile
+                                    <i className="fas fa-angle-right"></i>
+                                    {t('Edit Profile')}
                                 </div>
                             </div>
                         </div>
                     </div>
 
-                    <div className="box" >
-                        <div className="row" >
-                            <div className="col">
-                                <div className="details-text" >
-                                    <h1>Edit Profile Details</h1>
+                    <div className="box">
+                        <div className="row">
+                            <div
+                                className="col"
+                                style={{ margin: '20px 34px 5px 34px', borderBottom: '1px solid #cccccc' }}
+                            >
+                                <div className="details-text" style={{ marginBottom: '18px' }}>
+                                    <a style={{ backgroundColor: '#cccccc' }}>{t('Profile')}</a>
+                                    <Link
+                                        to={config.authRoutes.getUserpaymentLink(user.id)}
+                                        state={{
+                                            activeTab: 2,
+                                        }}
+                                    >
+                                        {t('Payment')}
+                                    </Link>
+                                    <Link
+                                        to={config.authRoutes.getUserAppointmentsLink(user.id)}
+                                        state={{
+                                            activeTab: 2,
+                                        }}
+                                    >
+                                        {t('Appointments')}
+                                    </Link>
                                 </div>
                             </div>
                         </div>
@@ -56,18 +96,26 @@ function EditProfile() {
                                         <div className="form-row">
                                             <div className="col-md">
                                                 <div className="form-group">
-                                                    <label htmlFor="to" className="">
-                                                        Name:
-                                                    </label>
-                                                    <input type="text" className="form-control" required id="to" />
+                                                    <label htmlFor="to0">ID #:</label>
+                                                    <input
+                                                        type="text"
+                                                        className="form-control"
+                                                        required
+                                                        id="to0"
+                                                        defaultValue={user.id || ''}
+                                                    />
                                                 </div>
                                             </div>
                                             <div className="col-md">
                                                 <div className="form-group">
-                                                    <label htmlFor="to1" className="">
-                                                        Last Name
-                                                    </label>
-                                                    <input type="text" className="form-control" required id="to1" />
+                                                    <label htmlFor="username">{t('User Name')}</label>
+                                                    <input
+                                                        type="text"
+                                                        className="form-control"
+                                                        required
+                                                        id="username"
+                                                        defaultValue={user.username || ''}
+                                                    />
                                                 </div>
                                             </div>
                                         </div>
@@ -75,39 +123,74 @@ function EditProfile() {
                                         <div className="form-row">
                                             <div className="col-md">
                                                 <div className="form-group">
-                                                    <label htmlFor="to2" className="">
-                                                        Telephone # :
-                                                    </label>
-                                                    <input type="text" className="form-control" required id="to2" />
+                                                    <label htmlFor="balance">{t('Balance')} #:</label>
+                                                    <input
+                                                        type="text"
+                                                        className="form-control"
+                                                        required
+                                                        id="balance"
+                                                        defaultValue={user.balance || ''}
+                                                    />
                                                 </div>
                                             </div>
                                             <div className="col-md">
                                                 <div className="form-group">
-                                                    <label htmlFor="to3" className="">
-                                                        Email:
-                                                    </label>
-                                                    <input type="text" className="form-control" required id="to3" />
+                                                    <label htmlFor="fullname">{t('Full Name')}:</label>
+                                                    <input
+                                                        type="text"
+                                                        className="form-control"
+                                                        required
+                                                        id="fullname"
+                                                        defaultValue={user.fullname || ''}
+                                                    />
                                                 </div>
                                             </div>
                                         </div>
 
-                                        <div className="form-group">
+                                        <div className="form-row">
+                                            <div className="col-md">
+                                                <div className="form-group">
+                                                    <label htmlFor="phone">{t('Phone')} # :</label>
+                                                    <input
+                                                        type="text"
+                                                        className="form-control"
+                                                        required
+                                                        id="phone"
+                                                        defaultValue={user.phone || ''}
+                                                    />
+                                                </div>
+                                            </div>
+                                            <div className="col-md">
+                                                <div className="form-group">
+                                                    <label htmlFor="email">Email:</label>
+                                                    <input
+                                                        type="text"
+                                                        className="form-control"
+                                                        required
+                                                        id="email"
+                                                        defaultValue={user.email || ''}
+                                                    />
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        {/* <div className="form-group">
                                             <textarea
                                                 className="form-control textarea text-left p-3 h-100"
                                                 id="exampleFormControlTextarea1"
                                                 rows="5"
                                                 placeholder="Room Details"
                                             ></textarea>
-                                        </div>
+                                        </div> */}
                                         <ul className="list-inline">
                                             <li className="list-inline-item">
-                                                <button type="submit" className="btn" >
-                                                    Submit
+                                                <button type="submit" className="btn">
+                                                    {t('Submit')}
                                                 </button>
                                             </li>
                                             <li className="list-inline-item">
                                                 <button type="submit" className="btn">
-                                                    Cancel
+                                                    {t('Cancel')}
                                                 </button>
                                             </li>
                                         </ul>
@@ -115,23 +198,17 @@ function EditProfile() {
                                     <div className="col">
                                         <div className="upload-photo-wrapper">
                                             <div className="upload-heading">
-                                                <h5>Your Photo</h5>
+                                                <h5>{t('Avatar')}</h5>
                                             </div>
 
                                             <div className="dz-message">
-                                                <div
-                                                    className={`needsclick dz-clickable ${
-                                                        avatar ? '' : 'dropzone background_avatar'
-                                                    }`}
-                                                    id="demo-upload"
-                                                >
+                                                <div id="demo-upload">
                                                     <div className="dz-message">
-                                                        {avatar ? (
+                                                        {user ? (
                                                             <label>
                                                                 <Image
                                                                     className={styles.image}
-                                                                    src={avatar ? filePreview : ''}
-                                                                    // src={avatar ? filePreview : currentUser.avatar}
+                                                                    src={avatar ? filePreview : user.avatar}
                                                                     alt="avatar"
                                                                 />
                                                                 <input
@@ -147,7 +224,7 @@ function EditProfile() {
                                                                     style={{ display: 'none' }}
                                                                     onChange={handleAvatar}
                                                                 />
-                                                                <p>Drop files here or click to upload. </p>
+                                                                <p>{t('Drop files here or click to upload.')} </p>
                                                             </label>
                                                         )}
                                                     </div>

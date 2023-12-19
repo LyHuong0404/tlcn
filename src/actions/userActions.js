@@ -161,7 +161,7 @@ export const filterRooms = async (
         tvAvailable,
         totalPerson,
     };
-    const filteredParams = Object.fromEntries(Object.entries(filters).filter(([_, value]) => value !== null));
+    const filteredParams = Object.fromEntries(Object.entries(filters).filter(([_, value]) => value !== undefined));
     try {
         const response = await httprequest.get('room/filter-room', {
             params: filteredParams,
@@ -214,6 +214,15 @@ export const updateProfile = async (formData) => {
             },
         };
         const response = await httprequest.post('update-info-user', formData, config);
+        return response;
+    } catch (error) {
+        console.log(error);
+    }
+};
+
+export const changePassword = async ({ oldPassword, newPassword }) => {
+    try {
+        const response = await httprequest.post('change-password', { oldPassword, newPassword });
         return response;
     } catch (error) {
         console.log(error);

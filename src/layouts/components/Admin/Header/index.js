@@ -3,13 +3,21 @@ import Image from '~/components/Image';
 import Tippy from '@tippyjs/react/headless';
 import styles from './Header.module.scss';
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBell, faEnvelope, faEnvelopeOpen } from '@fortawesome/free-regular-svg-icons';
+import { userLogout } from '~/actions/authActions';
+import { useTranslation } from 'react-i18next';
 
-function Header() {
+function Header({ user }) {
+    const { t } = useTranslation();
     const [menuActive, setMenuActive] = useState(0);
+    const navigate = useNavigate();
 
+    const handleLogout = async () => {
+        await userLogout();
+        navigate('/auth/login');
+    };
     return (
         <div className="top-bar">
             <nav className="navbar">
@@ -22,7 +30,7 @@ function Header() {
                             <input
                                 className="form-control mr-sm-2"
                                 type="search"
-                                placeholder="Search"
+                                placeholder={t('Search')}
                                 aria-label="Search"
                             />
                             <i className="fas fa-search"></i>
@@ -31,7 +39,6 @@ function Header() {
                     <li className="nav-item list-inline-item dropdown messages">
                         <a
                             className="nav-link dropdown-toggle"
-                            href="#"
                             id="navbarDropdown"
                             role="button"
                             data-toggle="dropdown"
@@ -59,15 +66,12 @@ function Header() {
                                 <span>Lorem ipsum dolor sit amet consectetur adipisicing.</span>
                             </a>
                             <div className="dropdown-divider"></div>
-                            <a href="#" className="btn mx-auto d-block">
-                                View All
-                            </a>
+                            <a className="btn mx-auto d-block">View All</a>
                         </div>
                     </li>
                     <li className="nav-item list-inline-item notifications">
                         <a
                             className="nav-link dropdown-toggle"
-                            href="#"
                             id="navbarDropdown"
                             role="button"
                             data-toggle="dropdown"
@@ -92,9 +96,7 @@ function Header() {
                                 <span>Lorem ipsum dolor sit amet consectetur adipisicing.</span>
                             </a>
                             <div className="dropdown-divider"></div>
-                            <a href="#" className="btn mx-auto d-block">
-                                View All
-                            </a>
+                            <a className="btn mx-auto d-block">View All</a>
                         </div>
                     </li>
                     <li className="nav-item list-inline-item dropdown profile">
@@ -109,7 +111,7 @@ function Header() {
                                         onClick={() => setMenuActive(1)}
                                     >
                                         <i className="fas fa-user" style={{ marginRight: '15px' }}></i>
-                                        <span>View Profile</span>
+                                        <span>{t('View Profile')}</span>
                                     </Link>
 
                                     <Link
@@ -118,7 +120,7 @@ function Header() {
                                         onClick={() => setMenuActive(2)}
                                     >
                                         <i className="fas fa-cog" style={{ marginRight: '15px' }}></i>
-                                        <span>Edit Profile</span>
+                                        <span>{t('Edit Profile')}</span>
                                     </Link>
 
                                     <Link
@@ -127,23 +129,26 @@ function Header() {
                                         onClick={() => setMenuActive(3)}
                                     >
                                         <i className="fas fa-unlock" style={{ marginRight: '15px' }}></i>
-                                        <span>Change Password</span>
+                                        <span>{t('Change Password')}</span>
                                     </Link>
 
-                                    <Link className={`dropdown-item ${menuActive === 4 ? styles.active : ''}`} to="#">
-                                        <i className="fas fa-unlock" style={{ marginRight: '15px' }}></i>
-                                        <span>Lock Screen</span>
+                                    <Link
+                                        className={`dropdown-item ${menuActive === 4 ? styles.active : ''}`}
+                                        to="/seller/dashboard"
+                                    >
+                                        <i className="fas fa-home" style={{ marginRight: '15px' }}></i>
+                                        <span>{t('Seller Home')}</span>
                                     </Link>
 
-                                    <Link to="#" className={`btn d-block text-left ${styles.text_logout}`}>
-                                        <i className="fas fa-power-off" style={{ marginRight: '15px' }}></i>Logout
-                                    </Link>
+                                    <a onClick={handleLogout} className={`btn d-block text-left ${styles.text_logout}`}>
+                                        <i className="fas fa-power-off" style={{ marginRight: '15px' }}></i>
+                                        {t('Logout')}
+                                    </a>
                                 </div>
                             )}
                         >
                             <a
                                 className="nav-link"
-                                href="#"
                                 id="navbarDropdown"
                                 role="button"
                                 data-toggle="dropdown"
@@ -151,10 +156,10 @@ function Header() {
                                 aria-expanded="false"
                             >
                                 <Image
-                                    src="images/commenter-1.jpg"
-                                    alt="avatar"
+                                    src={user.avatar}
+                                    alt={user.sername}
                                     className="img-fluid rounded-circle"
-                                    width="34px"
+                                    style={{ width: '36px', height: '36px' }}
                                 />
                             </a>
                         </Tippy>

@@ -19,8 +19,10 @@ import RegisterSeller from '../RegisterSeller';
 import { Link, useLocation } from 'react-router-dom';
 import EditProfileDialog from '~/components/EditProfileDialog';
 import { getProfile } from '~/actions/userActions';
+import { useTranslation } from 'react-i18next';
 
 function Profile() {
+    const { t } = useTranslation();
     const [user, setUser] = useState({});
     const location = useLocation();
     const [active, setActive] = useState(location?.state?.activeTab || 1);
@@ -68,14 +70,14 @@ function Profile() {
                                 </div>
                             </a>
                             <h4 className="htlfndr-user-name">{user.username}</h4>
-                            <h6 className="htlfndr-user-membership">member since may 2012</h6>
+                            <h6 className="htlfndr-user-membership">{t('member since dec 2023')}</h6>
                             <p className="htlfndr-user-edit" onClick={() => setOpenDialog(!openDialog)}>
                                 <i
                                     className="fa fa-pencil-square-o"
                                     aria-hidden="true"
                                     style={{ marginRight: '5px' }}
                                 ></i>
-                                Edit Profile
+                                {t('Edit Profile')}
                             </p>
                             {/* sidebar */}
                             <ul role="tablist" style={{ listStyle: 'none' }} className={styles.private}>
@@ -85,7 +87,7 @@ function Profile() {
                                 >
                                     <a>
                                         <i className="fa fa-user"></i>
-                                        Personal Info
+                                        {t('Personal Info')}
                                     </a>
                                 </li>
                                 <li
@@ -93,7 +95,7 @@ function Profile() {
                                     onClick={() => setActive(2)}
                                 >
                                     <a>
-                                        <i className="fa fa-clock-o"></i> Appointments
+                                        <i className="fa fa-clock-o"></i> {t('Appointments')}
                                     </a>
                                 </li>
 
@@ -102,7 +104,7 @@ function Profile() {
                                     onClick={() => setActive(3)}
                                 >
                                     <a>
-                                        <i className="fa fa-heart-o"></i> Wishlist
+                                        <i className="fa fa-heart-o"></i> {t('Wishlist')}
                                     </a>
                                 </li>
                                 <li
@@ -110,7 +112,7 @@ function Profile() {
                                     onClick={() => setActive(4)}
                                 >
                                     <a>
-                                        <i className="fa fa-wrench"></i> Settings
+                                        <i className="fa fa-wrench"></i> {t('Settings')}
                                     </a>
                                 </li>
                                 {!user?.roles?.includes('ROLE_SELLER') && (
@@ -120,7 +122,7 @@ function Profile() {
                                     >
                                         <a>
                                             <i className="fa fa-credit-card"></i>
-                                            Register Seller
+                                            {t('Register Seller')}
                                         </a>
                                     </li>
                                 )}
@@ -128,15 +130,15 @@ function Profile() {
                                     <li className={styles.menu}>
                                         <Link to="/seller/dashboard">
                                             <i className="fa fa-home"></i>
-                                            Seller Home
+                                            {t('Seller Home')}
                                         </Link>
                                     </li>
                                 )}
                                 {user?.roles?.includes('ROLE_ADMIN') && (
                                     <li className={styles.menu}>
                                         <a>
-                                            <i className="fa fa-home"></i>
-                                            Admin Home
+                                            <i className="fa fa-unlock"></i>
+                                            {t('Admin Home')}
                                         </a>
                                     </li>
                                 )}

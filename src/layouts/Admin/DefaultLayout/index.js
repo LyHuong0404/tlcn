@@ -1,4 +1,6 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
+import { useEffect, useState } from 'react';
+import { getProfile } from '~/actions/userActions';
 import '~/assets/css/bootstrap-reboot4.2.1.css';
 import '~/assets/css/bootstrap.min4.2.1.css';
 import '~/assets/css/custom.datatables.css';
@@ -11,10 +13,25 @@ import Header from '~/layouts/components/Admin/Header';
 import Sidebar from '~/layouts/components/Admin/Sidebar';
 
 function DefaultLayout({ children }) {
+    const [user, setUser] = useState({});
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const result = await getProfile();
+                setUser(result);
+            } catch (error) {
+                console.log(error);
+            }
+        };
+
+        fetchData();
+    }, []);
+
     return (
         <div className="wrapper">
-            <Header></Header>
-            <Sidebar></Sidebar>
+            <Header user={user}></Header>
+            <Sidebar user={user}></Sidebar>
             {children}
         </div>
     );

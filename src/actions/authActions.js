@@ -58,3 +58,17 @@ export const AuthoSignup = createAsyncThunk(
         }
     },
 );
+
+export const userLogout = async () => {
+    localStorage.removeItem('user');
+    window.location.reload();
+};
+
+export const claimDailyLogin = async () => {
+    try {
+        const response = await httprequest.get('claim-daily-login');
+        return response;
+    } catch (error) {
+        console.log(error);
+    }
+};

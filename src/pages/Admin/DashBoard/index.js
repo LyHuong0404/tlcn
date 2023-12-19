@@ -1,9 +1,43 @@
 /* eslint-disable jsx-a11y/iframe-has-title */
 /* eslint-disable jsx-a11y/anchor-is-valid */
 
-import Image from '~/components/Image';
+import { useEffect, useState } from 'react';
+import { AllPayments, getReport } from '~/actions/adminActions';
+import { format } from 'date-fns';
+import ChartComponent from '../ChartComponent';
+import { useTranslation } from 'react-i18next';
 
 function DashBoard() {
+    const { t } = useTranslation();
+    const [data, setData] = useState({});
+    const [payments, setPayments] = useState([]);
+
+    useEffect(() => {
+        try {
+            const fetchData = async () => {
+                const rs = await getReport();
+                setData(rs);
+            };
+            fetchData();
+        } catch (error) {
+            console.log(error);
+        }
+
+        try {
+            const fetchData = async () => {
+                const rs = await AllPayments(0, 15, undefined, undefined);
+                rs?.content?.map((element) => {
+                    element.payDate = format(new Date(element.payDate), 'dd-MM-yyyy');
+                    element.payTime = format(new Date(`2000-01-01T${element.payTime}`), 'HH:mm');
+                });
+                setPayments(rs?.content);
+            };
+            fetchData();
+        } catch (error) {
+            console.log(error);
+        }
+    }, []);
+
     return (
         <section>
             <div className="content dashbaord">
@@ -11,16 +45,14 @@ function DashBoard() {
                     <div className="row no-gutters">
                         <div className="col" style={{ display: 'flex', alignItems: 'center' }}>
                             <div className="heading-messages">
-                                <h1>Dashboard</h1>
+                                <h1>{t('Dashboard')}</h1>
                             </div>
                         </div>
                         <div className="col-md-4">
                             <div className="breadcrumb">
                                 <div className="breadcrumb-item">
                                     <i className="fas fa-angle-right"></i>
-                                    <a href="#" style={{ fontSize: '16px' }}>
-                                        Dashboard
-                                    </a>
+                                    <a style={{ fontSize: '16px' }}>{t('Dashboard')}</a>
                                 </div>
                             </div>
                         </div>
@@ -31,9 +63,10 @@ function DashBoard() {
                             <div className="row">
                                 <div className="col-xl">
                                     <div className="dashboard-box">
-                                        <h4>Projects Completed</h4>
+                                        <h4>{t('Total Accounts')}</h4>
                                         <h1 className="pbh1">
-                                            <i className="fas fa-briefcase pb1i"></i>2400
+                                            <i className="fas fa-briefcase pb1i" style={{fontStyle: 'normal'}}></i>
+                                            {data.totalUser}
                                         </h1>
                                         <div className="progress">
                                             <div
@@ -44,32 +77,16 @@ function DashBoard() {
                                                 aria-valuemax="100"
                                             ></div>
                                         </div>
-                                        <p>60% Increase From Last Year</p>
+                                        {/* <p>60% Increase From Last Year</p> */}
                                     </div>
                                 </div>
+
                                 <div className="col-md">
                                     <div className="dashboard-box">
-                                        <h4>New Bookings</h4>
-                                        <h1 className="pbh2">
-                                            <i className="fas fa-briefcase pb2i"></i>1010
-                                        </h1>
-                                        <div className="progress">
-                                            <div
-                                                className="progress-bar pb2"
-                                                role="progressbar"
-                                                aria-valuenow="25"
-                                                aria-valuemin="0"
-                                                aria-valuemax="100"
-                                            ></div>
-                                        </div>
-                                        <p>80% Increase From Last Year</p>
-                                    </div>
-                                </div>
-                                <div className="col-md">
-                                    <div className="dashboard-box">
-                                        <h4>New Orders</h4>
+                                        <h4>{t('Total Rooms')}</h4>
                                         <h1 className="pbh3">
-                                            <i className="fas fa-briefcase pb3i"></i>400
+                                            <i className="fas fa-briefcase pb3i" style={{fontStyle: 'normal'}}></i>
+                                            {data.totalRoom}
                                         </h1>
                                         <div className="progress">
                                             <div
@@ -80,29 +97,64 @@ function DashBoard() {
                                                 aria-valuemax="100"
                                             ></div>
                                         </div>
-                                        <p>20% Increase From Last Year</p>
+                                        {/* <p>20% Increase From Last Year</p> */}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <br />
+                        <div className="dashboard-wrapper">
+                            <div className="row">
+                                <div className="col-md">
+                                    <div className="dashboard-box">
+                                        <h4>{t('Total Payments')}</h4>
+                                        <h1 className="pbh2">
+                                            <i className="fas fa-briefcase pb2i" style={{fontStyle: 'normal'}}></i>
+                                            {data.totalPayment}
+                                        </h1>
+                                        <div className="progress">
+                                            <div
+                                                className="progress-bar pb2"
+                                                role="progressbar"
+                                                aria-valuenow="25"
+                                                aria-valuemin="0"
+                                                aria-valuemax="100"
+                                            ></div>
+                                        </div>
+                                        {/* <p>80% Increase From Last Year</p> */}
+                                    </div>
+                                </div>
+                                <div className="col-xl">
+                                    <div className="dashboard-box">
+                                        <h4>{t('Total Appointments')}</h4>
+                                        <h1 className="pbh1">
+                                            <i className="fas fa-briefcase pb1i" style={{fontStyle: 'normal'}}></i>
+                                            {data.totalAppointment}
+                                        </h1>
+                                        <div className="progress">
+                                            <div
+                                                className="progress-bar pb1"
+                                                role="progressbar"
+                                                aria-valuenow="25"
+                                                aria-valuemin="0"
+                                                aria-valuemax="100"
+                                            ></div>
+                                        </div>
+                                        {/* <p>60% Increase From Last Year</p> */}
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div className="charts-section box">
-                            <div className="row">
-                                <div className="col-xl-6">
-                                    <h4>Monthly Porgress</h4>
-                                    <canvas id="myChart2" height="260"></canvas>
-                                </div>
-                                <div className="col-xl-6">
-                                    <h4>Monthly Sales</h4>
-                                    <canvas id="myChart3" height="260"></canvas>
-                                </div>
-                            </div>
+                            <h4>{t('Report Payments')}</h4>
+                            <ChartComponent payments={payments} />
                         </div>
                         <div className="content booking-content dashboard-bookings m-0">
                             <div className="in-content-wrapper">
                                 <div className="row no-gutters">
                                     <div className="col">
                                         <div className="heading-messages">
-                                            <h3>Bookings</h3>
+                                            <h3>{t('Payments')}</h3>
                                         </div>
                                     </div>
                                 </div>
@@ -117,153 +169,31 @@ function DashBoard() {
                                             >
                                                 <thead style={{ height: '42px' }}>
                                                     <tr style={{ height: '51px' }}>
-                                                        <th></th>
-                                                        <th>Name</th>
-                                                        <th>Mobile</th>
-                                                        <th>Email</th>
-                                                        <th>Arrive</th>
-                                                        <th>Depart</th>
-                                                        <th>Booking Type</th>
-                                                        <th>Status</th>
-                                                        <th>Payment</th>
-                                                        <th>Action</th>
+                                                        <th>#ID</th>
+                                                        <th>Bank Code</th>
+                                                        <th>TranNo</th>
+                                                        <th>TransactionNo</th>
+                                                        <th>{t('Date')}</th>
+                                                        <th>{t('Time')}</th>
+                                                        <th>{t('Amount')}</th>
+                                                        <th>UserId</th>
+                                                        <th>Username</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody style={{ backgroundColor: '#f9f9f9' }}>
-                                                    <tr style={{ height: '51px' }}>
-                                                        <td>
-                                                            <Image
-                                                                src="images/commenter-1.jpg"
-                                                                alt="table-img"
-                                                                className="img-fluid rounded-circle"
-                                                                width="40px"
-                                                            />
-                                                        </td>
-                                                        <td>Shaheel</td>
-                                                        <td>
-                                                            <a href="#">933322221</a>
-                                                        </td>
-                                                        <td>
-                                                            <a href="#">Shaheel@gmail.com</a>
-                                                        </td>
-                                                        <td>11/06/2019</td>
-                                                        <td>15/06/2019</td>
-                                                        <td>Hotel</td>
-                                                        <td className="pending">
-                                                            <a href="#">Pending</a>
-                                                        </td>
-                                                        <td className="unpaid">
-                                                            <a href="#">UnPaid</a>
-                                                        </td>
-                                                        <td>
-                                                            <a href="#">
-                                                                <i className="fas fa-edit"></i>
-                                                            </a>
-                                                            <a href="#">
-                                                                <i className="fas fa-trash"></i>
-                                                            </a>
-                                                        </td>
-                                                    </tr>
-                                                    <tr style={{ height: '51px' }}>
-                                                        <td>
-                                                            <Image
-                                                                src="images/commenter-2.jpg"
-                                                                alt="table-img"
-                                                                className="img-fluid rounded-circle"
-                                                                width="40px"
-                                                            />
-                                                        </td>
-                                                        <td>Hunn dan</td>
-                                                        <td>
-                                                            <a href="#">933334442</a>
-                                                        </td>
-                                                        <td>
-                                                            <a href="#">dan@gmail.com</a>
-                                                        </td>
-                                                        <td>4/06/2019</td>
-                                                        <td>7/06/2019</td>
-                                                        <td>Tour</td>
-                                                        <td className="approved">
-                                                            <a href="#">Approved</a>
-                                                        </td>
-                                                        <td className="paid">
-                                                            <a href="#">paid</a>
-                                                        </td>
-                                                        <td>
-                                                            <a href="#">
-                                                                <i className="fas fa-edit"></i>
-                                                            </a>
-                                                            <a href="#">
-                                                                <i className="fas fa-trash"></i>
-                                                            </a>
-                                                        </td>
-                                                    </tr>
-                                                    <tr style={{ height: '51px' }}>
-                                                        <td>
-                                                            <Image
-                                                                src="images/commenter-3.jpg"
-                                                                alt="table-img"
-                                                                className="img-fluid rounded-circle"
-                                                            />
-                                                        </td>
-                                                        <td>Mary Jane</td>
-                                                        <td>
-                                                            <a href="#">967835542</a>
-                                                        </td>
-                                                        <td>
-                                                            <a href="#">Jane@gmail.com</a>
-                                                        </td>
-                                                        <td>8/06/2019</td>
-                                                        <td>12/06/2019</td>
-                                                        <td>Cruise</td>
-                                                        <td className="cancelled">
-                                                            <a href="#">Cancelled</a>
-                                                        </td>
-                                                        <td className="unpaid">
-                                                            <a href="#">Unpaid</a>
-                                                        </td>
-                                                        <td>
-                                                            <a href="#">
-                                                                <i className="fas fa-edit"></i>
-                                                            </a>
-                                                            <a href="#">
-                                                                <i className="fas fa-trash"></i>
-                                                            </a>
-                                                        </td>
-                                                    </tr>
-                                                    <tr style={{ height: '51px' }}>
-                                                        <td>
-                                                            <Image
-                                                                src="images/commenter-3.jpg"
-                                                                alt="table-img"
-                                                                className="img-fluid rounded-circle"
-                                                            />
-                                                        </td>
-                                                        <td>Foo mann</td>
-                                                        <td>
-                                                            <a href="#">944334442</a>
-                                                        </td>
-                                                        <td>
-                                                            <a href="#">mann@gmail.com</a>
-                                                        </td>
-                                                        <td>12/06/2019</td>
-                                                        <td>15/06/2019</td>
-                                                        <td>Flight</td>
-                                                        <td className="approved">
-                                                            <a href="#">Approved</a>
-                                                        </td>
-                                                        <td className="paid">
-                                                            <a href="#">Paid</a>
-                                                        </td>
-                                                        <td>
-                                                            <a href="#">
-                                                                <i className="fas fa-edit"></i>
-                                                            </a>
-                                                            <a href="#">
-                                                                <i className="fas fa-trash"></i>
-                                                            </a>
-                                                        </td>
-                                                    </tr>
+                                                    {payments?.map((payment, index) => (
+                                                        <tr key={index} style={{ height: '51px' }}>
+                                                            <td>{payment.id}</td>
+                                                            <td>{payment.bankCode}</td>
+                                                            <td>{payment.bankTranNo}</td>
+                                                            <td>{payment.transactionNo}</td>
+                                                            <td>{payment.payDate}</td>
+                                                            <td>{payment.payTime}</td>
+                                                            <td>{payment.amount}</td>
+                                                            <td>{payment.userId}</td>
+                                                            <td>{payment.username}</td>
+                                                        </tr>
+                                                    ))}
                                                 </tbody>
                                             </table>
                                         </div>
@@ -271,7 +201,7 @@ function DashBoard() {
                                 </div>
                             </div>
                         </div>
-                        <div className="box dashbaord-reviews">
+                        {/* <div className="box dashbaord-reviews">
                             <div className="row">
                                 <div className="col">
                                     <div className="details-text">
@@ -328,7 +258,7 @@ function DashBoard() {
                                     </li>
                                 </ul>
                             </div>
-                        </div>
+                        </div> */}
                     </div>
                 </div>
             </div>

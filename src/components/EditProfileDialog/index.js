@@ -7,8 +7,10 @@ import Image from '~/components/Image';
 import { getProfile, updateProfile } from '~/actions/userActions';
 import { toast } from 'react-toastify';
 import Loading from '../Loading';
+import { useTranslation } from 'react-i18next';
 
 function EditProfileDialog({ onClose }) {
+    const { t } = useTranslation();
     const [user, setUser] = useState({});
     const [isOpen, setIsOpen] = useState(true);
     const [loading, setLoading] = useState(false);
@@ -83,7 +85,7 @@ function EditProfileDialog({ onClose }) {
                     <div className={styles.edit_form_overlay}></div>
                     <div className={styles.edit_form_body}>
                         <div className={styles.header}>
-                            <strong className={styles.title}>Edit Profile</strong>
+                            <strong className={styles.title}>{t('Edit Profile')}</strong>
                             <FontAwesomeIcon
                                 icon={faXmark}
                                 className={styles.icon_close}
@@ -97,7 +99,7 @@ function EditProfileDialog({ onClose }) {
 
                         <div className={styles.inner}>
                             <div className={styles.avatar_wrapper}>
-                                <p className={styles.title_input}>Profile photo</p>
+                                <p className={styles.title_input}>{t('Profile photo')}</p>
                                 <label>
                                     <Image
                                         className={styles.image}
@@ -111,7 +113,7 @@ function EditProfileDialog({ onClose }) {
                                 </label>
                             </div>
                             <div className={styles.feild}>
-                                <p className={styles.title_input}>Username</p>
+                                <p className={styles.title_input}>{t('Username')}</p>
                                 <input
                                     id="username"
                                     name="username"
@@ -121,7 +123,7 @@ function EditProfileDialog({ onClose }) {
                                 />
                             </div>
                             <div className={styles.feild}>
-                                <p className={styles.title_input}>FullName</p>
+                                <p className={styles.title_input}>{t('FullName')}</p>
                                 <input
                                     className={styles.input_value}
                                     id="fullname"
@@ -142,7 +144,7 @@ function EditProfileDialog({ onClose }) {
                                 />
                             </div>
                             <div className={styles.feild}>
-                                <p className={styles.title_input}>Phone</p>
+                                <p className={styles.title_input}>{t('Phone')}</p>
                                 <input
                                     id="phone"
                                     name="phone"
@@ -155,7 +157,7 @@ function EditProfileDialog({ onClose }) {
 
                         <div className={styles.footer}>
                             <button disabled={loading} type="submit" className={styles.button}>
-                                Save
+                                {t('Save')}
                             </button>
                         </div>
                     </div>

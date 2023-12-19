@@ -2,26 +2,30 @@
 import Image from '~/components/Image';
 import styles from './Sidebar.module.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {
-    faBuilding,
-    faHome,
-    faHotel,
-    faSuitcaseRolling,
-    faSyncAlt,
-    faUserTie,
-} from '@fortawesome/free-solid-svg-icons';
+import { faBuilding, faHome, faSuitcaseRolling, faSyncAlt, faUserTie } from '@fortawesome/free-solid-svg-icons';
 import { faBell, faBookmark, faEnvelope, faStar } from '@fortawesome/free-regular-svg-icons';
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { faStackOverflow } from '@fortawesome/free-brands-svg-icons';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { userLogout } from '~/actions/authActions';
+import { useTranslation } from 'react-i18next';
 
-function Sidebar() {
-    const [menuActive, setMenuActive] = useState(1);
+function Sidebar({ user }) {
+    const { t } = useTranslation();
+    const navigate = useNavigate();
+    const location = useLocation();
+    const activeTab = location?.state?.activeTab;
+    const [menuActive, setMenuActive] = useState(activeTab || 1);
+
+    const handleLogout = async () => {
+        await userLogout();
+        navigate('/auth/login');
+    };
+
     return (
         <div className="sidebar-left">
             <div className="sidebar-topbar text-center">
-                <i className="fas fa-hotel"></i>
-                <span className="text">Star Hotel</span>
+                <i className="fa fa-star"></i>
+                <span className="text">Smart Admin</span>
             </div>
 
             <div className="side-menu">
@@ -29,13 +33,14 @@ function Sidebar() {
                     <li className="nav-item">
                         <div className="sidebar-header">
                             <Image
-                                src="images/commenter-1.jpg"
-                                alt="sidebar-header-img"
+                                src={user.avatar}
+                                alt={user.username}
                                 className="img-fluid rounded-circle"
+                                style={{ padding: '0', height: '80px' }}
                             />
-                            <h2>John Doe</h2>
+                            <h2>{user.username}</h2>
                             <small>
-                                <h5>Incharge</h5>
+                                <h5>{t('Admin')}</h5>
                             </small>
                             <br />
                             <ul className="list-unstyled custom">
@@ -90,11 +95,11 @@ function Sidebar() {
                         </div>
                     </li>
                     <li className={`nav-item ${styles.sidebar}`} onClick={() => setMenuActive(1)}>
-                        <Link to="/admin/dashboards" className={`items-list first ${menuActive === 1 ? 'active' : ''}`}>
+                        <Link to="/admin/dashboard" className={`items-list first ${menuActive === 1 ? 'active' : ''}`}>
                             <span>
                                 <FontAwesomeIcon icon={faHome} className="icon-font" />
                             </span>
-                            <span className="items-list-text">Dashboard</span>
+                            <span className="items-list-text">{t('Dashboard')}</span>
                         </Link>
                     </li>
                     <li className={`nav-item ${styles.sidebar}`} onClick={() => setMenuActive(2)}>
@@ -102,55 +107,45 @@ function Sidebar() {
                             <span>
                                 <FontAwesomeIcon icon={faUserTie} className="icon-font" />
                             </span>
-                            <span className="items-list-text">Users</span>
-                        </Link>
-                    </li>
-                    <li className={`nav-item ${styles.sidebar}`} onClick={() => setMenuActive(3)}>
-                        <Link to="/admin/listrooms" className={`items-list first ${menuActive === 3 ? 'active' : ''}`}>
-                            <span>
-                                <FontAwesomeIcon icon={faHotel} className="icon-font" />
-                            </span>
-                            <span className="items-list-text">Room Listing</span>
-                        </Link>
-                    </li>
-                    <li className={`nav-item ${styles.sidebar}`} onClick={() => setMenuActive(4)}>
-                        <Link to="/admin/roomtypes" className={`items-list first ${menuActive === 4 ? 'active' : ''}`}>
-                            <span>
-                                <FontAwesomeIcon icon={faStackOverflow} className="icon-font" />
-                            </span>
-                            <span className="items-list-text">Room Types</span>
+                            <span className="items-list-text">{t('Users')}</span>
                         </Link>
                     </li>
                     <li className={`nav-item ${styles.sidebar}`} onClick={() => setMenuActive(5)}>
-                        <Link to="#" className={`items-list first ${menuActive === 5 ? 'active' : ''}`}>
+                        <Link
+                            to="/admin/appointments"
+                            className={`items-list first ${menuActive === 5 ? 'active' : ''}`}
+                        >
                             <span>
                                 <FontAwesomeIcon icon={faSuitcaseRolling} className="icon-font" />
                             </span>
-                            <span className="items-list-text">Bookings</span>
+                            <span className="items-list-text">{t('Appointments')}</span>
                         </Link>
                     </li>
                     <li className={`nav-item ${styles.sidebar}`} onClick={() => setMenuActive(6)}>
-                        <Link to="#" className={`items-list first ${menuActive === 6 ? 'active' : ''}`}>
+                        <Link to="/admin/payments" className={`items-list first ${menuActive === 6 ? 'active' : ''}`}>
                             <span>
                                 <FontAwesomeIcon icon={faSyncAlt} className="icon-font" />
                             </span>
-                            <span className="items-list-text">Reviews</span>
+                            <span className="items-list-text">{t('Payments')}</span>
                         </Link>
                     </li>
-                    <li className={`nav-item ${styles.sidebar}`} onClick={() => setMenuActive(7)}>
+                    {/* <li className={`nav-item ${styles.sidebar}`} onClick={() => setMenuActive(7)}>
                         <Link to="#" className={`items-list first ${menuActive === 7 ? 'active' : ''}`}>
                             <span>
                                 <FontAwesomeIcon icon={faEnvelope} className="icon-font" />
                             </span>
                             <span className="items-list-text">Messages</span>
                         </Link>
-                    </li>
+                    </li> */}
                     <li className={`nav-item ${styles.sidebar}`} onClick={() => setMenuActive(8)}>
-                        <Link to="#" className={`items-list first ${menuActive === 8 ? 'active' : ''}`}>
+                        <Link
+                            to="/admin/viewprofile"
+                            className={`items-list first ${menuActive === 8 ? 'active' : ''}`}
+                        >
                             <span>
                                 <FontAwesomeIcon icon={faBuilding} className="icon-font" />
                             </span>
-                            <span className="items-list-text">Profile</span>
+                            <span className="items-list-text">{t('Profile')}</span>
                         </Link>
                     </li>
                 </ul>
@@ -158,22 +153,28 @@ function Sidebar() {
             <div className="side-bar-bottom">
                 <ul className="list-unstyled">
                     <li className="list-inline-item" data-toggle="tooltip" data-html="true" title="Edit Profile">
-                        <a href="profile-edit-profile.html">
+                        <Link to="/admin/editprofile">
                             <i className="fas fa-cog"></i>
-                        </a>
+                        </Link>
                     </li>
                     <li className="list-inline-item" data-toggle="tooltip" data-html="true" title="Change Password">
-                        <a href="profile-change-password.html">
+                        <Link to="/admin/changepassword">
                             <i className="fas fa-key"></i>
-                        </a>
+                        </Link>
                     </li>
                     <li className="list-inline-item" data-toggle="tooltip" data-html="true" title="Lockscreen">
-                        <a href="#">
+                        <a>
                             <i className="fas fa-unlock"></i>
                         </a>
                     </li>
-                    <li className="list-inline-item" data-toggle="tooltip" data-html="true" title="Logout">
-                        <a href="#">
+                    <li
+                        onClick={handleLogout}
+                        className="list-inline-item"
+                        data-toggle="tooltip"
+                        data-html="true"
+                        title="Logout"
+                    >
+                        <a>
                             <i className="fas fa-power-off"></i>
                         </a>
                     </li>

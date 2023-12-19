@@ -29,3 +29,18 @@ export const payment = async (amount, bankCode) => {
         console.log(error);
     }
 };
+
+export const getListReviews = async (roomId, pageIndex) => {
+    try {
+        const response = await httprequest.get('review-of-room', {
+            params: {
+                roomId,
+                pageIndex,
+            },
+        });
+
+        return response.data;
+    } catch (error) {
+        console.log(error);
+    }
+};

@@ -125,7 +125,7 @@
     margin-right: auto;
     width: 30px;
     height: 46px !important;
-    background: url('../images/select_scroll.png') no-repeat -1px center;
+    /* background: url('../images/select_scroll.png') no-repeat -1px center; */
     cursor: pointer;
     border-left: 1px solid #37bed6;
     border-right: 1px solid #37bed6;

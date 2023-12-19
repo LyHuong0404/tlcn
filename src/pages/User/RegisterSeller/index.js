@@ -9,6 +9,7 @@ import Loading from '~/components/Loading';
 import { toast } from 'react-toastify';
 import Image from '~/components/Image';
 import images from '~/assets/images';
+import { useTranslation } from 'react-i18next';
 
 const customStyles = {
     control: (provided) => ({
@@ -20,6 +21,7 @@ const customStyles = {
 };
 
 function RegisterSeller() {
+    const { t } = useTranslation();
     const navigate = useNavigate();
     const {
         control,
@@ -108,17 +110,20 @@ function RegisterSeller() {
             {active === 1 ? (
                 <form onSubmit={handleSubmit(onSubmitToGetCode)}>
                     <div className="htlfndr-user-panel col-md-9 col-sm-8 htlfndr-setting-page" id="htlfndr-user-tab-5">
-                        <h3>Set up your seller information</h3>
+                        <h3>{t('Set up your seller information')}</h3>
                         <div className="row" style={{ marginTop: '25px' }}>
                             <div className="col-xs-6 col-sm-6 col-md-6">
-                                <label for="htlfndr-first-adult-name" className="htlfndr-required htlfndr-top-label">
-                                    Address
+                                <label
+                                    htmlFor="htlfndr-first-adult-name"
+                                    className="htlfndr-required htlfndr-top-label"
+                                >
+                                    {t('Address')}
                                 </label>
 
                                 <Select
                                     id="selectOption"
                                     options={provinceOptions || []}
-                                    placeholder="Select a province..."
+                                    placeholder={t('Select a province...')}
                                     issearchable="true"
                                     styles={customStyles}
                                     onChange={handleChangeProvince}
@@ -130,7 +135,7 @@ function RegisterSeller() {
                                 <Select
                                     id="selectOption"
                                     options={districts || []}
-                                    placeholder="Select a district..."
+                                    placeholder={t('Select a district...')}
                                     issearchable="true"
                                     styles={customStyles}
                                     onChange={handleChangeDistrict}
@@ -146,7 +151,7 @@ function RegisterSeller() {
                                         <Select
                                             id="selectOption"
                                             options={wards || []}
-                                            placeholder="Select a ward"
+                                            placeholder={t('Select a ward...')}
                                             issearchable="true"
                                             styles={customStyles}
                                             {...field}
@@ -157,8 +162,11 @@ function RegisterSeller() {
                         </div>
                         <div className="row" style={{ marginTop: '15px' }}>
                             <div className="col-xs-6 col-sm-6 col-md-6">
-                                <label for="htlfndr-first-adult-name" className="htlfndr-required htlfndr-top-label">
-                                    Detailed Address
+                                <label
+                                    htmlFor="htlfndr-first-adult-name"
+                                    className="htlfndr-required htlfndr-top-label"
+                                >
+                                    {t('Detailed Address')}
                                 </label>
                                 <input
                                     id="htlfndr-first-adult-name1"
@@ -168,15 +176,18 @@ function RegisterSeller() {
                                 />
                                 {errors.addressDetail && (
                                     <div style={{ textAlign: 'left' }}>
-                                        <label className="error-message">Address Detail is required.</label>
+                                        <label className="error-message">{t('Address Detail is required.')}</label>
                                     </div>
                                 )}
                             </div>
                         </div>
                         <div className="row" style={{ marginTop: '15px', marginBottom: '26px' }}>
                             <div className="col-xs-6 col-sm-6 col-md-6">
-                                <label for="htlfndr-first-adult-name" className="htlfndr-required htlfndr-top-label">
-                                    Phone Number
+                                <label
+                                    htmlFor="htlfndr-first-adult-name"
+                                    className="htlfndr-required htlfndr-top-label"
+                                >
+                                   {t('Phone Number')}
                                 </label>
                                 <input
                                     type="number"
@@ -187,16 +198,16 @@ function RegisterSeller() {
                                 />
                                 {errors.phone && (
                                     <div style={{ textAlign: 'left' }}>
-                                        <label className="error-message">Phone is required.</label>
+                                        <label className="error-message">{t('Phone is required.')}</label>
                                     </div>
                                 )}
                             </div>
                             <div className="col-xs-6 col-sm-6 col-md-6">
                                 <label
-                                    for="htlfndr-first-adult-last-name"
+                                    htmlFor="htlfndr-first-adult-last-name"
                                     className="htlfndr-required htlfndr-top-label"
                                 >
-                                    Fullname
+                                    {t('Fullname')}
                                 </label>
                                 <input
                                     type="text"
@@ -207,18 +218,17 @@ function RegisterSeller() {
                                 />
                                 {errors.fullname && (
                                     <div style={{ textAlign: 'left' }}>
-                                        <label className="error-message">Fullname is required.</label>
+                                        <label className="error-message">{t('Fullname is required.')}</label>
                                     </div>
                                 )}
                             </div>
                         </div>
 
                         <p>
-                            Please fill in all information and we will send a confirmation code to the email you
-                            registered your account with.
+                            {t('Please fill in all information and we will send a confirmation code to the email you registered your account with.')}
                         </p>
                         <button className="htlfndr-register-now" type="submit">
-                            REGISTER SELLER
+                            {t('REGISTER SELLER')}
                         </button>
                     </div>
                 </form>
@@ -230,30 +240,33 @@ function RegisterSeller() {
                         <div className="row" style={{ marginTop: '15px' }}>
                             <div className="col-xs-6 col-sm-6 col-md-6">
                                 <p>
-                                    We have sent the verification code to your email. <br />
-                                    Please check and fill in to register seller.
+                                    {t('We have sent the verification code to your email.')} <br />
+                                    {t('Please check and fill in to register seller.')}
                                 </p>
-                                < br/>
-                                < br/>
-                                < br/>
-                                < br/>
-                                <label for="htlfndr-first-adult-name" className="htlfndr-required htlfndr-top-label">
+                                <br />
+                                <br />
+                                <br />
+                                <br />
+                                <label
+                                    htmlFor="htlfndr-first-adult-name"
+                                    className="htlfndr-required htlfndr-top-label"
+                                >
                                     Code
                                 </label>
                                 <input
                                     id="htlfndr-first-adult-name5"
                                     name="htlfndr-first-adult-name5"
-                                    placeholder="Enter code"
+                                    placeholder={t('Enter code')}
                                     className={`htlfndr-input ${errors.code ? 'status-error' : ''}`}
                                     {...register('code', { required: true })}
                                 />
                                 {errors.code && (
                                     <div style={{ textAlign: 'left' }}>
-                                        <label className="error-message">Code is required.</label>
+                                        <label className="error-message">{t('Code is required.')}</label>
                                     </div>
                                 )}
                                 <button className="htlfndr-register-now" type="submit">
-                                    SUBMIT
+                                    {t('SUBMIT')}
                                 </button>
                             </div>
                             <div className="col-xs-6 col-sm-6 col-md-6">
