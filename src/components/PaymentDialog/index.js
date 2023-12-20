@@ -10,17 +10,15 @@ import { useTranslation } from 'react-i18next';
 
 function PaymentDialog({ onClose }) {
     const { t } = useTranslation();
-    const { user } = useSelector((state) => state.auth);
     const [isOpen, setIsOpen] = useState(true);
     const [amount, setAmount] = useState(null);
-    const [bankCode, setBankCode] = useState(null);
 
     const submitForm = (e) => {
         e.preventDefault();
         try {
-            if (amount !== null && bankCode !== null) {
+            if (amount !== null) {
                 const fetchData = async () => {
-                    const rs = await payment(amount, bankCode);
+                    const rs = await payment(amount, "NCB");
                     if (rs?.success) {
                         window.open(rs?.data?.urlPayment, '_blank');
                         onClose();
@@ -65,7 +63,6 @@ function PaymentDialog({ onClose }) {
                                         style={{ width: '70%' }}
                                         placeholder={t('BankCode')}
                                         prefix={<BarcodeOutlined />}
-                                        onChange={(e) => setBankCode(e.target.value)}
                                         value="NCB"
                                         readOnly
                                     />
