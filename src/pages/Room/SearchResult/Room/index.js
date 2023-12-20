@@ -5,6 +5,8 @@ import 'react-tooltip/dist/react-tooltip.css';
 import { Link } from 'react-router-dom';
 import config from '~/config';
 import { useTranslation } from 'react-i18next';
+import styles from './Room.module.scss';
+import './Room.module.scss'
 
 function Room({ data, gridColumn }) {
     const { t } = useTranslation();
@@ -24,7 +26,7 @@ function Room({ data, gridColumn }) {
         return <>{stars}</>;
     };
     return (
-        <div className="row">
+        <div className={`row ${styles.cus}`}>
             {data?.map((room, index) => (
                 <div key={index} className="col-md-4 htlfndr-hotel-post-wrapper">
                     <Link to={config.routes.detailRoomLink(room.id)} state={{ step: 2 }}>
@@ -43,7 +45,7 @@ function Room({ data, gridColumn }) {
                                             (<span>{room.totalReview}</span> {t('reviews')})
                                         </p>
                                     </div>
-                                    <h5 className="htlfndr-hotel-location">
+                                    <h5 className="htlfndr-hotel-location" style={{color: "#000"}}>
                                         <div data-tooltip-id="my-tooltip" data-tooltip-content={room.address}>
                                             <i
                                                 className="fa fa-map-marker"
@@ -56,7 +58,7 @@ function Room({ data, gridColumn }) {
                                     </h5>
                                     <Tooltip id="my-tooltip" />
                                 </div>
-                                <div className="htlfndr-select-hotel-button">select</div>
+                                <div className="htlfndr-select-hotel-button">{t('select')}</div>
                                 <div className="htlfndr-hotel-price">
                                     <span className="htlfndr-from">{t('from')}</span>
                                     <span className="htlfndr-cost">{room.price}</span>

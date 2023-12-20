@@ -202,7 +202,7 @@ function Appointments() {
                                                 <tr key={index}>
                                                     <td
                                                         style={{
-                                                            width: '80px',
+                                                            width: '70px',
                                                             overflow: 'hidden',
                                                             textOverflow: 'ellipsis',
                                                         }}
@@ -213,7 +213,7 @@ function Appointments() {
                                                     </td>
                                                     <td
                                                         style={{
-                                                            width: '250px',
+                                                            width: '220px',
                                                             overflow: 'hidden',
                                                             textOverflow: 'ellipsis',
                                                         }}
@@ -235,7 +235,7 @@ function Appointments() {
                                                     </td>
                                                     <td
                                                         style={{
-                                                            width: '120px',
+                                                            width: '100px',
                                                             overflow: 'hidden',
                                                             textOverflow: 'ellipsis',
                                                         }}
@@ -244,7 +244,7 @@ function Appointments() {
                                                     </td>
                                                     <td
                                                         style={{
-                                                            width: '170px',
+                                                            width: '150px',
                                                             overflow: 'hidden',
                                                             textOverflow: 'ellipsis',
                                                         }}

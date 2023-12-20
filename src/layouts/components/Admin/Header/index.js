@@ -37,7 +37,7 @@ function Header({ user }) {
                         </form>
                     </li>
                     <li className="nav-item list-inline-item dropdown messages">
-                        <a
+                        {/* <a
                             className="nav-link dropdown-toggle"
                             id="navbarDropdown"
                             role="button"
@@ -67,10 +67,10 @@ function Header({ user }) {
                             </a>
                             <div className="dropdown-divider"></div>
                             <a className="btn mx-auto d-block">View All</a>
-                        </div>
+                        </div> */}
                     </li>
                     <li className="nav-item list-inline-item notifications">
-                        <a
+                        {/* <a
                             className="nav-link dropdown-toggle"
                             id="navbarDropdown"
                             role="button"
@@ -79,9 +79,9 @@ function Header({ user }) {
                             aria-expanded="false"
                         >
                             <FontAwesomeIcon icon={faBell} className="far" />
-                        </a>
+                        </a> */}
                         <div className="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                            <span>Notifications (258)</span>
+                            {/* <span>Notifications (258)</span>
                             <div className="dropdown-divider"></div>
                             <a className="dropdown-item" href="#">
                                 <i className="fas fa-cart-plus"></i>Your Order is Placed
@@ -96,7 +96,7 @@ function Header({ user }) {
                                 <span>Lorem ipsum dolor sit amet consectetur adipisicing.</span>
                             </a>
                             <div className="dropdown-divider"></div>
-                            <a className="btn mx-auto d-block">View All</a>
+                            <a className="btn mx-auto d-block">View All</a> */}
                         </div>
                     </li>
                     <li className="nav-item list-inline-item dropdown profile">

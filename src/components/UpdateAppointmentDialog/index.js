@@ -15,7 +15,7 @@ function UpdateAppointmentDialog({ open, onClose, data }) {
         const appointmentId = data.id;
         try {
             await updateAppointment({ appointmentId, day, time });
-            toast.success('Appointment updated successfully.');
+            toast.success(t('Update Appointment successfully!'));
         } catch (error) {
             console.log(error);
         }

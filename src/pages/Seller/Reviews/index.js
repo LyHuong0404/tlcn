@@ -16,7 +16,7 @@ function Reviews() {
                             <div className="breadcrumb">
                                 <div className="breadcrumb-item">
                                     <i className="fas fa-angle-right"></i>
-                                    <a href="#">Reviews</a>
+                                    <a>Reviews</a>
                                 </div>
                             </div>
                         </div>
@@ -82,7 +82,7 @@ function Reviews() {
                                             </p>
 
                                             <div className="media">
-                                                <a href="#">
+                                                <a >
                                                     <Image
                                                         src="images/commenter-3.jpg"
                                                         className="mr-1 mr-sm-3 rounded-circle"
@@ -150,7 +150,7 @@ function Reviews() {
                                             </p>
 
                                             <div className="media">
-                                                <a href="#">
+                                                <a >
                                                     <Image
                                                         src="images/commenter-3.jpg"
                                                         className="mr-1 mr-sm-3 rounded-circle"

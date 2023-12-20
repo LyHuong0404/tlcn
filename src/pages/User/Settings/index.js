@@ -14,7 +14,7 @@ function Settings() {
 
     const handleCheckOldPassword = (e) => {
         if (e.target.value === '') {
-            setErrorOldPassword('Old Password is required.');
+            setErrorOldPassword(t('Old Password is required.'));
         } else {
             setErrorOldPassword('');
         }
@@ -44,22 +44,22 @@ function Settings() {
         const isLengthValid = newPassword.length >= 8;
 
         if (newPassword === '') {
-            setErrorNewPassword('New Password is required.');
+            setErrorNewPassword(t('New Password is required.'));
         } else {
             setErrorNewPassword('');
         }
 
         if (newPassword.trim() !== '') {
             if (!hasSpecialCharacter) {
-                setErrorNewPassword('Password must have at least 1 special character.');
+                setErrorNewPassword(t('Password must have at least 1 special character.'));
             } else if (!hasDigit) {
-                setErrorNewPassword('Password must have at least 1 digit character.');
+                setErrorNewPassword(t('Password must have at least 1 digit character.'));
             } else if (!hasUppercase) {
-                setErrorNewPassword('Password must have at least 1 uppercase character.');
+                setErrorNewPassword(t('Password must have at least 1 uppercase character.'));
             } else if (!hasLowercase) {
-                setErrorNewPassword('Password must have at least 1 lowercase character.');
+                setErrorNewPassword(t('Password must have at least 1 lowercase character.'));
             } else if (!isLengthValid) {
-                setErrorNewPassword('Password must have at least 8 characters');
+                setErrorNewPassword(t('Password must have at least 8 characters'));
             } else {
                 setErrorNewPassword('');
             }
@@ -69,12 +69,12 @@ function Settings() {
 
     const handleCheckMatchPw = (e) => {
         if (e.target.value === '') {
-            setErrorConfirmPassword('New Password is required.');
+            setErrorConfirmPassword(t('New Password is required.'));
         } else {
             setErrorConfirmPassword('');
         }
         if (e.target.value !== newPassword) {
-            setErrorConfirmPassword('Confirm Password does not match.');
+            setErrorConfirmPassword(t('Confirm Password does not match.'));
         } else {
             setErrorConfirmPassword('');
         }
@@ -85,13 +85,13 @@ function Settings() {
         e.preventDefault();
         if (oldPassword === '' || newPassword === '' || confirmPassword === '') {
             if (oldPassword === '') {
-                setErrorOldPassword('Old Password is required.');
+                setErrorOldPassword(t('Old Password is required.'));
             }
             if (newPassword === '') {
-                setErrorNewPassword('New Password is required.');
+                setErrorNewPassword(t('New Password is required.'));
             }
             if (confirmPassword === '') {
-                setErrorConfirmPassword('Confirm Password is required.');
+                setErrorConfirmPassword(t('Confirm Password is required.'));
             }
             return;
         }
@@ -103,15 +103,15 @@ function Settings() {
                     setOldPassword('');
                     setNewPassword('');
                     setConfirmPassword('');
-                    toast.success('Password changed successfully!');
+                    toast.success(t('Change Password successfully!'));
                 } else {
-                    setErrorOldPassword('Your current password is incorrect.');
-                    toast.error('Password change unsuccessfully!');
+                    setErrorOldPassword(t('Current password is incorrect.'));
+                    toast.error(t('Change Password unsuccessfully!'));
                 }
             };
             fetchData();
         } catch (error) {
-            toast.error('Password change unsuccessfully!');
+            toast.error(t('Change Password unsuccessfully!'));
         }
     };
     return (
@@ -136,7 +136,7 @@ function Settings() {
                             />
                             {errorOldPassword && (
                                 <div style={{ textAlign: 'left' }}>
-                                    <label className="error-message">{t(errorOldPassword)}</label>
+                                    <label className="error-message">{errorOldPassword}</label>
                                 </div>
                             )}
                             <br />
@@ -155,7 +155,7 @@ function Settings() {
                             />
                             {errorNewPassword && (
                                 <div style={{ textAlign: 'left' }}>
-                                    <label className="error-message">{t(errorNewPassword)}</label>
+                                    <label className="error-message">{errorNewPassword}</label>
                                 </div>
                             )}
                             <br />
@@ -174,7 +174,7 @@ function Settings() {
                             />
                             {errorConfirmPassword && (
                                 <div style={{ textAlign: 'left' }}>
-                                    <label className="error-message">{t(errorConfirmPassword)}</label>
+                                    <label className="error-message">{errorConfirmPassword}</label>
                                 </div>
                             )}
                             <br />

@@ -75,3 +75,17 @@ export const getReport = async () => {
         console.log(error);
     }
 };
+
+export const ReportPayment = async (startDate, endDate) => {
+    try {
+        const response = await httprequest.get('payment-chart', {
+            params: {
+                startDate,
+                endDate,
+            },
+        });
+        return response;
+    } catch (error) {
+        console.log(error);
+    }
+};

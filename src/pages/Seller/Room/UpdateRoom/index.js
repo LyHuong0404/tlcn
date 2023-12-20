@@ -188,7 +188,7 @@ function UpdateRoom() {
                 const data = await updateRoom(formData);
                 if (data?.success) {
                     // navigate('/seller/allrooms');
-                    toast.success('Room updated successfully.');
+                    toast.success(t('Update Room successfully!'));
                 }
                 setLoading(false);
             };
@@ -466,7 +466,9 @@ function UpdateRoom() {
                                         <div className={styles.box} style={{ padding: '0 20px 25px 20px' }}>
                                             <div className="input-field">
                                                 <br />
-                                                <label htmlFor="t2-price">{t('Price')} / {t('month')} (VNĐ)</label>
+                                                <label htmlFor="t2-price">
+                                                    {t('Price')} / {t('month')} (VNĐ)
+                                                </label>
                                                 <input
                                                     id="t2-price"
                                                     type="number"

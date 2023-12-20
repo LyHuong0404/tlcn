@@ -23,7 +23,7 @@ function Sidebar({ data }) {
                 const result = await addToWishlist(roomID);
                 if (result.success) {
                     setIsFollowed(!isFollowed);
-                    toast.success('Wishlist added successfully');
+                    toast.success(t('Wishlist added successfully'));
                 }
             } catch (error) {
                 console.log(error);
@@ -75,7 +75,7 @@ function Sidebar({ data }) {
                             <i className="fa fa-star htlfndr-star-color"></i>
                             <i className="fa fa-star htlfndr-star-color"></i>
                         </div>
-                        <h5 className="htlfndr-hotel-location">
+                        <h5 className="htlfndr-hotel-location" style={{color: "#000"}}>
                             <a data-tooltip-id="my-tooltip" data-tooltip-content={data?.room?.address}>
                                 <i className="fa fa-map-marker"></i>
                                 {data?.room?.address}
@@ -89,7 +89,7 @@ function Sidebar({ data }) {
                     </div>
                 </div>
                 <button onClick={handleBook} className="htlfndr-book-now-button" role="button">
-                    <i className="fa fa-bookmark" style={{ marginRight: '10px' }} aria-hidden="true"></i>{t('Make appointment')}
+                    <i className="fa fa-bookmark" style={{ marginRight: '10px' }} aria-hidden="true"></i>{t('Book')}
                 </button>
 
                 {!isFollowed ? (

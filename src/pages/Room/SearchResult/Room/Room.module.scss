@@ -1,3 +1,9 @@
 a {
     text-decoration: none !important;
 }
+
+.cus {
+    &:hover {
+        text-decoration: none;
+    }
+}

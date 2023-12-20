@@ -58,9 +58,9 @@ function Login() {
                 <div className="row login-box">
                     <div className="col-lg-6 align-self-center form-section">
                         <div className="form-inner">
-                            <a href="index.html" className="logo">
+                            <Link to="/" className="logo">
                                 <Image src={images.user} alt="logo" />
-                            </a>
+                            </Link>
                             <h3>{t('Sign into your account')}</h3>
                             {error && <p style={{ color: '#ed2a2a', fontSize: '17px' }}>{error}</p>}
 
@@ -103,7 +103,7 @@ function Login() {
                                             RememberMe
                                         </label>
                                     </div> */}
-                                    <a href="forgot-password.html" className="forgot-password">
+                                    <a  className="forgot-password">
                                         {t('Forgot Password?')}
                                     </a>
                                 </div>

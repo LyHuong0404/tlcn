@@ -50,11 +50,11 @@ function Wishlist() {
                         <div key={index} className="htlfndr-hotel-post clearfix">
                             <a
                                 className="glyphicon glyphicon-remove"
-                                href="#"
+                                
                                 data-toggle="modal"
                                 data-target="#remove-page"
                             ></a>
-                            <a href="hotel-page-v3.html" className="htlfndr-hotel-thumbnail pull-left">
+                            <a  className="htlfndr-hotel-thumbnail pull-left">
                                 <Image src={room.avatarUrl} alt={room.subject} className={styles.image_room} />
                             </a>
                             <div className="htlfndr-hotel-description">
@@ -67,10 +67,10 @@ function Wishlist() {
                                         </p>
                                     </div>
                                     <h2 className="htlfndr-entry-title">
-                                        <a href="hotel-page-v3.html">{room.subject}</a>
+                                        <a >{room.subject}</a>
                                     </h2>
                                     <h5 className="htlfndr-hotel-location">
-                                        <a href="/">
+                                        <a >
                                             <i className="fa fa-map-marker"></i>
                                             {room.address}
                                         </a>

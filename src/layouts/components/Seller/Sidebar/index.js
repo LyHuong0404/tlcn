@@ -73,15 +73,20 @@ function Sidebar() {
                             <i className="fa fa-cogs" aria-hidden="true"></i> {t('Seller Setting')}
                         </Link>
                     </li>
+                    <li onClick={() => setMenuActive(8)}>
+                        <Link to="/seller/setting" className={menuActive === 8 ? 'menu-active' : ''}>
+                            <i className="fa fa-commenting-o" aria-hidden="true"></i> {t('Reviews')}
+                        </Link>
+                    </li>
                 </ul>
                 <ul className="collapsible custom-login">
-                    {user?.roles?.length > 2 && (
+                    {/* {user?.roles?.length > 2 && (
                         <li>
-                            <Link to="/admin/dashboard">
+                            <Link to="/admin/dashboard" >
                                 <i className="fa fa-unlock" aria-hidden="true"></i> {t('Admin Home')}
                             </Link>
                         </li>
-                    )}
+                    )} */}
                     <li onClick={handleLogout}>
                         <a>
                             <i className="fa fa-sign-in" aria-hidden="true"></i> {t('Logout')}

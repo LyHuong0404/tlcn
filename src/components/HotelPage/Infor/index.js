@@ -275,11 +275,7 @@ function Infor({ data }) {
                                             welcomes you to join this shared house. Thanks!
                                         </p>
                                         <p className="htlfndr-button-block">
-                                            <a
-                                                className="htlfndr-select-hotel-button"
-                                                role="button"
-                                                href="hotel-room-page.html"
-                                            >
+                                            <a className="htlfndr-select-hotel-button" role="button">
                                                 select
                                             </a>
                                         </p>
@@ -309,11 +305,7 @@ function Infor({ data }) {
                                             welcomes you to join this shared house. Thanks!
                                         </p>
                                         <p className="htlfndr-button-block">
-                                            <a
-                                                className="htlfndr-select-hotel-button"
-                                                role="button"
-                                                href="hotel-room-page.html"
-                                            >
+                                            <a className="htlfndr-select-hotel-button" role="button">
                                                 select
                                             </a>
                                         </p>

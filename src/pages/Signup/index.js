@@ -131,9 +131,9 @@ function Signup() {
                     <div className="row login-box">
                         <div className="col-lg-6 align-self-center form-section">
                             <div className="form-inner">
-                                <a href="index.html" className="logo">
+                                <Link to="/" className="logo">
                                     <Image src={images.user} alt="logo" />
-                                </a>
+                                </Link>
                                 <h3>{t('Create an account')}</h3>
                                 <form onSubmit={submitForm}>
                                     <div className="form-group clearfix">
@@ -182,7 +182,7 @@ function Signup() {
                                         />
                                         {errorPassword && (
                                             <div style={{ textAlign: 'left' }}>
-                                                <label className="error-message">{t(errorPassword)}</label>
+                                                <label className="error-message">{errorPassword}</label>
                                             </div>
                                         )}
                                     </div>

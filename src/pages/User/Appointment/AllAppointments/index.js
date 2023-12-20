@@ -58,7 +58,7 @@ function AllAppointments() {
             if (result?.success) {
                 getAllAppointment(currentPage);
             }
-            toast.success('Appointment deleted successfully');
+            toast.success(t('Delete Appointment successfully!'));
         } catch (error) {
             console.error('Error fetching data:', error);
         }

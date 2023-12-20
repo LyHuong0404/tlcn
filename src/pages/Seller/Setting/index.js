@@ -45,10 +45,10 @@ function Setting() {
                 setLoading(true);
                 const result = await updateProfile(formData);
                 if (result?.success) {
-                    toast.success('Profile updated successfully.');
+                    toast.success(t('Update Profile successfully!'));
                 } else {
-                    setError('Current password is incorrect.');
-                    toast.error('Profile updated unsuccessfully.');
+                    setError(t('Current password is incorrect.'));
+                    toast.error(t('Update Profile unsuccessfully!'));
                 }
                 setLoading(false);
             };
@@ -66,19 +66,19 @@ function Setting() {
                 if (rs?.success) {
                     setOldPassword('');
                     setNewPassword('');
-                    toast.success('Password changed successfully!');
+                    toast.success(t('Change Password successfully!'));
                 } else {
-                    setError('Current password is incorrect.');
+                    setError(t('Current password is incorrect.'));
 
-                    toast.error('Password change unsuccessfully!');
+                    toast.error(t('Change Password unsuccessfully!'));
                 }
                 setLoading(false);
             };
             fetchData();
         } catch (error) {
-            setError('Current password is incorrect.');
+            setError(t('Current password is incorrect.'));
 
-            toast.error('Password change unsuccessfully!');
+            toast.error(t('Change Password unsuccessfully!'));
         }
     };
 
@@ -133,7 +133,7 @@ function Setting() {
                                 </div>
                                 {error && (
                                     <div style={{ textAlign: 'left' }}>
-                                        <label className="error-message">{t(error)}</label>
+                                        <label className="error-message">{error}</label>
                                     </div>
                                 )}
                                 <div className="row">

@@ -33,7 +33,7 @@ function AuthoSignUp() {
     useEffect(() => {
         if (success) {
             navigate('/auth/login');
-            toast.success('Account created successfully!', {
+            toast.success(t('Create Account successfully!'), {
                 style: {
                     fontSize: '15px', // Đặt kích thước font size mong muốn
                 },
@@ -56,9 +56,9 @@ function AuthoSignUp() {
                 <div className="row login-box">
                     <div className="col-lg-6 align-self-center form-section">
                         <div className="form-inner">
-                            <a href="index.html" className="logo">
+                            <Link to="/" className="logo">
                                 <Image src={images.user} alt="logo" />
-                            </a>
+                            </Link>
                             <h3>{t('Create an account')}</h3>
                             <form onSubmit={submitForm}>
                                 <div className="form-group clearfix">
@@ -77,7 +77,7 @@ function AuthoSignUp() {
                                     />
                                     {error && (
                                         <div style={{ textAlign: 'left' }}>
-                                            <label className="error-message">{t(error)}</label>
+                                            <label className="error-message">{error}</label>
                                         </div>
                                     )}
                                 </div>
@@ -101,7 +101,9 @@ function AuthoSignUp() {
                                 <span>Room Finder</span>
                             </h1>
                             <p>
-                                {t('Incredibly friendly locals will tell you all about Georgia most picturesque, breathtaking, and gastronomic must-visit places. A quick search of our database will show you the best-fitting matches out of 100+ candidates. You can choose photos, or reviews from previous passengers.')}
+                                {t(
+                                    'Incredibly friendly locals will tell you all about Georgia most picturesque, breathtaking, and gastronomic must-visit places. A quick search of our database will show you the best-fitting matches out of 100+ candidates. You can choose photos, or reviews from previous passengers.',
+                                )}
                             </p>
                         </div>
                     </div>

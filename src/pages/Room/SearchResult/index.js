@@ -316,7 +316,7 @@ function SearchResult() {
                             />
                         </div>
                         <div id="htlfndr-input-5">
-                            <input type="submit" value="search" />
+                            <input type="submit" value={t('search')} />
                         </div>
                         <div className="clearfix"></div>
                     </form>
@@ -328,11 +328,11 @@ function SearchResult() {
                     role="complementary"
                 >
                     <div className="htlfndr-search-details widget">
-                        <h3 className="widget-title">details</h3>
+                        <h3 className="widget-title">{t('details')}</h3>
                         <div className="htlfndr-widget-content">
                             <form name="search-hotel-details" id="search-hotel-details">
                                 <label htmlFor="htlfndr-price-show" className="htlfndr-input-label">
-                                    Price
+                                    {t('Price')}
                                 </label>
                                 <Slider
                                     value={price}
@@ -345,10 +345,10 @@ function SearchResult() {
                                 <Typography variant="body3">
                                     {price[0]} - {price[1]}
                                 </Typography>
-                                <p className="htlfndr-input-label">user rating</p>
+                                <p className="htlfndr-input-label">{t('user rating')}</p>
                                 <Rating size="large" name="my-rating" value={rating} onChange={handleChangeRating} />
 
-                                <p className="htlfndr-input-label">Amenities</p>
+                                <p className="htlfndr-input-label">{t('Amenities')}</p>
                                 <p className="htlfndr-checkbox-line">
                                     <input
                                         type="checkbox"
@@ -356,7 +356,7 @@ function SearchResult() {
                                         name="htlfndr-check-television"
                                         onChange={() => setTvAvailable(!tvAvailable)}
                                     />
-                                    <label htmlFor="htlfndr-check-television">Television</label>
+                                    <label htmlFor="htlfndr-check-television">{t('Television')}</label>
                                 </p>
                                 <p className="htlfndr-checkbox-line">
                                     <input type="checkbox" id="htlfndr-check-wi-fi" name="htlfndr-check-wi-fi" />
@@ -368,7 +368,7 @@ function SearchResult() {
                                         id="htlfndr-check-swimming-pool"
                                         name="htlfndr-check-swimming-pool"
                                     />
-                                    <label htmlFor="htlfndr-check-swimming-pool">Swimming pool</label>
+                                    <label htmlFor="htlfndr-check-swimming-pool">{t('Swimming pool')}</label>
                                 </p>
                                 <p className="htlfndr-checkbox-line">
                                     <input
@@ -377,7 +377,7 @@ function SearchResult() {
                                         name="htlfndr-check-smoking"
                                         onChange={() => setFurnitureAvailable(!furnitureAvailable)}
                                     />
-                                    <label htmlFor="htlfndr-check-smoking">Furniture Available</label>
+                                    <label htmlFor="htlfndr-check-smoking">{t('Furniture Available')}</label>
                                 </p>
                                 <p className="htlfndr-checkbox-line">
                                     <input
@@ -386,7 +386,7 @@ function SearchResult() {
                                         id="htlfndr-check-wine-bar"
                                         name="htlfndr-check-wine-bar"
                                     />
-                                    <label htmlFor="htlfndr-check-wine-bar">Attic</label>
+                                    <label htmlFor="htlfndr-check-wine-bar">{t('Attic')}</label>
                                 </p>
                                 <p className="htlfndr-checkbox-line">
                                     <input
@@ -395,7 +395,7 @@ function SearchResult() {
                                         name="htlfndr-check-hot-tub"
                                         onChange={() => setAirConditionAvailable(!airConditionAvailable)}
                                     />
-                                    <label htmlFor="htlfndr-check-hot-tub">Air Conditioning</label>
+                                    <label htmlFor="htlfndr-check-hot-tub">{t('Air Conditioning')}</label>
                                 </p>
                                 <p className="htlfndr-checkbox-line">
                                     <input
@@ -404,7 +404,7 @@ function SearchResult() {
                                         name="htlfndr-check-air-conditioning"
                                         onChange={() => setIsFreeParking(!isFreeParking)}
                                     />
-                                    <label htmlFor="htlfndr-check-air-conditioning">Free Parking</label>
+                                    <label htmlFor="htlfndr-check-air-conditioning">{t('Free Parking')}</label>
                                 </p>
                                 <p className="htlfndr-checkbox-line">
                                     <input
@@ -413,7 +413,7 @@ function SearchResult() {
                                         name="htlfndr-check-breakfast"
                                         onChange={() => setPrivateToilet(!privateToilet)}
                                     />
-                                    <label htmlFor="htlfndr-check-breakfast">Private Toilet</label>
+                                    <label htmlFor="htlfndr-check-breakfast">{t('Private Toilet')}</label>
                                 </p>
                                 <p className="htlfndr-checkbox-line">
                                     <input
@@ -422,7 +422,7 @@ function SearchResult() {
                                         name="htlfndr-check-free-parking"
                                         onChange={() => setAllowedPet(!allowedPet)}
                                     />
-                                    <label htmlFor="htlfndr-check-free-parking">Allowed Pet</label>
+                                    <label htmlFor="htlfndr-check-free-parking">{t('Allow Pet')}</label>
                                 </p>
                             </form>
                         </div>
@@ -447,7 +447,7 @@ function SearchResult() {
                                             fontFamily: "'Montserrat', 'Helvetica Neue', Helvetica, Arial, sans-serif",
                                         }}
                                     >
-                                        Sort
+                                        {t('Sort')}
                                     </InputLabel>
                                     <MuiSelect
                                         data-toggle="dropdown"

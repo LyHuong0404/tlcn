@@ -46,7 +46,7 @@ function DashBoard() {
                                     <p>
                                         <i className="fa  fa-arrow-up up"></i> Today Views
                                     </p>
-                                    <h3>22,520</h3>
+                                    <h3>22</h3>
                                 </div>
                             </div>
                         </li>
@@ -57,9 +57,9 @@ function DashBoard() {
                                 </span>
                                 <div className="ad-hom-view-com">
                                     <p>
-                                        <i className="fa  fa-arrow-up up"></i> Earnings
+                                        <i className="fa  fa-arrow-up up"></i> Today Reviews
                                     </p>
-                                    <h3>22,520</h3>
+                                    <h3>7</h3>
                                 </div>
                             </div>
                         </li>
@@ -70,13 +70,13 @@ function DashBoard() {
                                 </span>
                                 <div className="ad-hom-view-com">
                                     <p>
-                                        <i className="fa  fa-arrow-up up"></i> Users
+                                        <i className="fa  fa-arrow-up up"></i> Today Appointments
                                     </p>
-                                    <h3>22,520</h3>
+                                    <h3>5</h3>
                                 </div>
                             </div>
                         </li>
-                        <li>
+                        {/* <li>
                             <div className="ad-hom-box ad-hom-box-4">
                                 <span className="ad-hom-col-com ad-hom-col-4">
                                     <i className="fa fa-envelope-open-o"></i>
@@ -88,7 +88,7 @@ function DashBoard() {
                                     <h3>22,520</h3>
                                 </div>
                             </div>
-                        </li>
+                        </li> */}
                     </ul>
                 </div>
             </div>
@@ -395,7 +395,7 @@ function DashBoard() {
                     <div className="col-md-12">
                         <div className="box-inn-sp">
                             <div className="inn-title">
-                                <h4>List New Rooms</h4>
+                                <h4>{t('List New Rooms')}</h4>
                                 {/* <p>Airtport Hotels The Right Way To Start A Short Break Holiday</p> */}
                             </div>
                             <div className="tab-inn">
@@ -407,10 +407,8 @@ function DashBoard() {
                                                 <th>{t('Name')}</th>
                                                 <th>{t('Address')}</th>
                                                 <th>{t('Price')}</th>
-                                                <th>Listings</th>
-                                                <th>Enquiry</th>
-                                                <th>Bookings</th>
-                                                <th>Reviews</th>
+                                                <th>{t('Bookings')}</th>
+                                                <th>{t('Reviews')}</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -421,23 +419,17 @@ function DashBoard() {
                                                             <Image src={room.avatarUrl} alt={room.subject} />
                                                         </span>
                                                     </td>
-                                                    <td>
+                                                    <td style={{ width: '150px' }}>
                                                         <span className="list-enq-name">{room.subject}</span>
                                                     </td>
-                                                    <td>{room.address}</td>
-                                                    <td>{room.price}</td>
+                                                    <td style={{ width: '480px' }}>{room.address}</td>
+                                                    <td style={{ width: '180px' }}>{room.price}</td>
 
                                                     <td>
-                                                        <span className="label label-primary">02</span>
+                                                        <span className="label label-success">5</span>
                                                     </td>
                                                     <td>
-                                                        <span className="label label-danger">12</span>
-                                                    </td>
-                                                    <td>
-                                                        <span className="label label-success">24</span>
-                                                    </td>
-                                                    <td>
-                                                        <span className="label label-info">36</span>
+                                                        <span className="label label-info">7</span>
                                                     </td>
                                                 </tr>
                                             ))}

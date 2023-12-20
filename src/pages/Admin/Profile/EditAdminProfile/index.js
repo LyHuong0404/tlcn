@@ -58,13 +58,13 @@ function EditAdminProfile() {
                 const result = await updateProfile(formData);
                 if (result?.success) {
                     // window.location.reload();
-                    toast.success('Profile updated successfully.', {
+                    toast.success(t('Update Profile successfully!'), {
                         style: {
                             fontSize: '14px',
                         },
                     });
                 } else {
-                    toast.error('Profile updated unsuccessfully.', {
+                    toast.error(t('Update Profile unsuccessfully!'), {
                         style: {
                             fontSize: '14px',
                         },
@@ -74,7 +74,7 @@ function EditAdminProfile() {
             };
             updateInfo();
         } catch (error) {
-            toast.error('Profile updated unsuccessfully.', {
+            toast.error(t('Update Profile unsuccessfully!'), {
                 style: {
                     fontSize: '14px',
                 },

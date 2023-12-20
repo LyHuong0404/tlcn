@@ -86,7 +86,7 @@ function RegisterSeller() {
                 setLoading(true);
                 const rs = await registerSeller({ code, phone, fullname, addressDetail, wardCode });
                 if (rs?.status) {
-                    toast.success('Registered as a seller successfully.');
+                    toast.success(t('Register as a seller successfully!'));
                     navigate('/seller/dashboard');
                 }
                 setLoading(false);

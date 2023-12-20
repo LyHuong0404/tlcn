@@ -79,9 +79,9 @@ function AllRooms() {
                 const result = await deleteRoom(roomId);
                 if (result?.status === 'SUCCESS') {
                     fetchAllRooms(currentPage);
-                    toast.success('Room deleted successfully.');
+                    toast.success(t('Delete Room successfully!'));
                 } else {
-                    toast.error('Error deleting room.');
+                    toast.error(t('Delete Room unsuccessfully!'));
                 }
             };
             fetchData();
@@ -167,7 +167,7 @@ function AllRooms() {
                                                 <tr key={room.id}>
                                                     <td
                                                         style={{
-                                                            width: '110px',
+                                                            width: '120px',
                                                             overflow: 'hidden',
                                                             textOverflow: 'ellipsis',
                                                         }}

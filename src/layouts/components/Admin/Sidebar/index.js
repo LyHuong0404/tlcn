@@ -53,7 +53,7 @@ function Sidebar({ user }) {
                                     <a
                                         className="sidebar-header-icons"
                                         style={{ fontSize: '14px' }}
-                                        href="messages-inbox.html"
+                                       
                                     >
                                         <FontAwesomeIcon icon={faEnvelope} className="far" />
                                     </a>
@@ -64,7 +64,7 @@ function Sidebar({ user }) {
                                     data-html="true"
                                     title="Notifications"
                                 >
-                                    <a className="sidebar-header-icons" style={{ fontSize: '14px' }} href="#">
+                                    <a className="sidebar-header-icons" style={{ fontSize: '14px' }} >
                                         <FontAwesomeIcon icon={faBell} className="far" />
                                     </a>
                                 </li>
@@ -72,7 +72,7 @@ function Sidebar({ user }) {
                                     <a
                                         className="sidebar-header-icons"
                                         style={{ fontSize: '14px' }}
-                                        href="reviews.html"
+                                       
                                     >
                                         <FontAwesomeIcon icon={faStar} className="far" />
                                     </a>
@@ -86,7 +86,7 @@ function Sidebar({ user }) {
                                     <a
                                         className="sidebar-header-icons"
                                         style={{ fontSize: '14px' }}
-                                        href="bookmarks.html"
+                                       
                                     >
                                         <FontAwesomeIcon icon={faBookmark} className="far" />
                                     </a>

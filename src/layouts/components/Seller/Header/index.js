@@ -22,13 +22,13 @@ function Header() {
         <div className="container-fluid sb1">
             <div className="row">
                 <div className="col-md-2 col-sm-3 col-xs-6 sb1-1">
-                    <a href="/seller/dashboard" className="logo">
+                    <Link to="/seller/dashboard" className="logo">
                         <Image src={images.logo1} alt="logo" />
-                    </a>
+                    </Link>
                 </div>
                 <div className="col-md-6 col-sm-6 mob-hide"></div>
                 <div className="col-md-2 tab-hide">
-                    <div className="top-not-cen">
+                    {/* <div className="top-not-cen">
                         <a className="waves-effect btn-noti">
                             <i className="fa fa-commenting-o" aria-hidden="true"></i>
                             <span>5</span>
@@ -41,7 +41,7 @@ function Header() {
                             <i className="fa fa-tag" aria-hidden="true"></i>
                             <span>5</span>
                         </a>
-                    </div>
+                    </div> */}
                 </div>
                 <div className="col-md-2 col-sm-3 col-xs-6">
                     <Tippy

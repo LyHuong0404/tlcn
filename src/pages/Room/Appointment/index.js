@@ -27,7 +27,7 @@ function Appointment() {
             const fetchAPI = async () => {
                 const result = await makeAppointment(data);
                 if (result?.success) {
-                    toast.success('Make an appointment successfully');
+                    toast.success(t('Make an appointment successfully!'));
                     navigate('/profile', { state: { activeTab: 2 } });
                 } else {
                     setIsOpen(!isOpen);
@@ -123,7 +123,7 @@ function Appointment() {
                                 type="submit"
                                 disabled={isDisabled}
                                 className="htlfndr-payment-submit"
-                                value="complete booking"
+                                value={t('complete booking')}
                             />
                         </section>
                     </form>
@@ -139,12 +139,12 @@ function Appointment() {
                                 <h3 className="widget-title">{t('appointment details')}</h3>
                                 <div className="htlfndr-widget-block htlfndr-table-view">
                                     <div className="htlfndr-hotel-thumbnail">
-                                        <a href="hotel-page-v1.html">
+                                        <a>
                                             <Image src={room?.avatarUrl} alt="Hotel picture" />
                                         </a>
                                     </div>
                                     <div className="htlfndr-hotel-info">
-                                        <a href="hotel-page-v1.html">
+                                        <a>
                                             <h3>{room?.subject}</h3>
                                         </a>
                                         <div className="htlfndr-rating-stars">{renderStars(room?.averageStar)}</div>

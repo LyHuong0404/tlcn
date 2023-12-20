@@ -14,7 +14,7 @@ function Messages() {
                             <div class="breadcrumb">
                                 <div class="breadcrumb-item">
                                     <i class="fas fa-angle-right"></i>
-                                    <a href="#">Messages</a>
+                                    <a>Messages</a>
                                 </div>
                                 <div class="breadcrumb-item active">
                                     <i class="fas fa-angle-right"></i>Inbox
@@ -31,9 +31,7 @@ function Messages() {
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link active" href="#">
-                                    Inbox
-                                </a>
+                                <a class="nav-link active">Inbox</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="messages-sent.html">
@@ -93,7 +91,6 @@ function Messages() {
                                         <li class="list-inline-item dropdown p-0 m-0">
                                             <a
                                                 class="btn dropdown-btn "
-                                                href="#"
                                                 id="navbarDropdown"
                                                 role="button"
                                                 data-toggle="dropdown"
@@ -105,13 +102,13 @@ function Messages() {
                                             </a>
 
                                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                                <a class="dropdown-item" href="#">
+                                                <a class="dropdown-item">
                                                     <i class="fas fa-pencil-alt"></i>Mark as Read{' '}
                                                 </a>
-                                                <a class="dropdown-item" href="#">
+                                                <a class="dropdown-item">
                                                     <i class="fas fa-ban"></i>Spam <i class="fas"></i>
                                                 </a>
-                                                <a class="dropdown-item" href="#">
+                                                <a class="dropdown-item">
                                                     <i class="fas fa-trash-alt"></i>Delete
                                                 </a>
                                             </div>
@@ -136,7 +133,7 @@ function Messages() {
                                 </td>
                                 <td>Ryan Corey</td>
                                 <td>
-                                    <a href="#">Kevin Welcome on LinkedIn.</a>
+                                    <a>Kevin Welcome on LinkedIn.</a>
                                 </td>
                                 <td>
                                     <i class="fa fa-paperclip"></i>
@@ -158,7 +155,7 @@ function Messages() {
                                 </td>
                                 <td>Haley</td>
                                 <td>
-                                    <a href="#">Welcome To University Of Alaska Kevin</a>
+                                    <a>Welcome To University Of Alaska Kevin</a>
                                 </td>
                                 <td>
                                     <i class="fa fa-paperclip"></i>
@@ -180,7 +177,7 @@ function Messages() {
                                 </td>
                                 <td>John Doe</td>
                                 <td>
-                                    <a href="#">Fwd: Important Data Regarding To your Website</a>
+                                    <a>Fwd: Important Data Regarding To your Website</a>
                                 </td>
                                 <td>
                                     <i class="fa fa-paperclip"></i>
@@ -202,7 +199,7 @@ function Messages() {
                                 </td>
                                 <td>Smith Roy</td>
                                 <td>
-                                    <a href="#">Hello Kevin! Apply now for MS</a>
+                                    <a>Hello Kevin! Apply now for MS</a>
                                 </td>
                                 <td></td>
                                 <td>Nov 17</td>
@@ -222,7 +219,7 @@ function Messages() {
                                 </td>
                                 <td>Harry Parker</td>
                                 <td>
-                                    <a href="#">Transaction Alert For Your ABC Bank</a>
+                                    <a>Transaction Alert For Your ABC Bank</a>
                                 </td>
                                 <td>
                                     <i class="fa fa-paperclip"></i>
@@ -244,7 +241,7 @@ function Messages() {
                                 </td>
                                 <td>Finn Boland</td>
                                 <td>
-                                    <a href="#">Good Luck For Your Next Journey to Website Development</a>
+                                    <a>Good Luck For Your Next Journey to Website Development</a>
                                 </td>
                                 <td>
                                     <i class="fa fa-paperclip"></i>
@@ -266,7 +263,7 @@ function Messages() {
                                 </td>
                                 <td>Gollon Marry</td>
                                 <td>
-                                    <a href="#">Please Sign up for your new account to use all the services</a>
+                                    <a>Please Sign up for your new account to use all the services</a>
                                 </td>
                                 <td></td>
                                 <td>Nov 14</td>
@@ -286,7 +283,7 @@ function Messages() {
                                 </td>
                                 <td>Amar</td>
                                 <td>
-                                    <a href="#">Ceo of XYZ Company Usage</a>
+                                    <a>Ceo of XYZ Company Usage</a>
                                 </td>
                                 <td>
                                     <i class="fa fa-paperclip"></i>
@@ -308,7 +305,7 @@ function Messages() {
                                 </td>
                                 <td>Mary Jane</td>
                                 <td>
-                                    <a href="#">Help us make your website Security better by giving feedback</a>
+                                    <a>Help us make your website Security better by giving feedback</a>
                                 </td>
                                 <td></td>
                                 <td>Nov 13</td>
@@ -328,7 +325,7 @@ function Messages() {
                                 </td>
                                 <td>Sara Hector</td>
                                 <td>
-                                    <a href="#">Welcome To Our Cyber Security </a>
+                                    <a>Welcome To Our Cyber Security </a>
                                 </td>
                                 <td></td>
                                 <td>Nov 13</td>
@@ -348,7 +345,7 @@ function Messages() {
                                 </td>
                                 <td>Mary Finner</td>
                                 <td>
-                                    <a href="#">Now your account is available for professional services</a>
+                                    <a>Now your account is available for professional services</a>
                                 </td>
                                 <td>
                                     <i class="fa fa-paperclip"></i>
@@ -357,10 +354,10 @@ function Messages() {
                             </tr>
                         </table>
                         <div class="page-navigation d-flex justify-content-end">
-                            <a href="#">
+                            <a>
                                 <i class="fas fa-angle-left"></i>
                             </a>
-                            <a href="#">
+                            <a>
                                 <i class="fas fa-angle-right"></i>
                             </a>
                         </div>

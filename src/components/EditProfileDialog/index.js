@@ -66,7 +66,7 @@ function EditProfileDialog({ onClose }) {
                 const result = await updateProfile(formData);
                 if (result?.success) {
                     // window.location.reload();
-                    toast.success('Profile updated successfully.');
+                    toast.success(t('Update Profile successfully.'));
                     setIsOpen(!isOpen);
                 }
                 setLoading(false);

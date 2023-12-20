@@ -39,15 +39,15 @@ function ChangePassword() {
 
         if (newPassword.trim() !== '') {
             if (!hasSpecialCharacter) {
-                setErrorNewPassword('Password must have at least 1 special character.');
+                setErrorNewPassword(t('Password must have at least 1 special character.'));
             } else if (!hasDigit) {
-                setErrorNewPassword('Password must have at least 1 digit character.');
+                setErrorNewPassword(t('Password must have at least 1 digit character.'));
             } else if (!hasUppercase) {
-                setErrorNewPassword('Password must have at least 1 uppercase character.');
+                setErrorNewPassword(t('Password must have at least 1 uppercase character.'));
             } else if (!hasLowercase) {
-                setErrorNewPassword('Password must have at least 1 lowercase character.');
+                setErrorNewPassword(t('Password must have at least 1 lowercase character.'));
             } else if (!isLengthValid) {
-                setErrorNewPassword('Password must have at least 8 characters');
+                setErrorNewPassword(t('Password must have at least 8 characters'));
             } else {
                 setErrorNewPassword('');
             }
@@ -57,7 +57,7 @@ function ChangePassword() {
 
     const handleCheckMatchPw = (e) => {
         if (e.target.value !== newPassword) {
-            setErrorConfirmPassword('Confirm Password does not match.');
+            setErrorConfirmPassword(t('Confirm Password does not match!'));
         } else {
             setErrorConfirmPassword('');
         }
@@ -76,26 +76,26 @@ function ChangePassword() {
                         setOldPassword('');
                         setNewPassword('');
                         setConfirmPassword('');
-                        toast.success('Password changed successfully!', {
+                        toast.success(t('Change Password successfully!'), {
                             style: {
                                 fontSize: '14px',
                             },
                         });
                     } else {
-                        setErrorOldPassword('Your current password is incorrect.');
-                        toast.error('Password change unsuccessfully!', {
+                        setErrorOldPassword(t('Your current password is incorrect!'));
+                        toast.error(t('Change Password unsuccessfully!'), {
                             style: {
                                 fontSize: '14px',
                             },
                         });
                     }
-                    setLoading(false)
+                    setLoading(false);
                 };
                 fetchData();
             }
         } catch (error) {
-            setErrorOldPassword('Your current password is incorrect.');
-            toast.error('Password change unsuccessfully!', {
+            setErrorOldPassword(t('Your current password is incorrect!'));
+            toast.error(t('Change Password unsuccessfully!'), {
                 style: {
                     fontSize: '14px',
                 },
@@ -119,7 +119,8 @@ function ChangePassword() {
                                     <abbr>{t('Profile')}</abbr>
                                 </div>
                                 <div className="breadcrumb-item active">
-                                    <i className="fas fa-angle-right"></i>{t('Change Password')}
+                                    <i className="fas fa-angle-right"></i>
+                                    {t('Change Password')}
                                 </div>
                             </div>
                         </div>
@@ -158,7 +159,9 @@ function ChangePassword() {
                                                     />
                                                     {errorOldPassword && (
                                                         <div style={{ textAlign: 'left' }}>
-                                                            <label className="error-message">{t(errorOldPassword)}</label>
+                                                            <label className="error-message">
+                                                                {errorOldPassword}
+                                                            </label>
                                                         </div>
                                                     )}
                                                 </div>
@@ -181,7 +184,9 @@ function ChangePassword() {
                                                     />
                                                     {errorNewPassword && (
                                                         <div style={{ textAlign: 'left' }}>
-                                                            <label className="error-message">{t(errorNewPassword)}</label>
+                                                            <label className="error-message">
+                                                                {errorNewPassword}
+                                                            </label>
                                                         </div>
                                                     )}
                                                 </div>
@@ -205,7 +210,7 @@ function ChangePassword() {
                                                     {errorConfirmPassword && (
                                                         <div style={{ textAlign: 'left' }}>
                                                             <label className="error-message">
-                                                                {t(errorConfirmPassword)}
+                                                                {errorConfirmPassword}
                                                             </label>
                                                         </div>
                                                     )}

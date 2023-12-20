@@ -122,8 +122,8 @@ function Slider() {
                                         <i className="fa fa-star-o htlfndr-star-color"></i>
                                         <i className="fa fa-star-o htlfndr-star-color"></i>
                                         <i className="fa fa-star-o htlfndr-star-color"></i>
-                                        <i className="fa fa-star-o"></i>
-                                        <i className="fa fa-star-o"></i>
+                                        <i className="fa fa-star-o htlfndr-star-color"></i>
+                                        <i className="fa fa-star-o htlfndr-star-color"></i>
                                     </div>
                                     <h1 className="htlfndr-slider-title">{t('find your perfect room')}</h1>
                                     <div className="htlfndr-slider-under-title-line"></div>

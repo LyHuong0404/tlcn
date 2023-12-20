@@ -49,7 +49,7 @@ function Survey({ onClose }) {
                 });
                 if (rs?.success) {
                     onClose();
-                    toast.success('Thank you for your survey!');
+                    toast.success(t('Thank you for your survey!'));
                 }
             };
             fetchData();
@@ -126,7 +126,7 @@ function Survey({ onClose }) {
                                                 name="allowedPet"
                                                 {...register('allowedPet')}
                                             />
-                                            <label htmlFor="allowedPet">{t('Allowed Pet')}</label>
+                                            <label htmlFor="allowedPet">{t('Allow Pet')}</label>
                                         </div>
 
                                         <div>

@@ -1,18 +1,19 @@
 /* eslint-disable array-callback-return */
 /* eslint-disable jsx-a11y/anchor-is-valid */
+import { DatePicker } from 'antd';
 import Image from '~/components/Image';
 import styles from './Appointments.module.scss';
 import Pagination from '@mui/material/Pagination';
 import { useEffect, useState } from 'react';
 import { AllAppointments } from '~/actions/adminActions';
 import { format } from 'date-fns';
-import { DatePicker } from 'antd';
 import dayjs from 'dayjs';
 import 'dayjs/locale/zh-cn';
 import config from '~/config';
 import 'react-tooltip/dist/react-tooltip.css';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+
 const { RangePicker } = DatePicker;
 
 function Appointments() {
@@ -107,7 +108,8 @@ function Appointments() {
                             <div className="col text-left">
                                 <div className="add-new">
                                     <Link to="/admin/adduser">
-                                        {t('Add New')}<i className="fas fa-plus"></i>
+                                        {t('Add New')}
+                                        <i className="fas fa-plus"></i>
                                     </Link>
                                 </div>
                             </div>

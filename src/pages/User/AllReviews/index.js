@@ -121,7 +121,7 @@ function AllReviews() {
                             </div>
                         </div>
                         <button onClick={handleBook} className="htlfndr-book-now-button" role="button">
-                            {t('Make appointment')}
+                            {t('Book')}
                         </button>
                         <div className="htlfndr-widget-padding">
                             <div className="htlfndr-hotel-contacts">

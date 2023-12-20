@@ -72,7 +72,7 @@ function DashBoard() {
                                             <div
                                                 className="progress-bar pb1"
                                                 role="progressbar"
-                                                aria-valuenow="25"
+                                                aria-valuenow="100"
                                                 aria-valuemin="0"
                                                 aria-valuemax="100"
                                             ></div>
@@ -147,7 +147,7 @@ function DashBoard() {
                         </div>
                         <div className="charts-section box">
                             <h4>{t('Report Payments')}</h4>
-                            <ChartComponent payments={payments} />
+                            <ChartComponent />
                         </div>
                         <div className="content booking-content dashboard-bookings m-0">
                             <div className="in-content-wrapper">

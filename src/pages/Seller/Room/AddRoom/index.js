@@ -115,7 +115,7 @@ function AddRoom() {
                 const data = await newRoom(formData);
                 if (data?.success) {
                     navigate('/seller/allrooms');
-                    toast.success('Room added successfully.');
+                    toast.success(t('Add Room successfully!'));
                 }
                 setLoading(false);
             } catch (error) {
@@ -478,7 +478,7 @@ function AddRoom() {
                                                             style={{ fontSize: '70px' }}
                                                         />
                                                         <div className={styles.text}>
-                                                            <p>Drop files here or click to upload.</p>
+                                                            <p>{t('Drop files here or click to upload.')}</p>
                                                             {/* <span>
                                                                 (This is just a demo dropzone. Selected files are
                                                                 <strong> not</strong> actually uploaded.)

@@ -278,7 +278,9 @@ function Header() {
                                             className={menuActive === 5 ? 'active' : ''}
                                             onClick={() => setMenuActive(5)}
                                         >
-                                            <Link to="/search">{t('Search Rooms')}</Link>
+                                            <Link to="/search" state={{ activeTab: 1 }}>
+                                                {t('Search Rooms')}
+                                            </Link>
                                         </li>
                                     </ul>
                                 </div>
