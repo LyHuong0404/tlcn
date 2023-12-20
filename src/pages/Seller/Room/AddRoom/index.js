@@ -102,9 +102,10 @@ function AddRoom() {
         const formData = new FormData();
         for (const key in fullData) {
             if (key === 'imagesFile') {
-                for (let file of imageFiles) {
-                    formData.append('imagesFile', file);
-                }
+                if (Array.isArray(imageFiles))
+                    for (let file of imageFiles) {
+                        formData.append('imagesFile', file);
+                    }
             } else {
                 formData.append(key, fullData[key]);
             }
