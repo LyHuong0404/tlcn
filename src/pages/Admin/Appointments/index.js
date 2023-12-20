@@ -16,6 +16,7 @@ import { useTranslation } from 'react-i18next';
 
 const { RangePicker } = DatePicker;
 
+
 function Appointments() {
     const { t } = useTranslation();
     const [data, setData] = useState([]);

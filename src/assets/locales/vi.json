@@ -149,6 +149,7 @@
     "Role": "Vai trò",
     "ADMIN, SELLER, USER": "Người quản trị, Người bán, Ngườ dùng",
     "Users List": "Danh sách tài khoản",
+    "Account List": "Danh sách tài khoản",
     "Non": "Non",
     "Active": "Active",
     "Search": "Tìm kiếm",
@@ -307,5 +308,6 @@
     "List New Rooms": "Danh sách phòng mới",
     "Home": "Trang chủ",
     "Bookings": "Lịch hẹn",
-    "Name": "Tên"
+    "Name": "Tên",
+    "Accounts": "Tài khoản"
 }

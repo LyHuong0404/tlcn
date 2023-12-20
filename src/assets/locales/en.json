@@ -2,7 +2,6 @@
     "Trang chủ": "home",
     "Trang chủ": "Home",
     "Tài khoản": "Personal Info",
-    "Tìm kiếm": "Search Rooms",
     "Thông báo": "Notifications",
     "Đồng Ý": "Yes",
     "Hủy": "No",
@@ -149,6 +148,7 @@
     "Vai trò": "Role",
     "Người quản trị, Người bán, Ngườ dùng": "ADMIN, SELLER, USER",
     "Danh sách tài khoản": "Users List",
+    "Danh sách tài khoản": "Account List",
     "Non": "Non",
     "Active": "Active",
     "Tìm kiếm": "Search",
@@ -287,5 +287,6 @@
     "lịch hẹn": "appointment",
     "Danh sách phòng mới": "List New Rooms",
     "Lịch hẹn": "Bookings",
-    "Tên": "Name"
+    "Tên": "Name",
+    "Tài khoản": "Accounts"
 }

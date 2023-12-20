@@ -107,7 +107,7 @@ function Sidebar({ user }) {
                             <span>
                                 <FontAwesomeIcon icon={faUserTie} className="icon-font" />
                             </span>
-                            <span className="items-list-text">{t('Users')}</span>
+                            <span className="items-list-text">{t('Accounts')}</span>
                         </Link>
                     </li>
                     <li className={`nav-item ${styles.sidebar}`} onClick={() => setMenuActive(5)}>

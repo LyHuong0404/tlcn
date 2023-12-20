@@ -12,7 +12,7 @@ import { useTranslation } from 'react-i18next';
 
 function UserList() {
     const { t } = useTranslation();
-    const [status, setStatus] = useState(false);
+    const [status, setStatus] = useState(true);
     const [users, setUsers] = useState([]);
     const [totalPage, setTotalPage] = useState(0);
     const [pageIndex, setPageIndex] = useState(0);
@@ -64,17 +64,18 @@ function UserList() {
                     <div className="row no-gutters">
                         <div className="col display-header">
                             <div className="heading-messages">
-                                <h1>{t('Users')}</h1>
+                                <h1>{t('Accounts')}</h1>
                             </div>
                         </div>
                         <div className="col-md-4">
                             <div className="breadcrumb">
                                 <div className="breadcrumb-item">
                                     <i className="fas fa-angle-right"></i>
-                                    <a>{t('Users')}</a>
+                                    <a>{t('Accounts')}</a>
                                 </div>
                                 <div className="breadcrumb-item active">
-                                    <i className="fas fa-angle-right"></i>{t('Users List')}
+                                    <i className="fas fa-angle-right"></i>
+                                    {t('Account List')}
                                 </div>
                             </div>
                         </div>
@@ -85,7 +86,8 @@ function UserList() {
                             <div className="col text-left">
                                 <div className="add-new">
                                     <Link to="/admin/adduser">
-                                        {t('Add New')}<i className="fas fa-plus"></i>
+                                        {t('Add New')}
+                                        <i className="fas fa-plus"></i>
                                     </Link>
                                 </div>
                             </div>
@@ -167,7 +169,7 @@ function UserList() {
                                             <th>{t('User Name')}</th>
                                             <th>{t('Full Name')}</th>
                                             <th>Email</th>
-                                            <th>{t("Phone")} #</th>
+                                            <th>{t('Phone')} #</th>
                                             <th>{t('Balance')}</th>
                                             <th>{t('Status')}</th>
                                             <th>{t('Action')}</th>
