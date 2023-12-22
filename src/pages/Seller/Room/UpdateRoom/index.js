@@ -660,7 +660,7 @@ function UpdateRoom() {
                                         <input
                                             type="submit"
                                             className="waves-effect waves-light btn-large"
-                                            value="Save"
+                                            value={t('Save')}
                                         />
                                     </div>
                                 </div>

@@ -23,7 +23,7 @@ function Sidebar({ data }) {
                 const result = await addToWishlist(roomID);
                 if (result.success) {
                     setIsFollowed(!isFollowed);
-                    toast.success(t('Wishlist added successfully'));
+                    toast.success(t('Add Wishlist successfully'));
                 }
             } catch (error) {
                 console.log(error);
@@ -39,6 +39,14 @@ function Sidebar({ data }) {
         } else {
             navigate('/auth/login');
         }
+    };
+
+    const renderStars = (averageStar) => {
+        const stars = Array.from({ length: 5 }, (_, index) => (
+            <i key={index} className={`fa fa-star ${index < averageStar ? 'htlfndr-star-color' : ''}`}></i>
+        ));
+
+        return <>{stars}</>;
     };
 
     return (
@@ -68,14 +76,8 @@ function Sidebar({ data }) {
                     </div>
                     <div className="htlfndr-hotel-description">
                         <h2>{data?.room?.subject}</h2>
-                        <div className="htlfndr-rating-stars">
-                            <i className="fa fa-star htlfndr-star-color"></i>
-                            <i className="fa fa-star htlfndr-star-color"></i>
-                            <i className="fa fa-star htlfndr-star-color"></i>
-                            <i className="fa fa-star htlfndr-star-color"></i>
-                            <i className="fa fa-star htlfndr-star-color"></i>
-                        </div>
-                        <h5 className="htlfndr-hotel-location" style={{color: "#000"}}>
+                        <div className="htlfndr-rating-stars">{renderStars(data?.room?.averageStar)}</div>
+                        <h5 className="htlfndr-hotel-location" style={{ color: '#000' }}>
                             <a data-tooltip-id="my-tooltip" data-tooltip-content={data?.room?.address}>
                                 <i className="fa fa-map-marker"></i>
                                 {data?.room?.address}
@@ -89,7 +91,8 @@ function Sidebar({ data }) {
                     </div>
                 </div>
                 <button onClick={handleBook} className="htlfndr-book-now-button" role="button">
-                    <i className="fa fa-bookmark" style={{ marginRight: '10px' }} aria-hidden="true"></i>{t('Book')}
+                    <i className="fa fa-bookmark" style={{ marginRight: '10px' }} aria-hidden="true"></i>
+                    {t('Book')}
                 </button>
 
                 {!isFollowed ? (
@@ -118,7 +121,9 @@ function Sidebar({ data }) {
                         <p className="htlfndr-phone">
                             <a>{data?.owner?.phone}</a>
                         </p>
-                        <p className="htlfndr-reviews">{data?.room?.totalReview} ({t('Reviews')})</p>
+                        <p className="htlfndr-reviews">
+                            {data?.room?.totalReview} ({t('Reviews')})
+                        </p>
                     </div>
                 </div>
             </div>
