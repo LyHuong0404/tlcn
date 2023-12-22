@@ -1,21 +1,20 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faXmark } from '@fortawesome/free-solid-svg-icons';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styles from './Survey.module.scss';
 import Image from '../Image';
 import images from '~/assets/images';
 import Typography from '@mui/material/Typography';
 import Slider from '@mui/material/Slider';
 import { useForm } from 'react-hook-form';
-import { makeSurvey } from '~/actions/userActions';
+import { getProfile, makeSurvey } from '~/actions/userActions';
 import { toast } from 'react-toastify';
-import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 
-function Survey({ onClose }) {
+function Survey() {
     const { t } = useTranslation();
+    const [user, setUser] = useState({});
     const { register, handleSubmit } = useForm();
-    const { user } = useSelector((state) => state.auth);
     const [price, setPrice] = useState([0, 10000000]);
     const [isOpen, setIsOpen] = useState(true);
 
@@ -23,6 +22,18 @@ function Survey({ onClose }) {
         setPrice(newValue);
     };
 
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const result = await getProfile();
+                setUser(result);
+            } catch (error) {
+                console.log(error);
+            }
+        };
+
+        fetchData();
+    }, []);
     const submitForm = (data) => {
         const registerNotify = true;
         const priceMin = price[0];
@@ -70,7 +81,6 @@ function Survey({ onClose }) {
                                 className={styles.icon_close}
                                 onClick={() => {
                                     setIsOpen(false);
-                                    onClose();
                                 }}
                             />
                         </div>

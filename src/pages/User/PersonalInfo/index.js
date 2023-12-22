@@ -1,9 +1,23 @@
+import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useSelector } from 'react-redux';
+import { getProfile } from '~/actions/userActions';
 
 function PersonalInfo() {
-    const { user } = useSelector((state) => state.auth);
     const { t } = useTranslation();
+    const [user, setUser] = useState({});
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const result = await getProfile();
+                setUser(result);
+            } catch (error) {
+                console.log(error);
+            }
+        };
+
+        fetchData();
+    }, []);
 
     return (
         <div className="htlfndr-user-panel col-sm-8 col-md-9 htlfndr-info-page">
@@ -34,7 +48,7 @@ function PersonalInfo() {
                             </tr>
                             <tr>
                                 <th className="htlfndr-scope-row">{t('role')}:</th>
-                                <td>{user.roles[0]}</td>
+                                <td>{user && user.roles && user.roles[0]}</td>
                             </tr>
                         </tbody>
                     </table>
