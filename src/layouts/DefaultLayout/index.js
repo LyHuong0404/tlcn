@@ -11,7 +11,7 @@ function DefaultLayout({ children }) {
     const { user } = useSelector((state) => state.auth);
     return (
         <div className={cx('wrapper')}>
-            {user?.isSurvey && <Survey />}
+            {!user?.isSurvey && <Survey />}
             <Header></Header>
             <div style={{ marginTop: '120px' }}>{children}</div>
             <Footer></Footer>

@@ -115,7 +115,7 @@ function AddRoom() {
                 setLoading(true);
                 const data = await newRoom(formData);
                 if (data?.success) {
-                    navigate('/seller/allrooms', {state: {activeTab: 3}});
+                    navigate('/seller/allrooms', { state: { activeTab: 3 } });
                     toast.success(t('Add Room successfully!'));
                 }
                 setLoading(false);
