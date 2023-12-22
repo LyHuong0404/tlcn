@@ -188,7 +188,7 @@ function Infor({ data }) {
 
                                         <tr>
                                             <th scope="row">{t('phone')}:</th>
-                                            <td>{data?.room?.phone}</td>
+                                            <td>{data?.owner?.phone}</td>
                                         </tr>
                                         <tr>
                                             <th scope="row">{t('Person')}:</th>

@@ -103,7 +103,7 @@ function Footer() {
                                         </li>
 
                                         <li className="menu-item">
-                                            <Link to="/auth/login"> blog</Link>
+                                            <Link > blog</Link>
                                         </li>
 
                                         <li className="menu-item">

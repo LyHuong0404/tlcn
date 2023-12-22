@@ -145,15 +145,22 @@ function AllAppointments() {
                                 {appointment.day}, {appointment.time}
                             </td>
                             <td>
-                                <a className={styles.action_edit} onClick={() => handleUpdateDialogClick(appointment)}>
-                                    <FontAwesomeIcon icon={faEdit} className={styles.custom_icon} />
-                                </a>
-                                <a
-                                    className={styles.action_delete}
-                                    onClick={() => handleDeleteDialogClick(appointment)}
-                                >
-                                    <FontAwesomeIcon icon={faTrashCan} className={styles.custom_icon} />
-                                </a>
+                                {appointment.status !== 'REQUEST' && (
+                                    <>
+                                        <a
+                                            className={styles.action_edit}
+                                            onClick={() => handleUpdateDialogClick(appointment)}
+                                        >
+                                            <FontAwesomeIcon icon={faEdit} className={styles.custom_icon} />
+                                        </a>
+                                        <a
+                                            className={styles.action_delete}
+                                            onClick={() => handleDeleteDialogClick(appointment)}
+                                        >
+                                            <FontAwesomeIcon icon={faTrashCan} className={styles.custom_icon} />
+                                        </a>
+                                    </>
+                                )}
                             </td>
                         </tr>
                     ))}

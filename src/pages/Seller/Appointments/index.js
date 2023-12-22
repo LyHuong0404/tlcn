@@ -12,7 +12,7 @@ import {
     CancelAppointment,
 } from '~/actions/sellerActions';
 import { DatePicker, Select, Space } from 'antd';
-import { format } from 'date-fns';
+import { format, addDays } from 'date-fns';
 import dayjs from 'dayjs';
 import 'dayjs/locale/zh-cn';
 import config from '~/config';
@@ -38,7 +38,7 @@ function Appointments() {
     const [totalElement, setTotalElement] = useState(0);
     const [statusFilter, setStatusFilter] = useState('ALL');
     const [startDate, setStartDate] = useState(format(new Date().setDate(new Date().getDate() - 7), 'yyyy-MM-dd'));
-    const [endDate, setEndDate] = useState(format(new Date(), 'yyyy-MM-dd'));
+    const [endDate, setEndDate] = useState(format(addDays(new Date(), 10), 'yyyy-MM-dd'));
     const defaultDateRange = [dayjs().subtract(7, 'day'), dayjs(endDate)];
 
     const getAllAppointments = useCallback(
@@ -193,7 +193,7 @@ function Appointments() {
                                                 <th>{t('Phone')}</th>
                                                 <th>Email</th>
                                                 <th>{t('Date Time')}</th>
-                                                <th>{t("Status")}</th>
+                                                <th>{t('Status')}</th>
                                                 <th>{t('Action')}</th>
                                             </tr>
                                         </thead>

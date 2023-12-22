@@ -260,7 +260,7 @@ function Header() {
                                             className={menuActive === 2 ? 'active' : ''}
                                             onClick={() => setMenuActive(2)}
                                         >
-                                            <Link to="/auth/login">blog</Link>
+                                            <Link >blog</Link>
                                         </li>
                                         <li
                                             className={menuActive === 3 ? 'active' : ''}
