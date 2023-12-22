@@ -48,7 +48,7 @@ function Survey({ onClose }) {
                     allowedPet,
                 });
                 if (rs?.success) {
-                    onClose();
+                    setIsOpen(false);
                     toast.success(t('Thank you for your survey!'));
                 }
             };
