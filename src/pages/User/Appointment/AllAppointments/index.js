@@ -145,7 +145,7 @@ function AllAppointments() {
                                 {appointment.day}, {appointment.time}
                             </td>
                             <td>
-                                {appointment.status !== 'REQUEST' && (
+                                {appointment.status === 'REQUEST' && (
                                     <>
                                         <a
                                             className={styles.action_edit}
