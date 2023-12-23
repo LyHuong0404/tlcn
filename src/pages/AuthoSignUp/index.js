@@ -20,6 +20,7 @@ import images from '~/assets/images';
 import Loading from '~/components/Loading';
 import { toast } from 'react-toastify';
 import { useTranslation } from 'react-i18next';
+import CountdownTimer from '../CountdownTimer';
 
 function AuthoSignUp() {
     const { t } = useTranslation();
@@ -66,6 +67,7 @@ function AuthoSignUp() {
                                         {t('We have sent the verification code to your email.')} <br />
                                         {t('Please check and fill in to log in.')}
                                     </p>
+                                    <CountdownTimer />
                                     <input
                                         name="code"
                                         type="code"

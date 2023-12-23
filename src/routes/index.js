@@ -32,7 +32,6 @@ const AllAppointmentsUser = lazy(() => import('~/pages/User/Appointment/AllAppoi
 const UpdateRoomSeller = lazy(() => import('~/pages/Seller/Room/UpdateRoom'));
 const PaymentSuccess = lazy(() => import('~/pages/PaymentSuccess'));
 const PaymentFail = lazy(() => import('~/pages/PaymentFail'));
-const TemplateMail = lazy(() => import('~/components/TemplateMail'));
 const AppointmentsAdmin = lazy(() => import('~/pages/Admin/Appointments'));
 const PaymentsAdmin = lazy(() => import('~/pages/Admin/Payment'));
 const getUserAppointments = lazy(() => import('~/pages/Admin/UserAppointments'));
@@ -43,7 +42,6 @@ const publicRoutes = [
     {
         path: config.routes.home,
         component: Home,
-        // component: TemplateMail,
     },
     {
         path: config.routes.search,

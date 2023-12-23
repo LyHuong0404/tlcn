@@ -311,5 +311,6 @@
     "Name": "Tên",
     "Accounts": "Tài khoản",
     "Add Review successfully!": "Thêm bình luận thành công!",
-    "Add Review unsuccessfully!": "Thêm bình luận thất bại!"
+    "Add Review unsuccessfully!": "Thêm bình luận thất bại!",
+    "CODE has expired!": "Mã code đã hết thời gian chờ!"
 }

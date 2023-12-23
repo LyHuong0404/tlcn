@@ -10,6 +10,7 @@ import { toast } from 'react-toastify';
 import Image from '~/components/Image';
 import images from '~/assets/images';
 import { useTranslation } from 'react-i18next';
+import CountdownTimer from '~/pages/CountdownTimer';
 
 const customStyles = {
     control: (provided) => ({
@@ -187,7 +188,7 @@ function RegisterSeller() {
                                     htmlFor="htlfndr-first-adult-name"
                                     className="htlfndr-required htlfndr-top-label"
                                 >
-                                   {t('Phone Number')}
+                                    {t('Phone Number')}
                                 </label>
                                 <input
                                     type="number"
@@ -253,6 +254,7 @@ function RegisterSeller() {
                                 >
                                     Code
                                 </label>
+                                <CountdownTimer />
                                 <input
                                     id="htlfndr-first-adult-name5"
                                     name="htlfndr-first-adult-name5"
