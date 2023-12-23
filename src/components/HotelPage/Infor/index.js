@@ -18,6 +18,7 @@ import { useForm } from 'react-hook-form';
 import { addReview } from '~/actions/userActions';
 import { getListReviews } from '~/actions/otherActions';
 import { useTranslation } from 'react-i18next';
+import { toast } from 'react-toastify';
 
 function Infor({ data }) {
     const { t } = useTranslation();
@@ -60,11 +61,15 @@ function Infor({ data }) {
         try {
             const fetchData = async () => {
                 const rs = await addReview(formData);
-                console.log(rs);
+                if (rs?.success) {
+                    toast.success(t('Add Review successfully!'));
+                } else {
+                    toast.error(t('Add Review unsuccessfully!'));
+                }
             };
             fetchData();
         } catch (error) {
-            console.log(error);
+            toast.error('Add Review unsuccessfully!');
         }
     };
 

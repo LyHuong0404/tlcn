@@ -6,7 +6,7 @@ import styles from './Appointments.module.scss';
 import Pagination from '@mui/material/Pagination';
 import { useEffect, useState } from 'react';
 import { AllAppointments } from '~/actions/adminActions';
-import { format } from 'date-fns';
+import { format, addDays } from 'date-fns';
 import dayjs from 'dayjs';
 import 'dayjs/locale/zh-cn';
 import config from '~/config';
@@ -15,7 +15,6 @@ import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 
 const { RangePicker } = DatePicker;
-
 
 function Appointments() {
     const { t } = useTranslation();
@@ -26,7 +25,7 @@ function Appointments() {
     const [status, setStatus] = useState(undefined);
     const [totalElement, setTotalElement] = useState(0);
     const [startDate, setStartDate] = useState(format(new Date().setDate(new Date().getDate() - 7), 'yyyy-MM-dd'));
-    const [endDate, setEndDate] = useState(format(new Date(), 'yyyy-MM-dd'));
+    const [endDate, setEndDate] = useState(format(addDays(new Date(), 10), 'yyyy-MM-dd'));
     const defaultDateRange = [dayjs().subtract(7, 'day'), dayjs(endDate)];
 
     const handleChangePageSize = (e) => {
