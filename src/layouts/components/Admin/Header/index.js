@@ -4,8 +4,6 @@ import Tippy from '@tippyjs/react/headless';
 import styles from './Header.module.scss';
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBell, faEnvelope, faEnvelopeOpen } from '@fortawesome/free-regular-svg-icons';
 import { userLogout } from '~/actions/authActions';
 import { useTranslation } from 'react-i18next';
 
