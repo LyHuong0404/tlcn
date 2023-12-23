@@ -82,7 +82,8 @@ function AllReviews() {
                                 <article className="htlfndr-visitor-post">
                                     <header>
                                         <h3>{t('REVIEW ROOM')}</h3>
-                                        <h6>{review.time}</h6>
+
+                                        <h6>{review.day} {review.time}</h6>
                                     </header>
                                     <div className="htlfndr-rating-stars">{renderStars(review.star)}</div>
                                     <p>{review.content}</p>
