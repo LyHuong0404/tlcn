@@ -10,7 +10,7 @@ import '~/assets/js/jquery-1.11.3.min.js';
 import styles from './AllAppointments.module.scss';
 import Image from '~/components/Image';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTrashCan } from '@fortawesome/free-solid-svg-icons';
+import { faCheck, faTrashCan } from '@fortawesome/free-solid-svg-icons';
 import { faEdit } from '@fortawesome/free-regular-svg-icons';
 import { useState, useEffect } from 'react';
 import { userAllAppointment, deleteAppointment } from '~/actions/userActions';
@@ -21,6 +21,7 @@ import { useCallback } from 'react';
 import { toast } from 'react-toastify';
 import UpdateAppointmentDialog from '~/components/UpdateAppointmentDialog';
 import { useTranslation } from 'react-i18next';
+import { OKAppointment } from '~/actions/sellerActions';
 
 function AllAppointments() {
     const { t } = useTranslation();
@@ -82,6 +83,18 @@ function AllAppointments() {
         setUpdateDialogOpen(!updateDialogOpen);
         getAllAppointment(currentPage);
     };
+
+    const handleOKAppointment = (id) => {
+        try {
+            const fetchData = async () => {
+                await OKAppointment(id);
+                getAllAppointment(0);
+            };
+            fetchData();
+        } catch (error) {
+            console.log(error);
+        }
+    };
     return (
         <div className="htlfndr-user-panel col-md-9 col-sm-8 htlfndr-booking-page" id="htlfndr-user-tab-2">
             <table className="table">
@@ -89,9 +102,10 @@ function AllAppointments() {
                     <tr>
                         <th>{t('Image')}</th>
                         <th>{t('Room Name')}</th>
-                        <th>{t('Price')}</th>
+                        {/* <th>{t('Price')}</th> */}
                         <th>{t('Location')}</th>
                         <th>{t('Date Time')}</th>
+                        <th>{t('Status')}</th>
                         <th>{t('Action')}</th>
                     </tr>
                 </thead>
@@ -123,7 +137,7 @@ function AllAppointments() {
                             >
                                 {appointment.room.subject}
                             </td>
-                            <td
+                            {/* <td
                                 style={{
                                     width: '100px',
                                     overflow: 'hidden',
@@ -131,7 +145,8 @@ function AllAppointments() {
                                 }}
                             >
                                 {appointment.room.price}
-                            </td>
+                            </td> */}
+
                             <td
                                 style={{
                                     width: '280px',
@@ -144,24 +159,42 @@ function AllAppointments() {
                             <td>
                                 {appointment.day}, {appointment.time}
                             </td>
-                            <td>
-                                {appointment.status === 'REQUEST' && (
-                                    <>
-                                        <a
-                                            className={styles.action_edit}
-                                            onClick={() => handleUpdateDialogClick(appointment)}
-                                        >
-                                            <FontAwesomeIcon icon={faEdit} className={styles.custom_icon} />
-                                        </a>
-                                        <a
-                                            className={styles.action_delete}
-                                            onClick={() => handleDeleteDialogClick(appointment)}
-                                        >
-                                            <FontAwesomeIcon icon={faTrashCan} className={styles.custom_icon} />
-                                        </a>
-                                    </>
-                                )}
+                            <td
+                                style={{
+                                    width: '100px',
+                                    overflow: 'hidden',
+                                    textOverflow: 'ellipsis',
+                                }}
+                            >
+                                {appointment.status}
                             </td>
+                            {appointment.status === 'REQUEST' && (
+                                <td>
+                                    <a
+                                        className={styles.action_edit}
+                                        onClick={() => handleUpdateDialogClick(appointment)}
+                                    >
+                                        <FontAwesomeIcon icon={faEdit} className={styles.custom_icon} />
+                                    </a>
+                                    <a
+                                        className={styles.action_delete}
+                                        onClick={() => handleDeleteDialogClick(appointment)}
+                                    >
+                                        <FontAwesomeIcon icon={faTrashCan} className={styles.custom_icon} />
+                                    </a>
+                                </td>
+                            )}
+                            {appointment.status === 'CONFIRM' && (
+                                <td>
+                                    <a
+                                        className={styles.action_confirm}
+                                        onClick={() => handleOKAppointment(appointment.id)}
+                                    >
+                                        <FontAwesomeIcon icon={faCheck} className={styles.custom_icon} />
+                                    </a>
+                                </td>
+                            )}
+                            {appointment.status === 'OK' && <td></td>}
                         </tr>
                     ))}
                 </tbody>

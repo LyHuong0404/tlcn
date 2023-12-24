@@ -1,3 +1,16 @@
+a.action_edit,
+a.action_confirm,
+a.action_delete {
+    padding: 5px;
+    font-size: 12px;
+    border-radius: 7px;
+    color: #e6e6e6 !important;
+    margin-right: 10px;
+
+    &:hover {
+        background-color: #000;
+    }
+}
 .wrapper {
     display: flex;
     flex-direction: column;
@@ -77,6 +90,9 @@ a.action_delete {
     background-color: #ff0000;
 }
 
+.action_confirm {
+    background-color: green;
+}
 .custom_icon {
     &:hover,
     &:focus {
