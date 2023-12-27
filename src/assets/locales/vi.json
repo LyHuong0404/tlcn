@@ -312,5 +312,9 @@
     "Accounts": "Tài khoản",
     "Add Review successfully!": "Thêm bình luận thành công!",
     "Add Review unsuccessfully!": "Thêm bình luận thất bại!",
-    "CODE has expired!": "Mã code đã hết thời gian chờ!"
+    "CODE has expired!": "Mã code đã hết thời gian chờ!",
+    "Send Me Email": "GỬI MAIL",
+    "Username is not exist.": "Tên đăng nhập không tồn tại!",
+    "Recover Password": "Khôi Phục",
+    "Wrong Code.": "Mã code không đúng"
 }

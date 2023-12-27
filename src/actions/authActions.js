@@ -72,3 +72,21 @@ export const claimDailyLogin = async () => {
         console.log(error);
     }
 };
+
+export const getCodeForgotPassword = async ({ username }) => {
+    try {
+        const response = await httprequest.post('get-code-forgot-password', { username });
+        return response;
+    } catch (error) {
+        console.log(error);
+    }
+};
+
+export const forgotPassword = async ({ username, code, newPassword }) => {
+    try {
+        const response = await httprequest.post('forgot-password', { username, code, newPassword });
+        return response;
+    } catch (error) {
+        console.log(error);
+    }
+};

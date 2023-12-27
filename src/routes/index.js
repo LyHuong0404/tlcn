@@ -37,6 +37,7 @@ const PaymentsAdmin = lazy(() => import('~/pages/Admin/Payment'));
 const getUserAppointments = lazy(() => import('~/pages/Admin/UserAppointments'));
 const getUserPayment = lazy(() => import('~/pages/Admin/UserPayment'));
 const EditProfileAdmin = lazy(() => import('~/pages/Admin/Profile/EditAdminProfile'));
+const AuthoForgotPassword = lazy(() => import('~/pages/AuthoForgotPassword'));
 
 const publicRoutes = [
     {
@@ -77,6 +78,16 @@ const publicRoutes = [
     {
         path: config.authRoutes.authosignup,
         component: AuthoSignUp,
+        layout: null,
+    },
+    {
+        path: config.authRoutes.forgotpassword,
+        component: ForgotPassword,
+        layout: null,
+    },
+    {
+        path: config.authRoutes.OTPforgotpassword,
+        component: AuthoForgotPassword,
         layout: null,
     },
 ];

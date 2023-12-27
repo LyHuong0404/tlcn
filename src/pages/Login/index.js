@@ -103,9 +103,9 @@ function Login() {
                                             RememberMe
                                         </label>
                                     </div> */}
-                                    <a  className="forgot-password">
+                                    <Link to="/auth/forgotpassword" className="forgot-password">
                                         {t('Forgot Password?')}
-                                    </a>
+                                    </Link>
                                 </div>
                                 <div className="form-group clearfix">
                                     <button type="submit" className="btn-md btn-theme w-100">
@@ -146,7 +146,9 @@ function Login() {
                                 <span>Room Finder</span>
                             </h1>
                             <p>
-                                {t('Incredibly friendly locals will tell you all about Georgia most picturesque, breathtaking, and gastronomic must-visit places. A quick search of our database will show you the best-fitting matches out of 100+ candidates. You can choose photos, or reviews from previous passengers.')}
+                                {t(
+                                    'Incredibly friendly locals will tell you all about Georgia most picturesque, breathtaking, and gastronomic must-visit places. A quick search of our database will show you the best-fitting matches out of 100+ candidates. You can choose photos, or reviews from previous passengers.',
+                                )}
                             </p>
                         </div>
                     </div>

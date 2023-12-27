@@ -5,6 +5,7 @@ const authRoutes = {
     logout: '/auth/logout',
     me: '/auth/me',
     forgotpassword: '/auth/forgotpassword',
+    OTPforgotpassword: '/auth/forgotpassword/otp',
     profile: '/profile',
     appointment: '/user/appointment',
     updateAppointmentLink: (id) => `/user/appointment/${id}`,

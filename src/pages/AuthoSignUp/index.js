@@ -36,7 +36,7 @@ function AuthoSignUp() {
             navigate('/auth/login');
             toast.success(t('Create Account successfully!'), {
                 style: {
-                    fontSize: '15px', // Đặt kích thước font size mong muốn
+                    fontSize: '15px', 
                 },
             });
         }
@@ -92,7 +92,7 @@ function AuthoSignUp() {
                             <div className="clearfix"></div>
 
                             <p className="option">
-                                {t('Already a member?')} <Link to="/auth.login">{t('Login here')}</Link>
+                                {t('Already a member?')} <Link to="/auth/login">{t('Login here')}</Link>
                             </p>
                         </div>
                     </div>
