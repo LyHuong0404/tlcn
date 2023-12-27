@@ -54,13 +54,13 @@ function SearchResult() {
     const [totalPage, setTotalPage] = useState(1);
     const [rooms, setRooms] = useState([]);
     const [loading, setLoading] = useState(false);
-    const [attic, setAttic] = useState(null);
-    const [furnitureAvailable, setFurnitureAvailable] = useState(undefined);
-    const [airConditionAvailable, setAirConditionAvailable] = useState(undefined);
-    const [isFreeParking, setIsFreeParking] = useState(undefined);
-    const [privateToilet, setPrivateToilet] = useState(undefined);
-    const [allowedPet, setAllowedPet] = useState(undefined);
-    const [tvAvailable, setTvAvailable] = useState(undefined);
+    const [attic, setAttic] = useState(true);
+    const [furnitureAvailable, setFurnitureAvailable] = useState(true);
+    const [airConditionAvailable, setAirConditionAvailable] = useState(true);
+    const [isFreeParking, setIsFreeParking] = useState(true);
+    const [privateToilet, setPrivateToilet] = useState(true);
+    const [allowedPet, setAllowedPet] = useState(true);
+    const [tvAvailable, setTvAvailable] = useState(true);
     const [sort, setSort] = useState('price');
     const [show, setShow] = useState(9);
 
@@ -355,11 +355,12 @@ function SearchResult() {
                                         id="htlfndr-check-television"
                                         name="htlfndr-check-television"
                                         onChange={() => setTvAvailable(!tvAvailable)}
+                                        defaultChecked
                                     />
                                     <label htmlFor="htlfndr-check-television">{t('Television')}</label>
                                 </p>
                                 <p className="htlfndr-checkbox-line">
-                                    <input type="checkbox" id="htlfndr-check-wi-fi" name="htlfndr-check-wi-fi" />
+                                    <input type="checkbox" id="htlfndr-check-wi-fi" name="htlfndr-check-wi-fi" defaultChecked/>
                                     <label htmlFor="htlfndr-check-wi-fi">Wi-Fi</label>
                                 </p>
                                 <p className="htlfndr-checkbox-line">
@@ -367,6 +368,7 @@ function SearchResult() {
                                         type="checkbox"
                                         id="htlfndr-check-swimming-pool"
                                         name="htlfndr-check-swimming-pool"
+                                        defaultChecked
                                     />
                                     <label htmlFor="htlfndr-check-swimming-pool">{t('Swimming pool')}</label>
                                 </p>
@@ -376,6 +378,7 @@ function SearchResult() {
                                         id="htlfndr-check-smoking"
                                         name="htlfndr-check-smoking"
                                         onChange={() => setFurnitureAvailable(!furnitureAvailable)}
+                                        defaultChecked
                                     />
                                     <label htmlFor="htlfndr-check-smoking">{t('Furniture Available')}</label>
                                 </p>
@@ -385,6 +388,7 @@ function SearchResult() {
                                         onChange={() => setAttic(!attic)}
                                         id="htlfndr-check-wine-bar"
                                         name="htlfndr-check-wine-bar"
+                                        defaultChecked
                                     />
                                     <label htmlFor="htlfndr-check-wine-bar">{t('Attic')}</label>
                                 </p>
@@ -394,6 +398,7 @@ function SearchResult() {
                                         id="htlfndr-check-hot-tub"
                                         name="htlfndr-check-hot-tub"
                                         onChange={() => setAirConditionAvailable(!airConditionAvailable)}
+                                        defaultChecked
                                     />
                                     <label htmlFor="htlfndr-check-hot-tub">{t('Air Conditioning')}</label>
                                 </p>
@@ -403,6 +408,7 @@ function SearchResult() {
                                         id="htlfndr-check-air-conditioning"
                                         name="htlfndr-check-air-conditioning"
                                         onChange={() => setIsFreeParking(!isFreeParking)}
+                                        defaultChecked
                                     />
                                     <label htmlFor="htlfndr-check-air-conditioning">{t('Free Parking')}</label>
                                 </p>
@@ -412,6 +418,7 @@ function SearchResult() {
                                         id="htlfndr-check-breakfast"
                                         name="htlfndr-check-breakfast"
                                         onChange={() => setPrivateToilet(!privateToilet)}
+                                        defaultChecked
                                     />
                                     <label htmlFor="htlfndr-check-breakfast">{t('Private Toilet')}</label>
                                 </p>
@@ -421,6 +428,7 @@ function SearchResult() {
                                         id="htlfndr-check-free-parking"
                                         name="htlfndr-check-free-parking"
                                         onChange={() => setAllowedPet(!allowedPet)}
+                                        defaultChecked
                                     />
                                     <label htmlFor="htlfndr-check-free-parking">{t('Allow Pet')}</label>
                                 </p>
