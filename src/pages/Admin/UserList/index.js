@@ -141,7 +141,7 @@ function UserList() {
                                     </div>
                                     <div id="example_filter" className="dataTables_filter">
                                         <label>
-                                            {t('Status')}:
+                                            {/* {t('Status')}:
                                             <select
                                                 name="example_length"
                                                 aria-controls="example"
@@ -149,7 +149,7 @@ function UserList() {
                                             >
                                                 <option value="active">{t('Active')}</option>
                                                 <option value="non">{t('Non')}</option>
-                                            </select>
+                                            </select> */}
                                             {t('Search')}:
                                             <input
                                                 type="search"
@@ -171,7 +171,7 @@ function UserList() {
                                             <th>Email</th>
                                             <th>{t('Phone')} #</th>
                                             <th>{t('Balance')}</th>
-                                            <th>{t('Status')}</th>
+                                            <th>{t('Roles')}</th>
                                             <th>{t('Action')}</th>
                                         </tr>
                                     </thead>
@@ -193,14 +193,15 @@ function UserList() {
                                                 <td>{user.phone}</td>
                                                 <td>{user.balance}</td>
                                                 <td>
-                                                    <Switch
+                                                    {/* <Switch
                                                         onChange={handleChangeStatus}
                                                         checked={status}
                                                         checkedIcon={false}
                                                         uncheckedIcon={false}
                                                         height={22}
                                                         width={50}
-                                                    />
+                                                    /> */}
+                                                    {user.roles[0]}
                                                 </td>
                                                 <td>
                                                     <div>

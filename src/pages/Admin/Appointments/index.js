@@ -36,7 +36,7 @@ function Appointments() {
     useEffect(() => {
         try {
             const fetchData = async () => {
-                const rs = await AllAppointments(pageIndex, pageSize, status, startDate, endDate);
+                const rs = await AllAppointments(pageIndex, pageSize, status, undefined, undefined);
                 rs?.content?.map((element) => {
                     element.day = format(new Date(element.day), 'dd-MM-yyyy');
                     element.time = format(new Date(`2000-01-01T${element.time}`), 'HH:mm');
@@ -163,12 +163,12 @@ function Appointments() {
                                     </div>
 
                                     <div id="example_filter" className="dataTables_filter">
-                                        <RangePicker
+                                        {/* <RangePicker
                                             format="DD-MM-YYYY"
                                             defaultValue={defaultDateRange}
                                             onChange={handleDateChange}
                                             style={{ height: '38px', marginRight: '20px' }}
-                                        />
+                                        /> */}
                                         <label>
                                             {t('Status')}:
                                             <select

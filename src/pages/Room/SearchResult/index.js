@@ -360,7 +360,12 @@ function SearchResult() {
                                     <label htmlFor="htlfndr-check-television">{t('Television')}</label>
                                 </p>
                                 <p className="htlfndr-checkbox-line">
-                                    <input type="checkbox" id="htlfndr-check-wi-fi" name="htlfndr-check-wi-fi" defaultChecked/>
+                                    <input
+                                        type="checkbox"
+                                        id="htlfndr-check-wi-fi"
+                                        name="htlfndr-check-wi-fi"
+                                        defaultChecked
+                                    />
                                     <label htmlFor="htlfndr-check-wi-fi">Wi-Fi</label>
                                 </p>
                                 <p className="htlfndr-checkbox-line">

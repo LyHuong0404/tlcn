@@ -316,5 +316,6 @@
     "Send Me Email": "GỬI MAIL",
     "Username is not exist.": "Tên đăng nhập không tồn tại!",
     "Recover Password": "Khôi Phục",
-    "Wrong Code.": "Mã code không đúng"
+    "Wrong Code.": "Mã code không đúng",
+    "Roles": "Vai trò"
 }

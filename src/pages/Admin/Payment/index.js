@@ -137,12 +137,12 @@ function Payment() {
                                     </div>
 
                                     <div id="example_filter" className="dataTables_filter">
-                                        <RangePicker
+                                        {/* <RangePicker
                                             format="DD-MM-YYYY"
                                             defaultValue={defaultDateRange}
                                             onChange={handleDateChange}
                                             style={{ height: '38px', marginRight: '20px' }}
-                                        />
+                                        /> */}
                                     </div>
                                 </div>
                                 <table id="example" className="display table-hover table-responsive-xl listing">
