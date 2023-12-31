@@ -36,7 +36,7 @@ function DashBoard() {
 
             <div className="ad-v2-hom-info">
                 <div className="ad-v2-hom-info-inn">
-                    <ul>
+                    {/* <ul>
                         <li>
                             <div className="ad-hom-box ad-hom-box-1">
                                 <span className="ad-hom-col-com ad-hom-col-1">
@@ -76,7 +76,7 @@ function DashBoard() {
                                 </div>
                             </div>
                         </li>
-                        {/* <li>
+                        <li>
                             <div className="ad-hom-box ad-hom-box-4">
                                 <span className="ad-hom-col-com ad-hom-col-4">
                                     <i className="fa fa-envelope-open-o"></i>
@@ -88,8 +88,8 @@ function DashBoard() {
                                     <h3>22,520</h3>
                                 </div>
                             </div>
-                        </li> */}
-                    </ul>
+                        </li> 
+                    </ul> */}
                 </div>
             </div>
             {/* <div className="sb2-2-3">
@@ -407,8 +407,8 @@ function DashBoard() {
                                                 <th>{t('Name')}</th>
                                                 <th>{t('Address')}</th>
                                                 <th>{t('Price')}</th>
-                                                <th>{t('Bookings')}</th>
-                                                <th>{t('Reviews')}</th>
+                                                {/* <th>{t('Bookings')}</th>
+                                                <th>{t('Reviews')}</th> */}
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -425,12 +425,12 @@ function DashBoard() {
                                                     <td style={{ width: '480px' }}>{room.address}</td>
                                                     <td style={{ width: '180px' }}>{room.price}</td>
 
-                                                    <td>
+                                                    {/* <td>
                                                         <span className="label label-success">5</span>
                                                     </td>
                                                     <td>
                                                         <span className="label label-info">7</span>
-                                                    </td>
+                                                    </td> */}
                                                 </tr>
                                             ))}
                                         </tbody>
